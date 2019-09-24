@@ -37,7 +37,7 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon ">
-            <img src="resources/img/logo-glasswing.png" width="150px"/>
+            <img src="resources/img/logo-glasswing.png" style="width:100%;max-width: 150px"/>
         </div>
         <!--<div class="sidebar-brand-text mx-3">SIS-NNA<sup>2</sup></div>-->
       </a>
@@ -47,28 +47,28 @@
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item ${marked eq 'dashboard' ? ' active' : ''}">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
-
+      
       <!-- Divider -->
       <hr class="sidebar-divider">
       
       <li class="nav-item ${marked eq 'denuncias' ? ' active' : ''}">
-        <a class="nav-link" href="/denuncias">
+        <a class="nav-link" href="${pageContext.request.contextPath}/denuncias">
           <i class="fa fa-envelope"></i>
           <span>Denuncias</span></a>
       </li>
       
       <li class="nav-item ${marked eq 'comites' ? ' active' : ''}">
-        <a class="nav-link" href="/comites">
+        <a class="nav-link" href="${pageContext.request.contextPath}/comites">
           <i class="fas fa-fw fa-users"></i>
           <span>Comites</span></a>
       </li>
       
        <li class="nav-item ${marked eq 'usuarios' ? ' active' : ''}">
-        <a class="nav-link" href="/usuarios">
+        <a class="nav-link" href="${pageContext.request.contextPath}/usuarios">
           <i class="fas fa-fw fa-user"></i>
           <span>Usuarios</span></a>
       </li>

@@ -34,7 +34,7 @@ public class MainController {
                 if(username.equals("usuario") && password.equals("glasswing")){
 //		if(userServ.findOneUser(username, password)) {
 			log.info("Entrando a funcion init-min" + log.getName());    
-			mav.setViewName("main");
+			mav= new ModelAndView("redirect:/dashboard");
 		}else {
                         mav.addObject("error", "Las credenciales son invalidas");
 			mav.setViewName("login");

@@ -2,8 +2,8 @@
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:admin-template>
-    <jsp:attribute name="marked">comites</jsp:attribute>
-    <jsp:attribute name="title">Comites</jsp:attribute>
+    <jsp:attribute name="marked">usuarios</jsp:attribute>
+    <jsp:attribute name="title">Usuarios</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
         <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">

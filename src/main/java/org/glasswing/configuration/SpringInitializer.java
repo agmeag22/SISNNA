@@ -16,7 +16,7 @@ public class SpringInitializer implements WebApplicationInitializer {
 		ctx.register(SpringConfiguration.class);
 		ctx.setServletContext(container);
 		
-		ServletRegistration.Dynamic servlet = container.addServlet("spring-capas",new DispatcherServlet(ctx));
+		ServletRegistration.Dynamic servlet = container.addServlet("sis-nna",new DispatcherServlet(ctx));
 		
 		servlet.addMapping("/");
 		servlet.setLoadOnStartup(1);

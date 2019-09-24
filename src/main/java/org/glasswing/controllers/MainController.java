@@ -24,20 +24,22 @@ public class MainController {
 	public ModelAndView initMain() {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
+		mav.setViewName("login");
 		return mav;
 	}
 	
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(@RequestParam(value="username") String username,@RequestParam(value="password") String password) {
 		ModelAndView mav = new ModelAndView();
+                if(username.equals("usuario") && password.equals("glasswing")){
 //		if(userServ.findOneUser(username, password)) {
-//			log.info("Entrando a funcion init-min" + log.getName());
-//			mav.setViewName("main");
-//		}else {
-//			mav.setViewName("login");
-//		}
-//			log.info("No se pudo realizar" + log.getName() +"u:::::::"+ username+ "p::::::"+password);
+			log.info("Entrando a funcion init-min" + log.getName());    
+			mav.setViewName("main");
+		}else {
+                        mav.addObject("error", "Las credenciales son invalidas");
+			mav.setViewName("login");
+		}
+			log.info("No se pudo realizar" + log.getName() +"u:::::::"+ username+ "p::::::"+password);
 		return mav; 
 	}
 	

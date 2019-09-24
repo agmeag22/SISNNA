@@ -5,10 +5,12 @@
      <jsp:attribute name="styles">
       
     </jsp:attribute>
+    <jsp:attribute name="title">Dashboard</jsp:attribute>
+    <jsp:attribute name="marked">dashboard</jsp:attribute>
     <jsp:attribute name="scripts">
       
     </jsp:attribute>
     <jsp:body>
-        <p>Hi I'm the heart of the message</p>
+        <p>Bienvenido a SIS-NNA</p>
     </jsp:body>
 </t:admin-template>

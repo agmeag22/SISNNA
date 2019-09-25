@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="org.glasswing_SIS_NNA_war_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>org.glasswing.configuration.TypeUser</class>
+    <class>org.glasswing.configuration.User</class>
+    <class>org.glasswing.configuration.Privilege</class>
+    <class>org.glasswing.configuration.TypeAbuse</class>
+    <class>org.glasswing.configuration.Department</class>
+    <class>org.glasswing.configuration.Role</class>
+    <class>org.glasswing.configuration.Complaint</class>
+    <class>org.glasswing.configuration.Process</class>
+    <class>org.glasswing.configuration.CommitteeStaff</class>
+    <class>org.glasswing.configuration.Committee</class>
+    <class>org.glasswing.configuration.Staff</class>
+    <class>org.glasswing.configuration.UserRole</class>
+    <class>org.glasswing.configuration.RolePrivilege</class>
+    <class>org.glasswing.domain.TypeAbuse</class>
+    <class>org.glasswing.domain.UserRole</class>
+    <class>org.glasswing.domain.Staff</class>
+    <class>org.glasswing.domain.Department</class>
+    <class>org.glasswing.domain.Role</class>
+    <class>org.glasswing.domain.RolePrivilege</class>
+    <class>org.glasswing.domain.Privilege</class>
+    <class>org.glasswing.domain.TypeUser</class>
+    <class>org.glasswing.domain.Complaint</class>
+    <class>org.glasswing.domain.Process</class>
+    <class>org.glasswing.domain.Committee</class>
+    <class>org.glasswing.domain.User</class>
+    <class>org.glasswing.domain.CommitteeStaff</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/glasswings2"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>

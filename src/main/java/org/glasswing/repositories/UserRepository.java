@@ -26,7 +26,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-	@Query(nativeQuery=true, value="select count(*) from public.table_user where username= :username and pass= :password")
+	@Query(nativeQuery=true, value="select count(*) from user where username= :username and password= :password")
 	public int findOneUser(@Param("username")String username,@Param("password") String password) throws DataAccessException ;
 
 

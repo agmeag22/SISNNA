@@ -5,7 +5,11 @@
  */
 package org.glasswing.controllers;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
+import org.glasswing.domain.Committee;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +26,20 @@ public class ComitesController {
 	
 	@RequestMapping("/comites")
 	public ModelAndView initMain() {
-		
+		List<Committee> lista = new ArrayList();
+                Committee item;
+                for(int i=0;i<10;i++){
+                    item = new Committee();
+                    item.setName("Comite #"+i);
+                    
+                    item.setIdCommittee(i);
+                    item.setCreatedUp(new Date());
+                    item.setUpdatedUp(new Date());
+                    lista.add(item);
+                    
+                }
 		ModelAndView mav = new ModelAndView();
+                mav.addObject("lista" , lista);
 		mav.setViewName("comites/index");
 		return mav;
 	}

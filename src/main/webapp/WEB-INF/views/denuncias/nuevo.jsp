@@ -21,15 +21,15 @@
     </jsp:attribute>
     <jsp:body>
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-        <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+        <h1 class="h3 mb-2 text-gray-800">Formulario de Alerta</h1>
+        <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a href="formulario.jsp" class="btn btn-outline-primary">
-                    Nueva Denuncia
-                </a>
+                <!--                <a href="formulario.jsp" class="btn btn-outline-primary">
+                                    Nueva Denuncia
+                                </a>-->
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -102,7 +102,12 @@
                                 <label for="comment">¿Es de su conocimiento si este incidente se ha presentado en varias ocasiones?:</label>
                                 <textarea class="form-control" rows="5" id="comment"></textarea>
                             </div>
-
+                            <a href="${pageContext.request.contextPath}/denuncias" class="btn btn-warning btn-icon-split" >
+                                <span class="icon text-white-50">
+                                    <i class="far fa-save"></i>
+                                </span>
+                                <span class="text">Enviar Denuncia</span>
+                            </a>
                         </form>
                     </table>
                 </jsp:body>

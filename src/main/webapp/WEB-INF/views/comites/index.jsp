@@ -25,7 +25,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Comites</h1>
         <p class="mb-4">Listado de Comites</p>
-        
+
         <a href="${pageContext.request.contextPath}/comites/nuevo" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
@@ -50,7 +50,7 @@
                                 <th>Nombre</th>
                                 <th>Ultima actualizacion</th>
                                 <th>Creación</th>
-
+                                <th>Acción</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -59,6 +59,7 @@
                                 <th>Nombre</th>
                                 <th>Ultima actualizacion</th>
                                 <th>Creación</th>
+                                <th>Acción</th>
 
                             </tr>
                         </tfoot>
@@ -72,6 +73,16 @@
 
                                     <td>${item.updatedUp}</td>
                                     <td>${item.createdUp}"</td>
+                                    <td><div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <em class="fa fa-cog"></em>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#">Eliminar</a>
+                                                <a class="dropdown-item" href="#">Editar</a>
+                                                <a class="dropdown-item" href="#">...</a>
+                                            </div>
+                                        </div></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

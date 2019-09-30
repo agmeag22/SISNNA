@@ -24,18 +24,25 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
       <!--  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p> -->
+          <a href="${pageContext.request.contextPath}/comites/nuevo" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">A&ntildeadir Usuario</span>
+        </a>
 
+        <br><br>
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h6 class="m-0 font-weight-bold text-primary">Usuarios en el sistema</h6>
             </div>
             <div class="card-body">
-                <div class="table-responsive">
+<!--                <div class="table-responsive">
                     <a href="${pageContext.request.contextPath}/usuarios/nuevo" class="btn btn-secondary btn-user">
                       Crear Nuevo Usuario
-                    </a>                      
-                    <hr>
+                    </a>                      -->
+                    <!--<hr>-->
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
@@ -83,15 +90,25 @@
                                 <td>${user.createdAlert}</td>
                                 <td>${user.assignedAlert}</td>
                                 <td>${user.state}</td>
-                                <td><form  action="${pageContext.request.contextPath}/usuarios/eliminar" method="post">
+                                 <td><div class="dropdown">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <em class="fa fa-cog"></em>
+                                            </button>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <a class="dropdown-item" href="#"><form  action="${pageContext.request.contextPath}/usuarios/eliminar" method="post">
                                         <input type="hidden" name="userNumber" id="userNumberInput"  value="${user.number}">
-                                        <input type="submit" value="Eliminar" /><br>
-                                  </form>
-                                        /
-                                        <form  action="${pageContext.request.contextPath}/usuarios/modificar" method="post">
+                                        <input type="submit" class="dropdown-item" value="Eliminar" /><br>
+                                  </form></a>
+                                                <a class="dropdown-item" href="#">  <form  action="${pageContext.request.contextPath}/usuarios/modificar" method="post">
                                             <input type="hidden" id="userNumber" name="userNumber" value="${user.number}">
-                                              <input type="submit" value="Editar" />
-                                    </form></td>                                
+                                              <input type="submit" class="dropdown-item" value="Editar" />
+                                    </form></a>
+                                                <a class="dropdown-item" href="#">...</a>
+                                            </div>
+                                        </div></td>
+                                <td>
+                                        /
+                                      </td>                                
                             </tr>
                             </c:forEach>
                         </tbody>

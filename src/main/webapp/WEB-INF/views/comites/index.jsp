@@ -25,11 +25,20 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Comites</h1>
         <p class="mb-4">Listado de Comites</p>
+        
+        <a href="${pageContext.request.contextPath}/comites/nuevo" class="btn btn-success btn-icon-split">
+            <span class="icon text-white-50">
+                <i class="fas fa-plus"></i>
+            </span>
+            <span class="text">A&ntildeadir Comite</span>
+        </a>
+
+        <br><br>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                
+
                 <!--<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>-->
             </div>
             <div class="card-body">
@@ -60,9 +69,9 @@
                                 <tr>
                                     <td>${item.idCommittee}</td>
                                     <td>${item.name}</td>
-                                   
+
                                     <td>${item.updatedUp}</td>
-                                     <td>${item.createdUp}"</td>
+                                    <td>${item.createdUp}"</td>
                                 </tr>
                             </c:forEach>
                         </tbody>

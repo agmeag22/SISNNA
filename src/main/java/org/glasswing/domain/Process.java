@@ -6,20 +6,26 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,204 +33,156 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "process")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Process.findAll", query = "SELECT p FROM Process p")
-    , @NamedQuery(name = "Process.findByIdprocess", query = "SELECT p FROM Process p WHERE p.idprocess = :idprocess")
-    , @NamedQuery(name = "Process.findByStatus", query = "SELECT p FROM Process p WHERE p.status = :status")
-    , @NamedQuery(name = "Process.findByMailSent", query = "SELECT p FROM Process p WHERE p.mailSent = :mailSent")
-    , @NamedQuery(name = "Process.findByControlPointContacted", query = "SELECT p FROM Process p WHERE p.controlPointContacted = :controlPointContacted")
-    , @NamedQuery(name = "Process.findByIsThereEvidence", query = "SELECT p FROM Process p WHERE p.isThereEvidence = :isThereEvidence")
-    , @NamedQuery(name = "Process.findByNotificationToSuperior", query = "SELECT p FROM Process p WHERE p.notificationToSuperior = :notificationToSuperior")
-    , @NamedQuery(name = "Process.findByVerbalNotification", query = "SELECT p FROM Process p WHERE p.verbalNotification = :verbalNotification")
-    , @NamedQuery(name = "Process.findByWrittenNotification", query = "SELECT p FROM Process p WHERE p.writtenNotification = :writtenNotification")
-    , @NamedQuery(name = "Process.findByRecurrence", query = "SELECT p FROM Process p WHERE p.recurrence = :recurrence")
-    , @NamedQuery(name = "Process.findByInterruptContact", query = "SELECT p FROM Process p WHERE p.interruptContact = :interruptContact")
-    , @NamedQuery(name = "Process.findByRecurrenceReport", query = "SELECT p FROM Process p WHERE p.recurrenceReport = :recurrenceReport")
-    , @NamedQuery(name = "Process.findByCommitteeEvaluation", query = "SELECT p FROM Process p WHERE p.committeeEvaluation = :committeeEvaluation")})
+    @NamedQuery(name = "Process.findAll", query = "SELECT p FROM Process p"),
+    @NamedQuery(name = "Process.findByIdProcess", query = "SELECT p FROM Process p WHERE p.idProcess = :idProcess"),
+    @NamedQuery(name = "Process.findByRecurrence", query = "SELECT p FROM Process p WHERE p.recurrence = :recurrence"),
+    @NamedQuery(name = "Process.findByGuardianNotificated", query = "SELECT p FROM Process p WHERE p.guardianNotificated = :guardianNotificated"),
+    @NamedQuery(name = "Process.findByCreatedDate", query = "SELECT p FROM Process p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "Process.findByUpdatedDate", query = "SELECT p FROM Process p WHERE p.updatedDate = :updatedDate")})
 public class Process implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idprocess")
-    private Integer idprocess;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "status")
-    private String status;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "mail_sent")
-    private short mailSent;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "control_point_contacted")
-    private short controlPointContacted;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "is_there_evidence")
-    private short isThereEvidence;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "notification_to_superior")
-    private short notificationToSuperior;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "verbal_notification")
-    private short verbalNotification;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "written_notification")
-    private short writtenNotification;
-    @Basic(optional = false)
-    @NotNull
+    @Column(name = "id_process")
+    private Integer idProcess;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "action_to_take")
+    private String actionToTake;
     @Column(name = "recurrence")
-    private short recurrence;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "interrupt_contact")
-    private short interruptContact;
-    @Size(max = 200)
-    @Column(name = "recurrence_report")
-    private String recurrenceReport;
-    @Size(max = 200)
-    @Column(name = "committee_evaluation")
-    private String committeeEvaluation;
-    @JoinColumn(name = "complaint_id", referencedColumnName = "idcomplaint")
-    @OneToOne
-    private Complaint complaintId;
+    private Boolean recurrence;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "evaluation_resolution")
+    private String evaluationResolution;
+    @Column(name = "guardian_notificated")
+    private Boolean guardianNotificated;
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Column(name = "updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+    @ManyToMany(mappedBy = "processSet", fetch = FetchType.LAZY)
+    private Set<Evidence> evidenceSet;
+    @JoinColumns({
+        @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint"),
+        @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")})
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Complaint complaint;
+    @JoinColumns({
+        @JoinColumn(name = "id_state", referencedColumnName = "id_state"),
+        @JoinColumn(name = "id_state", referencedColumnName = "id_state")})
+    @ManyToOne(fetch = FetchType.LAZY)
+    private State state;
+    @JoinColumns({
+        @JoinColumn(name = "id_user", referencedColumnName = "id_user"),
+        @JoinColumn(name = "id_user", referencedColumnName = "id_user")})
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     public Process() {
     }
 
-    public Process(Integer idprocess) {
-        this.idprocess = idprocess;
+    public Process(Integer idProcess) {
+        this.idProcess = idProcess;
     }
 
-    public Process(Integer idprocess, String status, short mailSent, short controlPointContacted, short isThereEvidence, short notificationToSuperior, short verbalNotification, short writtenNotification, short recurrence, short interruptContact) {
-        this.idprocess = idprocess;
-        this.status = status;
-        this.mailSent = mailSent;
-        this.controlPointContacted = controlPointContacted;
-        this.isThereEvidence = isThereEvidence;
-        this.notificationToSuperior = notificationToSuperior;
-        this.verbalNotification = verbalNotification;
-        this.writtenNotification = writtenNotification;
-        this.recurrence = recurrence;
-        this.interruptContact = interruptContact;
+    public Integer getIdProcess() {
+        return idProcess;
     }
 
-    public Integer getIdprocess() {
-        return idprocess;
+    public void setIdProcess(Integer idProcess) {
+        this.idProcess = idProcess;
     }
 
-    public void setIdprocess(Integer idprocess) {
-        this.idprocess = idprocess;
+    public String getActionToTake() {
+        return actionToTake;
     }
 
-    public String getStatus() {
-        return status;
+    public void setActionToTake(String actionToTake) {
+        this.actionToTake = actionToTake;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public short getMailSent() {
-        return mailSent;
-    }
-
-    public void setMailSent(short mailSent) {
-        this.mailSent = mailSent;
-    }
-
-    public short getControlPointContacted() {
-        return controlPointContacted;
-    }
-
-    public void setControlPointContacted(short controlPointContacted) {
-        this.controlPointContacted = controlPointContacted;
-    }
-
-    public short getIsThereEvidence() {
-        return isThereEvidence;
-    }
-
-    public void setIsThereEvidence(short isThereEvidence) {
-        this.isThereEvidence = isThereEvidence;
-    }
-
-    public short getNotificationToSuperior() {
-        return notificationToSuperior;
-    }
-
-    public void setNotificationToSuperior(short notificationToSuperior) {
-        this.notificationToSuperior = notificationToSuperior;
-    }
-
-    public short getVerbalNotification() {
-        return verbalNotification;
-    }
-
-    public void setVerbalNotification(short verbalNotification) {
-        this.verbalNotification = verbalNotification;
-    }
-
-    public short getWrittenNotification() {
-        return writtenNotification;
-    }
-
-    public void setWrittenNotification(short writtenNotification) {
-        this.writtenNotification = writtenNotification;
-    }
-
-    public short getRecurrence() {
+    public Boolean getRecurrence() {
         return recurrence;
     }
 
-    public void setRecurrence(short recurrence) {
+    public void setRecurrence(Boolean recurrence) {
         this.recurrence = recurrence;
     }
 
-    public short getInterruptContact() {
-        return interruptContact;
+    public String getEvaluationResolution() {
+        return evaluationResolution;
     }
 
-    public void setInterruptContact(short interruptContact) {
-        this.interruptContact = interruptContact;
+    public void setEvaluationResolution(String evaluationResolution) {
+        this.evaluationResolution = evaluationResolution;
     }
 
-    public String getRecurrenceReport() {
-        return recurrenceReport;
+    public Boolean getGuardianNotificated() {
+        return guardianNotificated;
     }
 
-    public void setRecurrenceReport(String recurrenceReport) {
-        this.recurrenceReport = recurrenceReport;
+    public void setGuardianNotificated(Boolean guardianNotificated) {
+        this.guardianNotificated = guardianNotificated;
     }
 
-    public String getCommitteeEvaluation() {
-        return committeeEvaluation;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setCommitteeEvaluation(String committeeEvaluation) {
-        this.committeeEvaluation = committeeEvaluation;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public Complaint getComplaintId() {
-        return complaintId;
+    public Date getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setComplaintId(Complaint complaintId) {
-        this.complaintId = complaintId;
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
+    public Set<Evidence> getEvidenceSet() {
+        return evidenceSet;
+    }
+
+    public void setEvidenceSet(Set<Evidence> evidenceSet) {
+        this.evidenceSet = evidenceSet;
+    }
+
+    public Complaint getComplaint() {
+        return complaint;
+    }
+
+    public void setComplaint(Complaint complaint) {
+        this.complaint = complaint;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idprocess != null ? idprocess.hashCode() : 0);
+        hash += (idProcess != null ? idProcess.hashCode() : 0);
         return hash;
     }
 
@@ -235,7 +193,7 @@ public class Process implements Serializable {
             return false;
         }
         Process other = (Process) object;
-        if ((this.idprocess == null && other.idprocess != null) || (this.idprocess != null && !this.idprocess.equals(other.idprocess))) {
+        if ((this.idProcess == null && other.idProcess != null) || (this.idProcess != null && !this.idProcess.equals(other.idProcess))) {
             return false;
         }
         return true;
@@ -243,7 +201,7 @@ public class Process implements Serializable {
 
     @Override
     public String toString() {
-        return "org.glasswing.domain.Process[ idprocess=" + idprocess + " ]";
+        return "org.glasswing.domain.Process[ idProcess=" + idProcess + " ]";
     }
     
 }

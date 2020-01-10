@@ -36,8 +36,8 @@ public class MainController {
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public ModelAndView login(@RequestParam(value="username") String username,@RequestParam(value="password") String password) {
 		ModelAndView mav = new ModelAndView();
-                if(username.equals("usuario") && password.equals("glasswing")){
-//		if(userServ.findOneUser(username, password)) {
+                //if(username.equals("usuario") && password.equals("glasswing")){
+		if(userServ.findOneUser(username, password)) {
 			log.info("Entrando a funcion init-min" + log.getName());    
 			mav= new ModelAndView("redirect:/dashboard");
 		}else {

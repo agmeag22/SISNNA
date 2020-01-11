@@ -4,11 +4,8 @@
  * and open the template in the editor.
  */
 package org.glasswing.service;
-
-import java.util.List;
 import org.glasswing.domain.User;
 import org.glasswing.repositories.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -22,12 +19,14 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 	
 	
+        @Override
 	public boolean findOneUser(String username, String password) throws DataAccessException {
 			boolean result=false;
 			if(userRepository.findOneUser(username, password)==1) result=true;
 			return result;
 	}
         
+        @Override
         public User findOne(Integer id) {
 		// TODO Auto-generated method stub
 		return userRepository.findById(id).get();

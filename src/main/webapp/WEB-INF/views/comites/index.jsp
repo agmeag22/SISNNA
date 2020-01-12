@@ -43,23 +43,23 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <table data-role="table" class="table table-bordered ui-responsive" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Ultima actualizacion</th>
-                                <th>Creación</th>
-                                <th>Acción</th>
+                                <th>NOMBRE</th>
+                                <th>PAIS</th>
+                                <th>MIEMBROS</th>
+                                <th>ACCIÓN</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Ultima actualizacion</th>
-                                <th>Creación</th>
-                                <th>Acción</th>
+                                <th>NOMBRE</th>
+                                <th>PAIS</th>
+                                <th>MIEMBROS</th>
+                                <th>ACCIÓN</th>
 
                             </tr>
                         </tfoot>

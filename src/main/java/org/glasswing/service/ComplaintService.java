@@ -5,7 +5,8 @@
  */
 package org.glasswing.service;
 
-import org.glasswing.domain.User;
+import java.util.List;
+import org.glasswing.domain.Complaint;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -13,10 +14,10 @@ import org.springframework.dao.DataAccessException;
  * @author elect
  */
 
-public interface UserService {
+public interface ComplaintService {
 
-	public boolean findOneUser(String username, String password) throws DataAccessException;
-	public User findOne(Integer code);
-	public void delete(User user);
-	public void save(User user);
+	public List<Complaint> getAll() throws DataAccessException;
+	public Complaint findOne(Integer code);
+	public void delete(Complaint c);
+	public void save(Complaint c);
 }

@@ -28,17 +28,17 @@ import javax.validation.constraints.Size;
  * @author elect
  */
 @Entity
-@Table(name = "department")
+@Table(name = "program")
 @NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d")})
-public class Department implements Serializable {
+    @NamedQuery(name = "Program.findAll", query = "SELECT p FROM Program p")})
+public class Program implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_department")
-    private Integer idDepartment;
+    @Column(name = "id_program")
+    private Integer idProgram;
     @Size(max = 255)
     @Column(name = "name")
     private String name;
@@ -48,22 +48,22 @@ public class Department implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private List<User> userList;
+    @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
+    private List<Complaint> complaintList;
 
-    public Department() {
+    public Program() {
     }
 
-    public Department(Integer idDepartment) {
-        this.idDepartment = idDepartment;
+    public Program(Integer idProgram) {
+        this.idProgram = idProgram;
     }
 
-    public Integer getIdDepartment() {
-        return idDepartment;
+    public Integer getIdProgram() {
+        return idProgram;
     }
 
-    public void setIdDepartment(Integer idDepartment) {
-        this.idDepartment = idDepartment;
+    public void setIdProgram(Integer idProgram) {
+        this.idProgram = idProgram;
     }
 
     public String getName() {
@@ -90,29 +90,29 @@ public class Department implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public List<User> getUserList() {
-        return userList;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idDepartment != null ? idDepartment.hashCode() : 0);
+        hash += (idProgram != null ? idProgram.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Department)) {
+        if (!(object instanceof Program)) {
             return false;
         }
-        Department other = (Department) object;
-        if ((this.idDepartment == null && other.idDepartment != null) || (this.idDepartment != null && !this.idDepartment.equals(other.idDepartment))) {
+        Program other = (Program) object;
+        if ((this.idProgram == null && other.idProgram != null) || (this.idProgram != null && !this.idProgram.equals(other.idProgram))) {
             return false;
         }
         return true;
@@ -120,7 +120,7 @@ public class Department implements Serializable {
 
     @Override
     public String toString() {
-        return "org.glasswing.domain.Department[ idDepartment=" + idDepartment + " ]";
+        return "org.glasswing.domain.Program[ idProgram=" + idProgram + " ]";
     }
     
 }

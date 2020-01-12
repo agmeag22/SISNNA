@@ -5,7 +5,8 @@
  */
 package org.glasswing.service;
 
-import org.glasswing.domain.User;
+import java.util.List;
+import org.glasswing.domain.Department;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -13,10 +14,10 @@ import org.springframework.dao.DataAccessException;
  * @author elect
  */
 
-public interface UserService {
+public interface DepartmentService {
 
-	public boolean findOneUser(String username, String password) throws DataAccessException;
-	public User findOne(Integer code);
-	public void delete(User user);
-	public void save(User user);
+	public List<Department> getAll() throws DataAccessException;
+	public Department findOne(Integer code);
+	public void delete(Department c);
+	public void save(Department c);
 }

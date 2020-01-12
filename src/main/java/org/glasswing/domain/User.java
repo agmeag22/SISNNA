@@ -7,7 +7,7 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,12 +33,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "user")
 @NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "User.findByIdUser", query = "SELECT u FROM User u WHERE u.idUser = :idUser"),
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password"),
-    @NamedQuery(name = "User.findByCreatedDate", query = "SELECT u FROM User u WHERE u.createdDate = :createdDate"),
-    @NamedQuery(name = "User.findByUpdatedDate", query = "SELECT u FROM User u WHERE u.updatedDate = :updatedDate")})
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,24 +56,21 @@ public class User implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Process> processSet;
+    private List<Process> processList;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private Set<Members> membersSet;
-    @JoinColumns({
-        @JoinColumn(name = "id_department", referencedColumnName = "id_department"),
-        @JoinColumn(name = "id_department", referencedColumnName = "id_department")})
+    private List<Members> membersList;
+    
+        @JoinColumn(name = "id_department", referencedColumnName = "id_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
-    @JoinColumns({
-        @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info"),
-        @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")})
+   
+        @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
     @ManyToOne(fetch = FetchType.LAZY)
     private PersonalInfo personalInfo;
-    @JoinColumns({
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role"),
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role")})
+    
+        @JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
@@ -129,28 +121,28 @@ public class User implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public Set<Process> getProcessSet() {
-        return processSet;
+    public List<Process> getProcessList() {
+        return processList;
     }
 
-    public void setProcessSet(Set<Process> processSet) {
-        this.processSet = processSet;
+    public void setProcessList(List<Process> processList) {
+        this.processList = processList;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
-    public Set<Members> getMembersSet() {
-        return membersSet;
+    public List<Members> getMembersList() {
+        return membersList;
     }
 
-    public void setMembersSet(Set<Members> membersSet) {
-        this.membersSet = membersSet;
+    public void setMembersList(List<Members> membersList) {
+        this.membersList = membersList;
     }
 
     public Department getDepartment() {

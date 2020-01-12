@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "accused_type")
 @NamedQueries({
-    @NamedQuery(name = "AccusedType.findAll", query = "SELECT a FROM AccusedType a"),
-    @NamedQuery(name = "AccusedType.findByIdAccusedType", query = "SELECT a FROM AccusedType a WHERE a.idAccusedType = :idAccusedType"),
-    @NamedQuery(name = "AccusedType.findByName", query = "SELECT a FROM AccusedType a WHERE a.name = :name")})
+    @NamedQuery(name = "AccusedType.findAll", query = "SELECT a FROM AccusedType a")})
 public class AccusedType implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,7 +40,7 @@ public class AccusedType implements Serializable {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "accusedType", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public AccusedType() {
     }
@@ -67,12 +65,12 @@ public class AccusedType implements Serializable {
         this.name = name;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

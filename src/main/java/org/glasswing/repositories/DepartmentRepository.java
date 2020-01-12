@@ -10,7 +10,7 @@ package org.glasswing.repositories;
  * @author elect
  */
 import java.util.List;
-import org.glasswing.domain.Committee;
+import org.glasswing.domain.Department;
 import org.glasswing.domain.User;
 
 
@@ -22,6 +22,6 @@ import org.springframework.data.repository.query.Param;
 
 
 
-public interface DepartmentRepository extends JpaRepository<Committee, Integer>{
+public interface DepartmentRepository extends JpaRepository<Department, Integer>{
 
 }

@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,9 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "municipality")
 @NamedQueries({
-    @NamedQuery(name = "Municipality.findAll", query = "SELECT m FROM Municipality m"),
-    @NamedQuery(name = "Municipality.findByIdMunicipality", query = "SELECT m FROM Municipality m WHERE m.idMunicipality = :idMunicipality"),
-    @NamedQuery(name = "Municipality.findByName", query = "SELECT m FROM Municipality m WHERE m.name = :name")})
+    @NamedQuery(name = "Municipality.findAll", query = "SELECT m FROM Municipality m")})
 public class Municipality implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,15 +42,14 @@ public class Municipality implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @JoinColumns({
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department"),
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")})
+    
+        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
     @OneToMany(mappedBy = "municipality", fetch = FetchType.LAZY)
-    private Set<PersonalInfo> personalInfoSet;
+    private List<PersonalInfo> personalInfoList;
     @OneToMany(mappedBy = "municipality", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public Municipality() {
     }
@@ -85,20 +82,20 @@ public class Municipality implements Serializable {
         this.countryDepartment = countryDepartment;
     }
 
-    public Set<PersonalInfo> getPersonalInfoSet() {
-        return personalInfoSet;
+    public List<PersonalInfo> getPersonalInfoList() {
+        return personalInfoList;
     }
 
-    public void setPersonalInfoSet(Set<PersonalInfo> personalInfoSet) {
-        this.personalInfoSet = personalInfoSet;
+    public void setPersonalInfoList(List<PersonalInfo> personalInfoList) {
+        this.personalInfoList = personalInfoList;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

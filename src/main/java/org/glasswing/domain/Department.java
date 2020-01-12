@@ -7,7 +7,7 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "department")
 @NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
-    @NamedQuery(name = "Department.findByIdDepartment", query = "SELECT d FROM Department d WHERE d.idDepartment = :idDepartment"),
-    @NamedQuery(name = "Department.findByName", query = "SELECT d FROM Department d WHERE d.name = :name"),
-    @NamedQuery(name = "Department.findByCreatedDate", query = "SELECT d FROM Department d WHERE d.createdDate = :createdDate"),
-    @NamedQuery(name = "Department.findByUpdatedDate", query = "SELECT d FROM Department d WHERE d.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d")})
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +49,7 @@ public class Department implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private Set<User> userSet;
+    private List<User> userList;
 
     public Department() {
     }
@@ -94,12 +90,12 @@ public class Department implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     @Override

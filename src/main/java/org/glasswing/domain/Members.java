@@ -27,8 +27,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "members")
 @NamedQueries({
-    @NamedQuery(name = "Members.findAll", query = "SELECT m FROM Members m"),
-    @NamedQuery(name = "Members.findByIdMembers", query = "SELECT m FROM Members m WHERE m.idMembers = :idMembers")})
+    @NamedQuery(name = "Members.findAll", query = "SELECT m FROM Members m")})
 public class Members implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,19 +36,16 @@ public class Members implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_members")
     private Integer idMembers;
-    @JoinColumns({
-        @JoinColumn(name = "id_committee", referencedColumnName = "id_committee"),
-        @JoinColumn(name = "id_committee", referencedColumnName = "id_committee")})
+    
+    @JoinColumn(name = "id_committee", referencedColumnName = "id_committee")
     @ManyToOne(fetch = FetchType.LAZY)
     private Committee committee;
-    @JoinColumns({
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role"),
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role")})
+   
+    @JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
-    @JoinColumns({
-        @JoinColumn(name = "id_user", referencedColumnName = "id_user"),
-        @JoinColumn(name = "id_user", referencedColumnName = "id_user")})
+    
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 

@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "permission")
 @NamedQueries({
-    @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM Permission p"),
-    @NamedQuery(name = "Permission.findByIdPermission", query = "SELECT p FROM Permission p WHERE p.idPermission = :idPermission"),
-    @NamedQuery(name = "Permission.findByName", query = "SELECT p FROM Permission p WHERE p.name = :name")})
+    @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM Permission p")})
 public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,8 +39,8 @@ public class Permission implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @ManyToMany(mappedBy = "permissionSet", fetch = FetchType.LAZY)
-    private Set<Role> roleSet;
+    @ManyToMany(mappedBy = "permissionList", fetch = FetchType.LAZY)
+    private List<Role> roleList;
 
     public Permission() {
     }
@@ -67,12 +65,12 @@ public class Permission implements Serializable {
         this.name = name;
     }
 
-    public Set<Role> getRoleSet() {
-        return roleSet;
+    public List<Role> getRoleList() {
+        return roleList;
     }
 
-    public void setRoleSet(Set<Role> roleSet) {
-        this.roleSet = roleSet;
+    public void setRoleList(List<Role> roleList) {
+        this.roleList = roleList;
     }
 
     @Override

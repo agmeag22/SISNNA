@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -30,9 +29,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "country_department")
 @NamedQueries({
-    @NamedQuery(name = "CountryDepartment.findAll", query = "SELECT c FROM CountryDepartment c"),
-    @NamedQuery(name = "CountryDepartment.findByIdCountryDepartment", query = "SELECT c FROM CountryDepartment c WHERE c.idCountryDepartment = :idCountryDepartment"),
-    @NamedQuery(name = "CountryDepartment.findByName", query = "SELECT c FROM CountryDepartment c WHERE c.name = :name")})
+    @NamedQuery(name = "CountryDepartment.findAll", query = "SELECT c FROM CountryDepartment c")})
 public class CountryDepartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,17 +41,15 @@ public class CountryDepartment implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @JoinColumns({
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country"),
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country")})
+    @JoinColumn(name = "id_country", referencedColumnName = "id_country")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
     @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.LAZY)
-    private Set<Municipality> municipalitySet;
+    private List<Municipality> municipalityList;
     @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.LAZY)
-    private Set<PersonalInfo> personalInfoSet;
+    private List<PersonalInfo> personalInfoList;
     @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public CountryDepartment() {
     }
@@ -87,28 +82,28 @@ public class CountryDepartment implements Serializable {
         this.country = country;
     }
 
-    public Set<Municipality> getMunicipalitySet() {
-        return municipalitySet;
+    public List<Municipality> getMunicipalityList() {
+        return municipalityList;
     }
 
-    public void setMunicipalitySet(Set<Municipality> municipalitySet) {
-        this.municipalitySet = municipalitySet;
+    public void setMunicipalityList(List<Municipality> municipalityList) {
+        this.municipalityList = municipalityList;
     }
 
-    public Set<PersonalInfo> getPersonalInfoSet() {
-        return personalInfoSet;
+    public List<PersonalInfo> getPersonalInfoList() {
+        return personalInfoList;
     }
 
-    public void setPersonalInfoSet(Set<PersonalInfo> personalInfoSet) {
-        this.personalInfoSet = personalInfoSet;
+    public void setPersonalInfoList(List<PersonalInfo> personalInfoList) {
+        this.personalInfoList = personalInfoList;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

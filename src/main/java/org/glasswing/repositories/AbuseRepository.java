@@ -10,8 +10,8 @@ package org.glasswing.repositories;
  * @author elect
  */
 import java.util.List;
-import org.glasswing.domain.Committee;
-import org.glasswing.domain.User;
+import org.glasswing.domain.Abuse;
+
 
 
 
@@ -22,6 +22,6 @@ import org.springframework.data.repository.query.Param;
 
 
 
-public interface AbuseRepository extends JpaRepository<Committee, Integer>{
+public interface AbuseRepository extends JpaRepository<Abuse, Integer>{
 
 }

@@ -6,7 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
-import org.glasswing.domain.Committee;
+import org.glasswing.domain.AccusedType;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -16,8 +16,8 @@ import org.springframework.dao.DataAccessException;
 
 public interface AccusedTypeService {
 
-	public List<Committee> getAll() throws DataAccessException;
-	public Committee findOne(Integer code);
-	public void delete(Committee c);
-	public void save(Committee c);
+	public List<AccusedType> getAll() throws DataAccessException;
+	public AccusedType findOne(Integer code);
+	public void delete(AccusedType c);
+	public void save(AccusedType c);
 }

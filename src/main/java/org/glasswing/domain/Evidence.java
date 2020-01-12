@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,8 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "evidence")
 @NamedQueries({
-    @NamedQuery(name = "Evidence.findAll", query = "SELECT e FROM Evidence e"),
-    @NamedQuery(name = "Evidence.findByIdEvidence", query = "SELECT e FROM Evidence e WHERE e.idEvidence = :idEvidence")})
+    @NamedQuery(name = "Evidence.findAll", query = "SELECT e FROM Evidence e")})
 public class Evidence implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,19 +48,17 @@ public class Evidence implements Serializable {
     @Column(name = "path")
     private String path;
     @JoinTable(name = "investigation_evidence", joinColumns = {
-        @JoinColumn(name = "id_evidence", referencedColumnName = "id_evidence"),
         @JoinColumn(name = "id_evidence", referencedColumnName = "id_evidence")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_process", referencedColumnName = "id_process"),
         @JoinColumn(name = "id_process", referencedColumnName = "id_process")})
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Process> processSet;
+    private List<Process> processList;
     @JoinTable(name = "complaint_evidence", joinColumns = {
-        @JoinColumn(name = "id_evidence", referencedColumnName = "id_evidence"),
+        
         @JoinColumn(name = "id_evidence", referencedColumnName = "id_evidence")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint"),
+       
         @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")})
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public Evidence() {
     }
@@ -94,20 +91,20 @@ public class Evidence implements Serializable {
         this.path = path;
     }
 
-    public Set<Process> getProcessSet() {
-        return processSet;
+    public List<Process> getProcessList() {
+        return processList;
     }
 
-    public void setProcessSet(Set<Process> processSet) {
-        this.processSet = processSet;
+    public void setProcessList(List<Process> processList) {
+        this.processList = processList;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

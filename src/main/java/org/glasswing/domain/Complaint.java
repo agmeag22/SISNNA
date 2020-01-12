@@ -7,7 +7,7 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,14 +35,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "complaint")
 @NamedQueries({
-    @NamedQuery(name = "Complaint.findAll", query = "SELECT c FROM Complaint c"),
-    @NamedQuery(name = "Complaint.findByIdComplaint", query = "SELECT c FROM Complaint c WHERE c.idComplaint = :idComplaint"),
-    @NamedQuery(name = "Complaint.findByIdPriority", query = "SELECT c FROM Complaint c WHERE c.idPriority = :idPriority"),
-    @NamedQuery(name = "Complaint.findByMisdemeanorDate", query = "SELECT c FROM Complaint c WHERE c.misdemeanorDate = :misdemeanorDate"),
-    @NamedQuery(name = "Complaint.findByMisdemeanorTime", query = "SELECT c FROM Complaint c WHERE c.misdemeanorTime = :misdemeanorTime"),
-    @NamedQuery(name = "Complaint.findByIsRecurrence", query = "SELECT c FROM Complaint c WHERE c.isRecurrence = :isRecurrence"),
-    @NamedQuery(name = "Complaint.findByCreatedDate", query = "SELECT c FROM Complaint c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "Complaint.findByUpdatedDate", query = "SELECT c FROM Complaint c WHERE c.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Complaint.findAll", query = "SELECT c FROM Complaint c")})
 public class Complaint implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -99,48 +92,40 @@ public class Complaint implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @ManyToMany(mappedBy = "complaintSet", fetch = FetchType.LAZY)
-    private Set<Evidence> evidenceSet;
+    @ManyToMany(mappedBy = "complaintList", fetch = FetchType.LAZY)
+    private List<Evidence> evidenceList;
     @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
-    private Set<Process> processSet;
-    @JoinColumns({
-        @JoinColumn(name = "id_abuse", referencedColumnName = "id_abuse"),
-        @JoinColumn(name = "id_abuse", referencedColumnName = "id_abuse")})
+    private List<Process> processList;
+   
+        @JoinColumn(name = "id_abuse", referencedColumnName = "id_abuse")
     @ManyToOne(fetch = FetchType.LAZY)
     private Abuse abuse;
-    @JoinColumns({
-        @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type"),
-        @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type")})
+   
+        @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type")
     @ManyToOne(fetch = FetchType.LAZY)
     private AccusedType accusedType;
-    @JoinColumns({
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country"),
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country")})
+  
+        @JoinColumn(name = "id_country", referencedColumnName = "id_country")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
-    @JoinColumns({
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department"),
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")})
+  
+        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
-    @JoinColumns({
-        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality"),
-        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")})
+    
+        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
     @ManyToOne(fetch = FetchType.LAZY)
     private Municipality municipality;
-    @JoinColumns({
-        @JoinColumn(name = "id_program", referencedColumnName = "id_program"),
-        @JoinColumn(name = "id_program", referencedColumnName = "id_program")})
+   
+        @JoinColumn(name = "id_program", referencedColumnName = "id_program")
     @ManyToOne(fetch = FetchType.LAZY)
     private Program program;
-    @JoinColumns({
-        @JoinColumn(name = "id_state", referencedColumnName = "id_state"),
-        @JoinColumn(name = "id_state", referencedColumnName = "id_state")})
+  
+        @JoinColumn(name = "id_state", referencedColumnName = "id_state")
     @ManyToOne(fetch = FetchType.LAZY)
     private State state;
-    @JoinColumns({
-        @JoinColumn(name = "id_user", referencedColumnName = "id_user"),
-        @JoinColumn(name = "id_user", referencedColumnName = "id_user")})
+   
+        @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
@@ -271,20 +256,20 @@ public class Complaint implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public Set<Evidence> getEvidenceSet() {
-        return evidenceSet;
+    public List<Evidence> getEvidenceList() {
+        return evidenceList;
     }
 
-    public void setEvidenceSet(Set<Evidence> evidenceSet) {
-        this.evidenceSet = evidenceSet;
+    public void setEvidenceList(List<Evidence> evidenceList) {
+        this.evidenceList = evidenceList;
     }
 
-    public Set<Process> getProcessSet() {
-        return processSet;
+    public List<Process> getProcessList() {
+        return processList;
     }
 
-    public void setProcessSet(Set<Process> processSet) {
-        this.processSet = processSet;
+    public void setProcessList(List<Process> processList) {
+        this.processList = processList;
     }
 
     public Abuse getAbuse() {

@@ -24,9 +24,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "priority")
 @NamedQueries({
-    @NamedQuery(name = "Priority.findAll", query = "SELECT p FROM Priority p"),
-    @NamedQuery(name = "Priority.findByIdPriority", query = "SELECT p FROM Priority p WHERE p.idPriority = :idPriority"),
-    @NamedQuery(name = "Priority.findByName", query = "SELECT p FROM Priority p WHERE p.name = :name")})
+    @NamedQuery(name = "Priority.findAll", query = "SELECT p FROM Priority p")})
 public class Priority implements Serializable {
 
     private static final long serialVersionUID = 1L;

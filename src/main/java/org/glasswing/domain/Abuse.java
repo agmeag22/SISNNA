@@ -7,7 +7,7 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "abuse")
 @NamedQueries({
-    @NamedQuery(name = "Abuse.findAll", query = "SELECT a FROM Abuse a"),
-    @NamedQuery(name = "Abuse.findByIdAbuse", query = "SELECT a FROM Abuse a WHERE a.idAbuse = :idAbuse"),
-    @NamedQuery(name = "Abuse.findByName", query = "SELECT a FROM Abuse a WHERE a.name = :name"),
-    @NamedQuery(name = "Abuse.findByCreatedDate", query = "SELECT a FROM Abuse a WHERE a.createdDate = :createdDate"),
-    @NamedQuery(name = "Abuse.findByUpdatedDate", query = "SELECT a FROM Abuse a WHERE a.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Abuse.findAll", query = "SELECT a FROM Abuse a")})
 public class Abuse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,7 +49,7 @@ public class Abuse implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @OneToMany(mappedBy = "abuse", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public Abuse() {
     }
@@ -94,12 +90,12 @@ public class Abuse implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

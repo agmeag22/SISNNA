@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,9 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "role")
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-    @NamedQuery(name = "Role.findByIdRole", query = "SELECT r FROM Role r WHERE r.idRole = :idRole"),
-    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")})
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,16 +43,16 @@ public class Role implements Serializable {
     @Column(name = "name")
     private String name;
     @JoinTable(name = "role_permissions", joinColumns = {
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role"),
+       
         @JoinColumn(name = "id_role", referencedColumnName = "id_role")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_role_permissions", referencedColumnName = "id_permission"),
+       
         @JoinColumn(name = "id_role_permissions", referencedColumnName = "id_permission")})
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Permission> permissionSet;
+    private List<Permission> permissionList;
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private Set<Members> membersSet;
+    private List<Members> membersList;
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
-    private Set<User> userSet;
+    private List<User> userList;
 
     public Role() {
     }
@@ -79,28 +77,28 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public Set<Permission> getPermissionSet() {
-        return permissionSet;
+    public List<Permission> getPermissionList() {
+        return permissionList;
     }
 
-    public void setPermissionSet(Set<Permission> permissionSet) {
-        this.permissionSet = permissionSet;
+    public void setPermissionList(List<Permission> permissionList) {
+        this.permissionList = permissionList;
     }
 
-    public Set<Members> getMembersSet() {
-        return membersSet;
+    public List<Members> getMembersList() {
+        return membersList;
     }
 
-    public void setMembersSet(Set<Members> membersSet) {
-        this.membersSet = membersSet;
+    public void setMembersList(List<Members> membersList) {
+        this.membersList = membersList;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     @Override

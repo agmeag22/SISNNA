@@ -5,8 +5,8 @@
  */
 package org.glasswing.service;
 import java.util.List;
-import org.glasswing.domain.Committee;
-import org.glasswing.repositories.CommitteeRepository;
+import org.glasswing.domain.Department;
+import org.glasswing.repositories.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,41 +14,41 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class DepartmentServiceImpl implements CommitteeService {
+public class DepartmentServiceImpl implements DepartmentService {
 	
 	@Autowired
-	CommitteeRepository committeeRepository;
+	DepartmentRepository departmentRepository;
 	
 	
       
         
         @Override
-        public Committee findOne(Integer id) {
+        public Department findOne(Integer id) {
 		// TODO Auto-generated method stub
-		return committeeRepository.findById(id).get();
+		return departmentRepository.findById(id).get();
 	}
             
-	public void deleteCommittee(Committee committee) {
-		committeeRepository.delete(committee);
+	public void deleteDepartment(Department department) {
+		departmentRepository.delete(department);
 		
 	}
 
 
 	@Override
-	public void delete(Committee committee) {
-		committeeRepository.delete(committee);
+	public void delete(Department department) {
+		departmentRepository.delete(department);
 		
 	}
 
 
 	@Override
-	public void save(Committee committee) {
-		committeeRepository.save(committee);
+	public void save(Department department) {
+		departmentRepository.save(department);
 		
 	}	
 
     @Override
-    public List<Committee> getAll() throws DataAccessException {
-        return committeeRepository.findAll();
+    public List<Department> getAll() throws DataAccessException {
+        return departmentRepository.findAll();
     }
 }

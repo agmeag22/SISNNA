@@ -7,7 +7,7 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,11 +33,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "committee")
 @NamedQueries({
-    @NamedQuery(name = "Committee.findAll", query = "SELECT c FROM Committee c"),
-    @NamedQuery(name = "Committee.findByIdCommittee", query = "SELECT c FROM Committee c WHERE c.idCommittee = :idCommittee"),
-    @NamedQuery(name = "Committee.findByName", query = "SELECT c FROM Committee c WHERE c.name = :name"),
-    @NamedQuery(name = "Committee.findByCreatedDate", query = "SELECT c FROM Committee c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "Committee.findByUpdatedDate", query = "SELECT c FROM Committee c WHERE c.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Committee.findAll", query = "SELECT c FROM Committee c")})
 public class Committee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,13 +51,11 @@ public class Committee implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @JoinColumns({
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country"),
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country")})
+    @JoinColumn(name = "id_country", referencedColumnName = "id_country")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
     @OneToMany(mappedBy = "committee", fetch = FetchType.LAZY)
-    private Set<Members> membersSet;
+    private List<Members> membersList;
 
     public Committee() {
     }
@@ -110,12 +104,12 @@ public class Committee implements Serializable {
         this.country = country;
     }
 
-    public Set<Members> getMembersSet() {
-        return membersSet;
+    public List<Members> getMembersList() {
+        return membersList;
     }
 
-    public void setMembersSet(Set<Members> membersSet) {
-        this.membersSet = membersSet;
+    public void setMembersList(List<Members> membersList) {
+        this.membersList = membersList;
     }
 
     @Override

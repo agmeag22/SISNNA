@@ -33,8 +33,8 @@ public class ComitesController {
                     item.setName("Comite #"+i);
                     
                     item.setIdCommittee(i);
-                    item.setCreatedUp(new Date());
-                    item.setUpdatedUp(new Date());
+                    item.setCreatedDate(new Date());
+                    item.setUpdatedDate(new Date());
                     lista.add(item);
                     
                 }

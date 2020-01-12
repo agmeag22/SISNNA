@@ -28,6 +28,19 @@
     <class>org.glasswing.domain.Committee</class>
     <class>org.glasswing.domain.User</class>
     <class>org.glasswing.domain.CommitteeStaff</class>
+    <class>org.glasswing.domain.Abuse</class>
+    <class>org.glasswing.domain.AccusedType</class>
+    <class>org.glasswing.domain.CountryDepartment</class>
+    <class>org.glasswing.domain.Program</class>
+    <class>org.glasswing.domain.Priority</class>
+    <class>org.glasswing.domain.State</class>
+    <class>org.glasswing.domain.Evidence</class>
+    <class>org.glasswing.domain.Members</class>
+    <class>org.glasswing.domain.Municipality</class>
+    <class>org.glasswing.domain.Gender</class>
+    <class>org.glasswing.domain.Permission</class>
+    <class>org.glasswing.domain.Country</class>
+    <class>org.glasswing.domain.PersonalInfo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/glasswings2"/>

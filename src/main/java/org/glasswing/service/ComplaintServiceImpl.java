@@ -5,8 +5,8 @@
  */
 package org.glasswing.service;
 import java.util.List;
-import org.glasswing.domain.Committee;
-import org.glasswing.repositories.CommitteeRepository;
+import org.glasswing.domain.Complaint;
+import org.glasswing.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -14,41 +14,41 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class ComplaintServiceImpl implements CommitteeService {
+public class ComplaintServiceImpl implements ComplaintService {
 	
 	@Autowired
-	CommitteeRepository committeeRepository;
+	ComplaintRepository complaintRepository;
 	
 	
       
         
         @Override
-        public Committee findOne(Integer id) {
+        public Complaint findOne(Integer id) {
 		// TODO Auto-generated method stub
-		return committeeRepository.findById(id).get();
+		return complaintRepository.findById(id).get();
 	}
             
-	public void deleteCommittee(Committee committee) {
-		committeeRepository.delete(committee);
+	public void deleteComplaint(Complaint complaint) {
+		complaintRepository.delete(complaint);
 		
 	}
 
 
 	@Override
-	public void delete(Committee committee) {
-		committeeRepository.delete(committee);
+	public void delete(Complaint complaint) {
+		complaintRepository.delete(complaint);
 		
 	}
 
 
 	@Override
-	public void save(Committee committee) {
-		committeeRepository.save(committee);
+	public void save(Complaint complaint) {
+		complaintRepository.save(complaint);
 		
 	}	
 
     @Override
-    public List<Committee> getAll() throws DataAccessException {
-        return committeeRepository.findAll();
+    public List<Complaint> getAll() throws DataAccessException {
+        return complaintRepository.findAll();
     }
 }

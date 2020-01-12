@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,9 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "state")
 @NamedQueries({
-    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s"),
-    @NamedQuery(name = "State.findByIdState", query = "SELECT s FROM State s WHERE s.idState = :idState"),
-    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name")})
+    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s")})
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,9 +40,9 @@ public class State implements Serializable {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
-    private Set<Process> processSet;
+    private List<Process> processList;
     @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public State() {
     }
@@ -69,20 +67,20 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    public Set<Process> getProcessSet() {
-        return processSet;
+    public List<Process> getProcessList() {
+        return processList;
     }
 
-    public void setProcessSet(Set<Process> processSet) {
-        this.processSet = processSet;
+    public void setProcessList(List<Process> processList) {
+        this.processList = processList;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

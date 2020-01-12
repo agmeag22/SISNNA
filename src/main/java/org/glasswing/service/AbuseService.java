@@ -6,7 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
-import org.glasswing.domain.Committee;
+import org.glasswing.domain.Abuse;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -16,8 +16,8 @@ import org.springframework.dao.DataAccessException;
 
 public interface AbuseService {
 
-	public List<Committee> getAll() throws DataAccessException;
-	public Committee findOne(Integer code);
-	public void delete(Committee c);
-	public void save(Committee c);
+	public List<Abuse> getAll() throws DataAccessException;
+	public Abuse findOne(Integer code);
+	public void delete(Abuse c);
+	public void save(Abuse c);
 }

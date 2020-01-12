@@ -7,7 +7,7 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,16 +33,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "personal_info")
 @NamedQueries({
-    @NamedQuery(name = "PersonalInfo.findAll", query = "SELECT p FROM PersonalInfo p"),
-    @NamedQuery(name = "PersonalInfo.findByIdPersonalInfo", query = "SELECT p FROM PersonalInfo p WHERE p.idPersonalInfo = :idPersonalInfo"),
-    @NamedQuery(name = "PersonalInfo.findByIdGender", query = "SELECT p FROM PersonalInfo p WHERE p.idGender = :idGender"),
-    @NamedQuery(name = "PersonalInfo.findByName", query = "SELECT p FROM PersonalInfo p WHERE p.name = :name"),
-    @NamedQuery(name = "PersonalInfo.findByBirthDate", query = "SELECT p FROM PersonalInfo p WHERE p.birthDate = :birthDate"),
-    @NamedQuery(name = "PersonalInfo.findByAddress", query = "SELECT p FROM PersonalInfo p WHERE p.address = :address"),
-    @NamedQuery(name = "PersonalInfo.findByGuardianName", query = "SELECT p FROM PersonalInfo p WHERE p.guardianName = :guardianName"),
-    @NamedQuery(name = "PersonalInfo.findByGuardianContact", query = "SELECT p FROM PersonalInfo p WHERE p.guardianContact = :guardianContact"),
-    @NamedQuery(name = "PersonalInfo.findByCreatedDate", query = "SELECT p FROM PersonalInfo p WHERE p.createdDate = :createdDate"),
-    @NamedQuery(name = "PersonalInfo.findByUpdateDate", query = "SELECT p FROM PersonalInfo p WHERE p.updateDate = :updateDate")})
+    @NamedQuery(name = "PersonalInfo.findAll", query = "SELECT p FROM PersonalInfo p")})
 public class PersonalInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -75,23 +66,20 @@ public class PersonalInfo implements Serializable {
     @Column(name = "update_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
-    @JoinColumns({
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country"),
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country")})
+   
+        @JoinColumn(name = "id_country", referencedColumnName = "id_country")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
-    @JoinColumns({
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department"),
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")})
+   
+        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
-    @JoinColumns({
-        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality"),
-        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")})
+  
+        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
     @ManyToOne(fetch = FetchType.LAZY)
     private Municipality municipality;
     @OneToMany(mappedBy = "personalInfo", fetch = FetchType.LAZY)
-    private Set<User> userSet;
+    private List<User> userList;
 
     public PersonalInfo() {
     }
@@ -196,12 +184,12 @@ public class PersonalInfo implements Serializable {
         this.municipality = municipality;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
+    public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
 
     @Override

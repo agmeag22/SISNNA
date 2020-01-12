@@ -6,7 +6,7 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,12 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "country")
 @NamedQueries({
-    @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c"),
-    @NamedQuery(name = "Country.findByIdCountry", query = "SELECT c FROM Country c WHERE c.idCountry = :idCountry"),
-    @NamedQuery(name = "Country.findByCode", query = "SELECT c FROM Country c WHERE c.code = :code"),
-    @NamedQuery(name = "Country.findByIso3166a1", query = "SELECT c FROM Country c WHERE c.iso3166a1 = :iso3166a1"),
-    @NamedQuery(name = "Country.findByIso3166a2", query = "SELECT c FROM Country c WHERE c.iso3166a2 = :iso3166a2"),
-    @NamedQuery(name = "Country.findByName", query = "SELECT c FROM Country c WHERE c.name = :name")})
+    @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c")})
 public class Country implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,13 +49,13 @@ public class Country implements Serializable {
     @Column(name = "name")
     private String name;
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-    private Set<Committee> committeeSet;
+    private List<Committee> committeeList;
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-    private Set<CountryDepartment> countryDepartmentSet;
+    private List<CountryDepartment> countryDepartmentList;
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-    private Set<PersonalInfo> personalInfoSet;
+    private List<PersonalInfo> personalInfoList;
     @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
-    private Set<Complaint> complaintSet;
+    private List<Complaint> complaintList;
 
     public Country() {
     }
@@ -109,36 +104,36 @@ public class Country implements Serializable {
         this.name = name;
     }
 
-    public Set<Committee> getCommitteeSet() {
-        return committeeSet;
+    public List<Committee> getCommitteeList() {
+        return committeeList;
     }
 
-    public void setCommitteeSet(Set<Committee> committeeSet) {
-        this.committeeSet = committeeSet;
+    public void setCommitteeList(List<Committee> committeeList) {
+        this.committeeList = committeeList;
     }
 
-    public Set<CountryDepartment> getCountryDepartmentSet() {
-        return countryDepartmentSet;
+    public List<CountryDepartment> getCountryDepartmentList() {
+        return countryDepartmentList;
     }
 
-    public void setCountryDepartmentSet(Set<CountryDepartment> countryDepartmentSet) {
-        this.countryDepartmentSet = countryDepartmentSet;
+    public void setCountryDepartmentList(List<CountryDepartment> countryDepartmentList) {
+        this.countryDepartmentList = countryDepartmentList;
     }
 
-    public Set<PersonalInfo> getPersonalInfoSet() {
-        return personalInfoSet;
+    public List<PersonalInfo> getPersonalInfoList() {
+        return personalInfoList;
     }
 
-    public void setPersonalInfoSet(Set<PersonalInfo> personalInfoSet) {
-        this.personalInfoSet = personalInfoSet;
+    public void setPersonalInfoList(List<PersonalInfo> personalInfoList) {
+        this.personalInfoList = personalInfoList;
     }
 
-    public Set<Complaint> getComplaintSet() {
-        return complaintSet;
+    public List<Complaint> getComplaintList() {
+        return complaintList;
     }
 
-    public void setComplaintSet(Set<Complaint> complaintSet) {
-        this.complaintSet = complaintSet;
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

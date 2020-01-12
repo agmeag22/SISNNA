@@ -35,81 +35,52 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Usuarios en el sistema</h6>
+
+                <!--<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>-->
             </div>
             <div class="card-body">
-<!--                <div class="table-responsive">
-                    <a href="${pageContext.request.contextPath}/usuarios/nuevo" class="btn btn-secondary btn-user">
-                      Crear Nuevo Usuario
-                    </a>                      -->
-                    <!--<hr>-->
+                <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Nombre de Usuario</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Rol</th>
-                                <th>Departamento</th>
-                                <th>Comite</th>
-                                <th>email</th>
-                                <th>Alertas hechas</th>
-                                <th>Alertas Asignadas</th>
-                                <th>Estado</th>
-                                <th>Accion</th>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>PAIS</th>
+                                <th>MIEMBROS</th>
+                                <th>ACCIÓN</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
-                                <th>Id</th>
-                                <th>Nombre de Usuario</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Rol</th>
-                                <th>Departamento</th>
-                                <th>Comite</th>
-                                <th>email</th>
-                                <th>Alertas hechas</th>
-                                <th>Alertas Asignadas</th>
-                                <th>Estado</th>
-                                <th>Accion</th>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>PAIS</th>
+                                <th>MIEMBROS</th>
+                                <th>ACCIÓN</th>
+
                             </tr>
                         </tfoot>
                         <tbody>
-                            <c:forEach var="user" items="${allUsers}">
-                            <tr> 
-                                <td>${user.id}</td>
-                                <td>${user.username}</td>
-                                <td>${user.name}</td>
-                                <td>${user.lastname}</td>
-                                <td>${user.role}</td>
-                                <td>${user.department}</td>
-                                <td>${user.committee}</td>
-                                <td>${user.email}</td>
-                                <td>${user.createdAlert}</td>
-                                <td>${user.assignedAlert}</td>
-                                <td>${user.state}</td>
-                                 <td><div class="dropdown">
+                            <%--<c:out value="${lista}" />--%>
+                            <c:forEach items="${lista}" var="item">
+                                <%--    <c:out value="${item.idCommittee}" />--%>
+                                <tr>
+                                    <td>${item.idCommittee}</td>
+                                    <td>${item.name}</td>
+
+                                    <td>${item.updatedUp}</td>
+                                    <td>${item.createdUp}"</td>
+                                    <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#"><form  action="${pageContext.request.contextPath}/usuarios/eliminar" method="post">
-                                        <input type="hidden" name="userNumber" id="userNumberInput"  value="${user.number}">
-                                        <input type="submit" class="dropdown-item" value="Eliminar" /><br>
-                                  </form></a>
-                                                <a class="dropdown-item" href="#">  <form  action="${pageContext.request.contextPath}/usuarios/modificar" method="post">
-                                            <input type="hidden" id="userNumber" name="userNumber" value="${user.number}">
-                                              <input type="submit" class="dropdown-item" value="Editar" />
-                                    </form></a>
+                                                <a class="dropdown-item" href="#">Eliminar</a>
+                                                <a class="dropdown-item" href="#">Editar</a>
                                                 <a class="dropdown-item" href="#">...</a>
                                             </div>
                                         </div></td>
-                                <td>
-                                        /
-                                      </td>                                
-                            </tr>
+                                </tr>
                             </c:forEach>
                         </tbody>
                     </table>

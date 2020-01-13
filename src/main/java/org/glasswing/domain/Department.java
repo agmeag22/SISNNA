@@ -36,7 +36,6 @@ public class Department implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
     @Column(name = "id_department")
     private Integer idDepartment;
     @Size(max = 255)

@@ -52,9 +52,9 @@ public class Committee implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
-    @OneToMany(mappedBy = "committee", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "committee", fetch = FetchType.EAGER)
     private List<Members> membersList;
 
     public Committee() {

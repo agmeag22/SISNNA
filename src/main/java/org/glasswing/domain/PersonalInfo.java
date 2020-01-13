@@ -44,7 +44,7 @@ public class PersonalInfo implements Serializable {
     private Integer idPersonalInfo;
     @Size(max = 255)
     @Column(name = "id_gender")
-    private String idGender;
+    private Integer idGender;
     @Size(max = 255)
     @Column(name = "name")
     private String name;
@@ -63,7 +63,7 @@ public class PersonalInfo implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Column(name = "update_date")
+    @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
    
@@ -96,11 +96,11 @@ public class PersonalInfo implements Serializable {
         this.idPersonalInfo = idPersonalInfo;
     }
 
-    public String getIdGender() {
+    public Integer getIdGender() {
         return idGender;
     }
 
-    public void setIdGender(String idGender) {
+    public void setIdGender(Integer idGender) {
         this.idGender = idGender;
     }
 

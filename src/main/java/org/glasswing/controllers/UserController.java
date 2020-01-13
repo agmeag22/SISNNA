@@ -16,29 +16,29 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller //manda a llamar a los metodos
-public class UsuariosController {
+public class UserController {
 
-	static Logger log = Logger.getLogger(UsuariosController.class.getName());
+	static Logger log = Logger.getLogger(UserController.class.getName());
 
 
 // static List<InfoUsuario> list = new ArrayList<InfoUsuario>();
-	@RequestMapping("/usuarios")
+	@RequestMapping("/usuarios/inicio_usuarios")
 	public ModelAndView initMain() {
 
 		ModelAndView mav = new ModelAndView();
 //                mav.addObject("allUsers",ServicioUsuario.getUsers());
-		mav.setViewName("usuarios/index");
+		mav.setViewName("user/user_list");
 		return mav;
 	}
 
         @RequestMapping("/usuarios/nuevo")
 	public ModelAndView crearUsuario() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("usuarios/nuevo");
+		mav.setViewName("user/new_user");
 		return mav;
 	}
 
-        @RequestMapping("/usuarios/modificar")
+        @RequestMapping("/usuarios/modificar_usuario")
 	public ModelAndView editarUsuario(@RequestParam(value="userNumber") int number) {
 		ModelAndView mav = new ModelAndView();
 
@@ -53,7 +53,7 @@ public class UsuariosController {
 //                    }
 //                }
 //                mav.addObject("user",user);
-		mav.setViewName("usuarios/modificar");
+		mav.setViewName("user/update_user");
 		return mav;
 	}
 
@@ -195,7 +195,7 @@ public class UsuariosController {
 //                //UserService.removeUser(users.indexOf(user));            
 //                //users.remove(user);     
 //                mav.addObject("allUsers",ServicioUsuario.getUsers());
-		mav.setViewName("usuarios/index");
+		mav.setViewName("user/user_list");
 		return mav;
 	}
 

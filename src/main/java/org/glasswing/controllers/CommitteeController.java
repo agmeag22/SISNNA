@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller //manda a llamar a los metodos
-public class ComitesController {
+public class CommitteeController {
 	
-	static Logger log = Logger.getLogger(ComitesController.class.getName());
+	static Logger log = Logger.getLogger(CommitteeController.class.getName());
 	
 	
 	
-	@RequestMapping("/comites")
+	@RequestMapping("/comites/inicio_comites")
 	public ModelAndView initMain() {
 		List<Committee> lista = new ArrayList();
                 Committee item;
@@ -40,13 +40,13 @@ public class ComitesController {
                 }
 		ModelAndView mav = new ModelAndView();
                 mav.addObject("lista" , lista);
-		mav.setViewName("comites/index");
+		mav.setViewName("committee/committee_list");
 		return mav;
 	}
 	 @RequestMapping("/comites/nuevo")
-	public ModelAndView crearUsuario() {
+	public ModelAndView new_committee() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("comites/nuevo");
+		mav.setViewName("committee/new_committee");
 		return mav;
 	}
 }

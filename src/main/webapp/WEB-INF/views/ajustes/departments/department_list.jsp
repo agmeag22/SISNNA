@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <t:admin-template>
-    <jsp:attribute name="marked">comites</jsp:attribute>
-    <jsp:attribute name="title">Comites</jsp:attribute>
+    <jsp:attribute name="marked">listado-usuarios</jsp:attribute>
+    <jsp:attribute name="title">Usuarios</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
         <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -15,26 +15,23 @@
         <script src="resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
             // Call the dataTables jQuery plugin
-//            $(document).ready(function () {
-//                $('#dataTable').DataTable();
-//            });
-
+            $(document).ready(function () {
+                $('#dataTable').DataTable();
+            });
         </script>
     </jsp:attribute>
     <jsp:body>
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Comites</h1>
-        <p class="mb-4">Listado de Comites</p>
-
-        <a href="${pageContext.request.contextPath}/comites/nuevo" class="btn btn-success btn-icon-split">
+        <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
+      <!--  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p> -->
+          <a href="${pageContext.request.contextPath}/comites/nuevo" class="btn btn-success btn-icon-split">
             <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
             </span>
-            <span class="text">A&ntildeadir Comite</span>
+            <span class="text">A&ntildeadir Usuario</span>
         </a>
 
         <br><br>
-
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -43,7 +40,7 @@
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table data-role="table" class="table table-bordered ui-responsive" id="dataTable" width="100%" cellspacing="0">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -64,9 +61,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <%--<c:out value="${lista}" />--%>
-                            <c:forEach items="${lista}" var="item">
-                                <%--    <c:out value="${item.idCommittee}" />--%>
+                            <%--<c:forEach items="${lista}" var="item">
                                 <tr>
                                     <td>${item.idCommittee}</td>
                                     <td>${item.name}</td>
@@ -84,8 +79,11 @@
                                             </div>
                                         </div></td>
                                 </tr>
-                            </c:forEach>
+                            </c:forEach>--%>
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
                 </jsp:body>
-            </t:admin-template>
+            </t:admin-template> 

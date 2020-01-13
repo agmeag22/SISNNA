@@ -6,7 +6,6 @@
 
     </jsp:attribute>
     <jsp:attribute name="title">Modificar Usuario</jsp:attribute>
-    <jsp:attribute name="marked">modifyUser</jsp:attribute>
     <jsp:attribute name="scripts">
 
     </jsp:attribute>

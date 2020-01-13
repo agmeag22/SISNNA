@@ -44,7 +44,7 @@ public class JpaConfiguration {
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/sisnna");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/SISNNA");
 		dataSource.setUsername("root");
                 dataSource.setPassword("root");
 		

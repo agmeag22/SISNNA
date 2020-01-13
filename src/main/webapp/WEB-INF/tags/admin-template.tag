@@ -57,31 +57,58 @@
       
       
        <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_complaints" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fa fa-envelope"></i>
           <span>Denuncias</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapse_complaints" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Denuncias</h6>
-            <a class="collapse-item ${marked eq 'denuncias' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/nuevo">Nueva denuncia</a>
-            <a class="collapse-item ${marked eq 'denuncias' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias">Denuncias pendientes</a>
-            <a class="collapse-item ${marked eq 'denuncias' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/procesadas">Denuncias procesadas</a>
+            <a class="collapse-item ${marked eq 'nueva-denuncia' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/nueva_denuncia">Nueva denuncia</a>
+            <a class="collapse-item ${marked eq 'denuncias-pendientes' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/denuncias_pendientes">Denuncias pendientes</a>
+            <a class="collapse-item ${marked eq 'denuncias-procesadas' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/denuncias_procesadas">Denuncias procesadas</a>
           </div>
         </div>
       </li>
-      <li class="nav-item ${marked eq 'comites' ? ' active' : ''}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/comites">
-          <i class="fas fa-fw fa-users"></i>
-          <span>Comites</span></a>
-      </li>
       
-       <li class="nav-item ${marked eq 'usuarios' ? ' active' : ''}">
-        <a class="nav-link" href="${pageContext.request.contextPath}/usuarios">
-          <i class="fas fa-fw fa-user"></i>
-          <span>Usuarios</span></a>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_committees" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fa fa-envelope"></i>
+          <span>Comites</span>
+        </a>
+        <div id="collapse_committees" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">COMITÉS</h6>
+            <a class="collapse-item ${marked eq 'nuevo-comite' ? ' active' : ''}" href="${pageContext.request.contextPath}/comites/nuevo">Nuevo comité</a>
+            <a class="collapse-item ${marked eq 'listado-comites' ? ' active' : ''}" href="${pageContext.request.contextPath}/comites/inicio_comites">Listado de comités</a>
+          </div>
+        </div>
       </li>
-
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fa fa-envelope"></i>
+          <span>Usuarios</span>
+        </a>
+        <div id="collapse_users" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">USUARIOS</h6>
+            <a class="collapse-item ${marked eq 'nuevo-usuario' ? ' active' : ''}" href="${pageContext.request.contextPath}/usuarios/nuevo">Nuevo usuario</a>
+            <a class="collapse-item ${marked eq 'listado-usuario' ? ' active' : ''}" href="${pageContext.request.contextPath}/usuarios/inicio_usuarios">Listado de usuarios</a>
+          </div>
+        </div>
+      </li>
+<li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_settings" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fa fa-envelope"></i>
+          <span>Ajustes</span>
+        </a>
+        <div id="collapse_settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Ajustes</h6>
+            <a class="collapse-item ${marked eq 'ajustes-departamentos' ? ' active' : ''}" href="${pageContext.request.contextPath}/usuarios/nuevo">Gestion de departamentos</a>
+          </div>
+        </div>
+      </li>
 <!--       Heading 
       <div class="sidebar-heading">
         Interface

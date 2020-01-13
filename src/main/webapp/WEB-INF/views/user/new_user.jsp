@@ -6,7 +6,7 @@
 
     </jsp:attribute>
     <jsp:attribute name="title">Crear Usuario</jsp:attribute>
-    <jsp:attribute name="marked">createUser</jsp:attribute>
+    <jsp:attribute name="marked">nuevo-usuario</jsp:attribute>
     <jsp:attribute name="scripts">
 
     </jsp:attribute>

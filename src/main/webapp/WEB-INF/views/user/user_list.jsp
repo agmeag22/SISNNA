@@ -3,7 +3,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <t:admin-template>
-    <jsp:attribute name="marked">usuarios</jsp:attribute>
+    <jsp:attribute name="marked">listado-usuarios</jsp:attribute>
     <jsp:attribute name="title">Usuarios</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
@@ -22,16 +22,8 @@
     </jsp:attribute>
     <jsp:body>
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Usuarios</h1>
-      <!--  <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p> -->
-          <a href="${pageContext.request.contextPath}/comites/nuevo" class="btn btn-success btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">A&ntildeadir Usuario</span>
-        </a>
-
-        <br><br>
+        <h1 class="h3 mb-2 text-gray-800">USUARIOS</h1>
+      
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -61,9 +53,7 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <%--<c:out value="${lista}" />--%>
-                            <c:forEach items="${lista}" var="item">
-                                <%--    <c:out value="${item.idCommittee}" />--%>
+                            <%--<c:forEach items="${lista}" var="item">
                                 <tr>
                                     <td>${item.idCommittee}</td>
                                     <td>${item.name}</td>
@@ -81,7 +71,7 @@
                                             </div>
                                         </div></td>
                                 </tr>
-                            </c:forEach>
+                            </c:forEach>--%>
                         </tbody>
                     </table>
                 </div>

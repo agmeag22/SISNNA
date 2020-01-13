@@ -3,7 +3,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <t:admin-template>
-    <jsp:attribute name="marked">comites</jsp:attribute>
+    <jsp:attribute name="marked">nuevo-comite</jsp:attribute>
     <jsp:attribute name="title">Comites</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->

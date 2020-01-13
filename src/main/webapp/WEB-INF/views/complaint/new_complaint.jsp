@@ -2,7 +2,7 @@
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:admin-template>
-    <jsp:attribute name="marked">denuncias</jsp:attribute>
+    <jsp:attribute name="marked">nueva-denuncia</jsp:attribute>
     <jsp:attribute name="title">Denuncias</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->

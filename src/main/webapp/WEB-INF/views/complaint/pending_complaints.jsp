@@ -2,8 +2,8 @@
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <t:admin-template>
-    <jsp:attribute name="marked">denuncias</jsp:attribute>
-    <jsp:attribute name="title">Denuncias</jsp:attribute>
+    <jsp:attribute name="marked">denuncias-pendientes</jsp:attribute>
+    <jsp:attribute name="title">Denuncias Pendientes</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
         <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -22,16 +22,8 @@
     </jsp:attribute>
     <jsp:body>
         <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Denuncias</h1>
-        <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>-->
-        <a href="${pageContext.request.contextPath}/denuncias/nuevo" class="btn btn-success btn-icon-split">
-            <span class="icon text-white-50">
-                <i class="fas fa-plus"></i>
-            </span>
-            <span class="text">A&ntildeadir Denuncia</span>
-        </a>
+        <h1 class="h3 mb-2 text-gray-800">DENUNCIAS PENDIENTES</h1>
 
-        <br><br>
        <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -67,6 +59,7 @@
                             <c:forEach items="${lista}" var="item">
                                 <%--    <c:out value="${item.idCommittee}" />--%>
                                 <tr>
+                                    <
                                     <td>${item.idCommittee}</td>
                                     <td>${item.name}</td>
 

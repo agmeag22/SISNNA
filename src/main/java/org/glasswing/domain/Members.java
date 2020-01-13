@@ -38,15 +38,15 @@ public class Members implements Serializable {
     private Integer idMembers;
     
     @JoinColumn(name = "id_committee", referencedColumnName = "id_committee")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Committee committee;
    
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
     
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
 
     public Members() {

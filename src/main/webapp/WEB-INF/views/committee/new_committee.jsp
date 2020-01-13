@@ -58,11 +58,15 @@
                 </div>
                 <div class="card-body">
                     <div><label>Nombre del Comite</label></div>
-                    <div><input type="text" class="form-control" name="ComitteeName"></div>
-                    <div><label>Descripción</label></div>
-                    <div><input type="text" class="form-control" name="ComitteeName"></div>
-                    <div><label>Función</label></div>
-                    <div><input type="text" class="form-control" name="ComitteeName"></div>
+                    <div><input type="text" class="form-control" name="name"></div>
+                    <div><label>Pais</label></div>
+                    <div>
+                        <select>
+                             <c:forEach items="${item.membersList}" var="member">
+                            <option value="${country.id_country}">${country.name}</option>
+                             </c:forEach>
+                        </select></div>
+                    
                 </div>
             </div>
 

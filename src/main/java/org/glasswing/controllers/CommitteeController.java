@@ -10,6 +10,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import org.glasswing.domain.Committee;
+import org.glasswing.domain.Country;
+import org.glasswing.domain.Role;
+import org.glasswing.domain.User;
 import org.glasswing.service.CommitteeService;
 import org.glasswing.service.CountryService;
 import org.glasswing.service.UserService;
@@ -28,6 +31,8 @@ public class CommitteeController {
 	private CommitteeService committeeServ;
     @Autowired
 	private CountryService countryServ;
+    @Autowired
+	private UserService userServ;
     static Logger log = Logger.getLogger(CommitteeController.class.getName());
 	
 	
@@ -43,8 +48,12 @@ public class CommitteeController {
 	 @RequestMapping("/comites/nuevo_comite")
 	public ModelAndView new_committee() {
 		ModelAndView mav = new ModelAndView();
-                List<Committee> lista = committeeServ.getAll();
-                mav.addObject("list" , lista);
+                List<Country> paises = countryServ.findNotUsedCountries();
+                Role admin = new Role();
+                admin.setIdRole(4);
+                List<User> usuarios = userServ.findByIdRoleNot(admin);
+                mav.addObject("countries" , paises);
+                mav.addObject("usuarios" , usuarios);
 		mav.setViewName("committee/new_committee");
 		return mav;
 	}

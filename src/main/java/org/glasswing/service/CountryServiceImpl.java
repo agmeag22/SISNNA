@@ -51,4 +51,9 @@ public class CountryServiceImpl implements CountryService {
     public List<Country> getAll() throws DataAccessException {
         return committeeRepository.findAll();
     }
+
+    @Override
+    public List<Country> findNotUsedCountries() throws DataAccessException {
+        return committeeRepository.findNotUsedCountries();
+    }
 }

@@ -7,44 +7,77 @@
     <jsp:attribute name="title">Comites</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
-        <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <style>
+            .hidden{
+                display:none
+            } 
+        </style>
     </jsp:attribute>
     <jsp:attribute name="scripts">
         <!-- Page level plugins -->
-        <script src="resources/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js"></script>
+       <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
-            $(document).ready(function () {
-                var max_fields = 100;
-                var wrapper = $(".card-body2");
-                var add_button = $(".add_form_field");
-                var x = 1;
-                $(add_button).click(function (e) {
-                    e.preventDefault();
-                    if (x < max_fields) {
-                        x++;
-                        $(wrapper).append('<div class="input-group">\n\
-                        <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">\n\
-                        <option selected>Elija un nuevo miembro</option><option value="1">Tiger Nixonz</option><option value="2">Garrett Winters</option>\n\
-                        <option value="3">Ashton Cox</option><option value="3">Cedric Kelly</option><option value="3">Airi Satou</option>\n\
-                        <option value="3">Brielle Williamson</option><option value="3">Herrod Chandler</option></select><div class="input-group-append">\n\
-                        <a href="#" class="btn btn-danger btn-icon-split delete"><span class="icon text-white-50">\n\
-                        <i class="fas fa-trash"></i></span><span class="text">Eliminar</span></a></div></div><br>'); //add input box
-                    } else {
-                        alert('You Reached the limits')
-                    }
+            var members = [];
+             var temp_listado_usuarios = [];
+             $(document).ready(function () {
+                $('#dataTable').DataTable({
+                    select: true
                 });
-
-                $(wrapper).on("click", ".delete", function (e) {
-                    e.preventDefault();
-                    $(this).parent('div').parent('div').remove();
-                    x--;
-                })
-            });
+                
+                $(".addUserButton").on( "click",function(){
+                    var id = $(this).data("id");
+                    var name = $(this).data("name");
+                    var email = $(this).data("email");
+                    var item = {id:id,name:name,email:email};
+                    console.log("Esta agregando el id" +id);
+                    var query = '.removeUserButton[data-id="'+id+'"]';
+                    console.log(query);
+                    $(query).removeClass("hidden");
+                    $(this).addClass("hidden");
+                    temp_listado_usuarios.push(item);
+                });
+                $(".removeUserButton").on( "click",function(){
+                    var id = $(this).data("id");
+                    var name = $(this).data("name");
+                    var email = $(this).data("email");
+                    var item = {id:id,name:name,email:email};
+                    console.log("Esta borrando el id" +id);
+                    var query = '.addUserButton[data-id="'+id+'"]';
+                    console.log(query);
+                    $(this).addClass("hidden");
+                    $(query).removeClass("hidden");
+                    temp_listado_usuarios.splice( temp_listado_usuarios.indexOf(item), 1 );
+                });
+                $('#userModal').on('shown.bs.modal', function (event) {
+                    temp_listado_usuarios = [...members];
+                    $(".addUserButton").removeClass("hidden");
+                    $(".removeUserButton").addClass("hidden");
+                    members.forEach(function(element){
+                        var query = '.addUserButton[data-id="'+element.id+'"]';
+                        $(query).addClass("hidden");
+                        var query = '.removeUserButton[data-id="'+element.id+'"]';
+                        $(query).removeClass("hidden");                        
+                    });
+                        
+                  });
+                  $('#saveMembers').on("click",function(){
+                      members = [...temp_listado_usuarios];
+                      updateMembersList();
+                  });
+                });
+                function updateMembersList(){
+                    var container = document.getElementById("member-list")
+                    var list = "<table><tbody>"
+                    members.forEach(function(element){    
+                        list+=`<tr><td>${"${element.name}"}</td><td> ${"${element.email}"}</td></tr>`
+                    });
+                    list+="<tbody></table>"
+                    container.innerHTML = list;
+                }
         </script>
-
+      
     </jsp:attribute>
     
     <jsp:body>
@@ -59,13 +92,15 @@
                 <div class="card-body">
                     <div><label>Nombre del Comite</label></div>
                     <div><input type="text" class="form-control" name="name"></div>
-                    <div><label>Pais</label></div>
-                    <div>
-                        <select>
-                             <c:forEach items="${item.membersList}" var="member">
-                            <option value="${country.id_country}">${country.name}</option>
-                             </c:forEach>
-                        </select></div>
+                     <div class="form-group">
+                                <label>Pais</label>
+                                <select class="form-control">
+                                       <c:forEach items="${countries}" var="country">
+                                        <option value="${country.idCountry}">${country.name}</option>
+                                         </c:forEach>
+                                </select>
+                            </div>
+                  
                     
                 </div>
             </div>
@@ -75,12 +110,27 @@
                     MIEMBROS DEL COMITE
                 </div>
                 <div class="card-body card-body2">
-                    <div><label>Añadir Miembros</label></div>
+                    <div><a href="#userModal" class="add_form_field btn btn-warning btn-icon-split" style="margin-bottom: 10px;" data-toggle="modal" >
+                            <span class="icon text-white-50">
+                                <i class="fas fa-edit"></i>
+                            </span>
+                            <span class="text">Editar Miembros</span>
+                          
+                        </a></div>
+                <div id="member-list"></div>
+                </div>
+            </div>
+            
+             <div class="card mb-4">
+                <div class="card-header">
+                    PUNTO DE CONTROL
+                </div>
+                <div class="card-body card-body2">
                     <div><a href="#" class="add_form_field btn btn-success btn-icon-split" style="margin-bottom: 10px;">
                             <span class="icon text-white-50">
-                                <i class="fas fa-plus"></i>
+                                <i class="fas fa-edit"></i>
                             </span>
-                            <span class="text">A&ntildeadir Miembro</span>
+                            <span class="text">Seleccionar</span>
                         </a></div>
                 </div>
             </div>
@@ -95,8 +145,64 @@
                   </a>
 
 
-
         </div>
-    </tbody>
+
+    
+    <div class="modal" id="userModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Busqueda de Usuarios</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times; </span>
+              </button>
+            </div>
+            <div class="modal-body">
+             <div class="">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>EMAIL</th>
+                                
+                                <th>ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>NOMBRE</th>
+                                <th>EMAIL</th>
+          
+                                <th>ACCIÓN</th>
+
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            <c:forEach items="${usuarios}" var="item">
+                                <tr>
+                                    <td>${item.idUser}</td>
+                                    <td>${item.personalInfo.name}</td>
+                                    <td>${item.email}</td>
+                                    <td>
+                                            <button class="btn btn-success addUserButton" type="button" data-id="${item.idUser}" data-email="${item.email}" data-name="${item.personalInfo.name}" aria-expanded="false">
+                                                <p style="margin-bottom:0;"><em class="fa fa-plus"></em><span> Añadir</span></p>
+                                            </button>
+                                             <button  class="btn btn-danger removeUserButton hidden" type="button" data-id="${item.idUser}" data-email="${item.email}" data-name="${item.personalInfo.name}" aria-expanded="false">
+                                                <p style="margin-bottom:0;"><em class="fa fa-trash"></em><span> Eliminar</span></p>
+                                            </button>
+                                        </td>
+                                </tr>
+                            </c:forEach>
+                        </tbody>
+                    </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="saveMembers" data-dismiss="modal" class="btn btn-primary">Guardar</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+      </div>
 </jsp:body>
 </t:admin-template>

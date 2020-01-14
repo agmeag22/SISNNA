@@ -38,9 +38,13 @@ public class UserController {
     static Logger log = Logger.getLogger(UserController.class.getName());
     @Autowired
     UserService userService;
+    @Autowired
     DepartmentService departmentService;
+    @Autowired
     CountryService countryService;
+    @Autowired
     GenderService genderService;
+    @Autowired
     RoleService roleService;
 
 // static List<InfoUsuario> list = new ArrayList<InfoUsuario>();
@@ -67,24 +71,12 @@ public class UserController {
         List<Gender> gender_list = null;
         List<Country> country_list = null;
         List<Department> department_list = null;
-        try {
-            if(roleService.getAll()!=null)
-            role_list = roleService.getAll();
-            if(genderService.getAll()!=null)
-            gender_list = genderService.getAll();
-            if(countryService.getAll()!=null)
-            country_list = countryService.getAll();
-            if(departmentService.getAll()!=null)
-            department_list = departmentService.getAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-            //return new ModelAndView("redirect:/usuarios/inicio_usuarios");
-        }
-
+        role_list = roleService.getAll();
+        gender_list = genderService.getAll();
+        country_list = countryService.getAll();
         mav.addObject("role_list", role_list);
         mav.addObject("gender_list", gender_list);
-        mav.addObject("country_list", country_list);
-        mav.addObject("department_list", department_list);
+//        mav.addObject("country_list", country_list);
         mav.setViewName("user/new_user");
         return mav;
     }

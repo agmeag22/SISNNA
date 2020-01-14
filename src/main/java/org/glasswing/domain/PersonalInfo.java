@@ -63,7 +63,7 @@ public class PersonalInfo implements Serializable {
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-    @Column(name = "update_date")
+    @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updateDate;
    

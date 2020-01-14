@@ -79,7 +79,7 @@
         <div id="collapse_committees" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">COMITÉS</h6>
-            <a class="collapse-item ${marked eq 'nuevo-comite' ? ' active' : ''}" href="${pageContext.request.contextPath}/comites/nuevo">Nuevo comité</a>
+            <a class="collapse-item ${marked eq 'nuevo-comite' ? ' active' : ''}" href="${pageContext.request.contextPath}/comites/nuevo_comite">Nuevo comité</a>
             <a class="collapse-item ${marked eq 'listado-comites' ? ' active' : ''}" href="${pageContext.request.contextPath}/comites/inicio_comites">Listado de comités</a>
           </div>
         </div>

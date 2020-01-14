@@ -24,4 +24,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface CountryRepository extends JpaRepository<Country, Integer>{
 
+    @Query("select c from Country c WHERE c.idCountry NOT IN(SELECT co.country FROM Committee co)")
+    List<Country> findNotUsedCountries();
+
 }

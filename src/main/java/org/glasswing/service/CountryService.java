@@ -17,6 +17,7 @@ import org.springframework.dao.DataAccessException;
 public interface CountryService {
 
 	public List<Country> getAll() throws DataAccessException;
+        public List<Country> findNotUsedCountries() throws DataAccessException;
 	public Country findOne(Integer code);
 	public void delete(Country c);
 	public void save(Country c);

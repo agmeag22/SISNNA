@@ -7,12 +7,12 @@
     <jsp:attribute name="title">Comites</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
-        <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </jsp:attribute>
     <jsp:attribute name="scripts">
         <!-- Page level plugins -->
-        <script src="resources/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
 //             Call the dataTables jQuery plugin
             $(document).ready(function () {
@@ -62,14 +62,21 @@
                                     <td>${item.idCommittee}</td>
                                     <td>${item.name}</td>
 
-                                    <td>${item.createdDate}</td>
-                                    <td>${item.updatedDate}"</td>
+                                    <td>${item.country.name}</td>
+                                    <td>
+                                        <ul>
+                                        <c:forEach items="${item.membersList}" var="member">
+                                            <li title='${member.user.email}'>${member.user.personalInfo.name} ${member.role.idRole eq 2?'(Punto de Control)':''}</li>
+                                        </c:forEach>
+                                        </ul>
+                                    
+                                    </td>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Eliminar</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/comites/delete/${item.idCommittee}">Eliminar</a>
                                                 <a class="dropdown-item" href="#">Editar</a>
                                                 <a class="dropdown-item" href="#">...</a>
                                             </div>

@@ -18,6 +18,7 @@ public class CountryServiceImpl implements CountryService {
 	
 	@Autowired
 	CountryRepository countryRepository;
+
 	
 	
       
@@ -25,11 +26,13 @@ public class CountryServiceImpl implements CountryService {
         @Override
         public Country findOne(Integer id) {
 		// TODO Auto-generated method stub
+
 		return countryRepository.findById(id).get();
 	}
             
 	public void deleteCountry(Country country) {
 		countryRepository.delete(country);
+
 		
 	}
 
@@ -37,6 +40,7 @@ public class CountryServiceImpl implements CountryService {
 	@Override
 	public void delete(Country country) {
 		countryRepository.delete(country);
+
 		
 	}
 
@@ -50,5 +54,12 @@ public class CountryServiceImpl implements CountryService {
     @Override
     public List<Country> getAll() throws DataAccessException {
         return countryRepository.findAll();
+
+    }
+
+    @Override
+    public List<Country> findNotUsedCountries() throws DataAccessException {
+        return countryRepository.findNotUsedCountries();
+
     }
 }

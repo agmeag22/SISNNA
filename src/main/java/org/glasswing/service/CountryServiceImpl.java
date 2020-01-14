@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 public class CountryServiceImpl implements CountryService {
 	
 	@Autowired
-	CountryRepository committeeRepository;
+	CountryRepository countryRepository;
+
 	
 	
       
@@ -25,30 +26,40 @@ public class CountryServiceImpl implements CountryService {
         @Override
         public Country findOne(Integer id) {
 		// TODO Auto-generated method stub
-		return committeeRepository.findById(id).get();
+
+		return countryRepository.findById(id).get();
 	}
             
-	public void deleteCountry(Country committee) {
-		committeeRepository.delete(committee);
+	public void deleteCountry(Country country) {
+		countryRepository.delete(country);
+
 		
 	}
 
 
 	@Override
-	public void delete(Country committee) {
-		committeeRepository.delete(committee);
+	public void delete(Country country) {
+		countryRepository.delete(country);
+
 		
 	}
 
 
 	@Override
-	public void save(Country committee) {
-		committeeRepository.save(committee);
+	public void save(Country country) {
+		countryRepository.save(country);
 		
 	}	
 
     @Override
     public List<Country> getAll() throws DataAccessException {
-        return committeeRepository.findAll();
+        return countryRepository.findAll();
+
+    }
+
+    @Override
+    public List<Country> findNotUsedCountries() throws DataAccessException {
+        return countryRepository.findNotUsedCountries();
+
     }
 }

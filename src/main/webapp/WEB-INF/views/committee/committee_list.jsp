@@ -66,7 +66,7 @@
                                     <td>
                                         <ul>
                                         <c:forEach items="${item.membersList}" var="member">
-                                            <li title='${member.user.email}'>${member.user.personalInfo.name}</li>
+                                            <li title='${member.user.email}'>${member.user.personalInfo.name} ${member.role.idRole eq 2?'(Punto de Control)':''}</li>
                                         </c:forEach>
                                         </ul>
                                     
@@ -76,7 +76,7 @@
                                                 <em class="fa fa-cog"></em>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Eliminar</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/comites/delete/${item.idCommittee}">Eliminar</a>
                                                 <a class="dropdown-item" href="#">Editar</a>
                                                 <a class="dropdown-item" href="#">...</a>
                                             </div>

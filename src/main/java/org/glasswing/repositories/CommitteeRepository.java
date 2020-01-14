@@ -23,5 +23,5 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface CommitteeRepository extends JpaRepository<Committee, Integer>{
-
+        
 }

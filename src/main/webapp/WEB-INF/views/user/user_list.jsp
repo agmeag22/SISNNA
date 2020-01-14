@@ -7,12 +7,12 @@
     <jsp:attribute name="title">Usuarios</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
-        <link href="resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </jsp:attribute>
     <jsp:attribute name="scripts">
         <!-- Page level plugins -->
-        <script src="resources/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
             // Call the dataTables jQuery plugin
             $(document).ready(function () {
@@ -53,13 +53,13 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <%--<c:forEach items="${lista}" var="item">
+                            <c:forEach items="${list}" var="item">
                                 <tr>
-                                    <td>${item.idCommittee}</td>
-                                    <td>${item.name}</td>
+                                    <td>${item.idUser}</td>
+                                    <td>${item.email}</td>
 
-                                    <td>${item.updatedUp}</td>
-                                    <td>${item.createdUp}"</td>
+                                    <td>${item.createdDate}</td>
+                                    <td>${item.updatedDate}"</td>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>
@@ -71,7 +71,7 @@
                                             </div>
                                         </div></td>
                                 </tr>
-                            </c:forEach>--%>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

@@ -6,7 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
-import org.glasswing.domain.Country;
+import org.glasswing.domain.Gender;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -14,11 +14,10 @@ import org.springframework.dao.DataAccessException;
  * @author elect
  */
 
-public interface CountryService {
+public interface GenderService {
 
-	public List<Country> getAll() throws DataAccessException;
-        public List<Country> findNotUsedCountries() throws DataAccessException;
-	public Country findOne(Integer code);
-	public void delete(Country c);
-	public void save(Country c);
+	public List<Gender> getAll() throws DataAccessException;
+	public Gender findOne(Integer code);
+	public void delete(Gender c);
+	public void save(Gender c);
 }

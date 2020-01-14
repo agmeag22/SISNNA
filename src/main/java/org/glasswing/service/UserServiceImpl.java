@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package org.glasswing.service;
+import java.util.List;
+import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 import org.glasswing.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,4 +52,13 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 		
 	}	
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+        }
+    @Override
+    public List<User> findByIdRoleNot(Role id) throws DataAccessException {
+        return userRepository.findByRoleNot(id);
+    }
 }

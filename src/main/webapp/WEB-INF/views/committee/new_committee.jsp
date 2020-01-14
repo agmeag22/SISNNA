@@ -84,11 +84,13 @@
                 function updateMembersList(){
                     var container = document.getElementById("member-list")
                     var list = "<table><tbody>"
-                    members.forEach(function(element){    
-                        list+=`<tr><td>${"${element.name}"}</td><td> ${"${element.email}"}</td></tr>`
+                    members.forEach(function(element,index){    
+                        list+=`<tr><td>${"${element.name}"}</td><td> ${"${element.email}"}</td><td><input class="hidden" type="text" name="membersList[${"${index}"}].user.idUser" value="${"${element.id}"}"/><input class="hidden" type="text" name="membersList[${"${index}"}].role.idRole" value="3"/><td></tr>`;
                     });
                     list+="<tbody></table>"
                     container.innerHTML = list;
+                    $("#pControlInput").attr('name',`membersList[${"${members.length}"}].user.idUser`);
+                    $("#pControlInput2").attr('name',`membersList[${"${members.length}"}].user.idUser`);
                 }
                 
                 function openpuntoControl(){
@@ -106,8 +108,12 @@
                      
                         list+=`<tr><td>${"${PControl.name}"}</td><td> ${"${PControl.email}"}</td></tr>`
                     list+="<tbody></table>"
+                    list += `<input type="text" class="hidden" id="pControlInput" name="membersList[${"${members.length}"}].user.idUser" value="${"${id}"}" />`;
+                    list += `<input type="text" class="hidden" id="pControlInput2" name="membersList[${"${members.length}"}].role.idRole" value="2" />`;
+
                     container.innerHTML = list;
-                    $("#puntoC").val(id);
+                     
+                     $("#puntoC").val(id);
                      $("#userModal").modal("hide")
                     
                 });
@@ -132,7 +138,7 @@
                     <div><input type="text" class="form-control" name="name"></div>
                      <div class="form-group">
                                 <label>Pais</label>
-                                <select class="form-control" name="idCountry">
+                                <select class="form-control" name="country.idCountry">
                                        <c:forEach items="${countries}" var="country">
                                         <option value="${country.idCountry}">${country.name}</option>
                                          </c:forEach>
@@ -173,7 +179,7 @@
                     <div id="pcontrol-list"></div>
                 </div>
             </div>
-
+            
             <!--div><input type="text" class="form-control col-sm-4"  name="mytext[]"-->
 
             <button class="btn btn-warning btn-icon-split" >
@@ -187,6 +193,7 @@
         </div>
         <input type="hidden" value="" name="miembros" id="miembros"/>
         <input type="hidden" value="" name="puntoC" id="puntoC"/>
+        <div id="members-list"></div>
     </form>
     <div class="modal" id="userModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">

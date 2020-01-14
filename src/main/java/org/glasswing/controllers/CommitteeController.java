@@ -19,6 +19,8 @@ import org.glasswing.service.CountryService;
 import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,47 +58,26 @@ public class CommitteeController {
                 mav.addObject("countries" , paises);
                 mav.addObject("usuarios" , usuarios);
 		mav.setViewName("committee/new_committee");
+                
 		return mav;
 	}
-        
+
         @RequestMapping("/comites/store")
-	public ModelAndView store_committee(@RequestParam String name,@RequestParam int idCountry,@RequestParam String miembros,@RequestParam Integer puntoC) {
-                Committee c = new Committee();
-                Country co = new Country();
-                Date now = new Date();
-                co.setIdCountry(idCountry);
-                c.setCountry(co);
-                c.setName(name);
-                c.setUpdatedDate(now);
-                c.setCreatedDate(now);
-                List<Members> membersList = new ArrayList<Members>();
-                
-                miembros = miembros.replace("[", "");
-                miembros = miembros.replace("]", "");
-                String[] mList = miembros.split(",");
-                for (String mList1 : mList) {
-                    Integer id = Integer.parseInt(mList1);
-                    User u = new User();
-                    u.setIdUser(id);
-                    Members m = new Members();
-                    m.setUser(u);
-                    m.setCommittee(c);
-                    Role role = new Role();
-                    role.setIdRole(3);
-                    m.setRole(role);
-                    membersList.add(m);
+	public ModelAndView store_committee(@ModelAttribute Committee c) {
+               
+                List<Members> x =c.getMembersList();
+                for (Members m:x) {
+                        m.setCommittee(c);
                 }
-                User u = new User();
-                u.setIdUser(puntoC);
-                Members m = new Members();
-                m.setUser(u);
-                m.setCommittee(c);
-                Role role = new Role();
-                role.setIdRole(2);
-                m.setRole(role);
-                membersList.add(m);
-                c.setMembersList(membersList);
+                c.setMembersList(x);
                 committeeServ.save(c);
+		ModelAndView mav = new ModelAndView("redirect:/comites/inicio_comites");
+		return mav;
+	}
+         @RequestMapping(value="/comites/delete/{id}")
+	public ModelAndView delete_committee( @PathVariable("id") int id) {
+                Committee c =  committeeServ.findOne(id);
+                committeeServ.delete(c);
 		ModelAndView mav = new ModelAndView("redirect:/comites/inicio_comites");
 		return mav;
 	}

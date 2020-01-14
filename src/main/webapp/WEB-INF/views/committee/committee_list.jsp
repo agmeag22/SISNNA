@@ -76,7 +76,7 @@
                                                 <em class="fa fa-cog"></em>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="#">Eliminar</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/comites/delete/${item.idCommittee}">Eliminar</a>
                                                 <a class="dropdown-item" href="#">Editar</a>
                                                 <a class="dropdown-item" href="#">...</a>
                                             </div>

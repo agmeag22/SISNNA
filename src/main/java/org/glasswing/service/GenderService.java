@@ -6,7 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
-import org.glasswing.domain.User;
+import org.glasswing.domain.Gender;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -14,10 +14,10 @@ import org.springframework.dao.DataAccessException;
  * @author elect
  */
 
-public interface UserService {
-        public List<User> getAll();
-	public boolean findOneUser(String username, String password) throws DataAccessException;
-	public User findOne(Integer code);
-	public void delete(User user);
-	public void save(User user);
+public interface GenderService {
+
+	public List<Gender> getAll() throws DataAccessException;
+	public Gender findOne(Integer code);
+	public void delete(Gender c);
+	public void save(Gender c);
 }

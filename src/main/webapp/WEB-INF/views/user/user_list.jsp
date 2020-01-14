@@ -53,13 +53,13 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            <%--<c:forEach items="${lista}" var="item">
+                            <c:forEach items="${list}" var="item">
                                 <tr>
-                                    <td>${item.idCommittee}</td>
-                                    <td>${item.name}</td>
+                                    <td>${item.idUser}</td>
+                                    <td>${item.email}</td>
 
-                                    <td>${item.updatedUp}</td>
-                                    <td>${item.createdUp}"</td>
+                                    <td>${item.createdDate}</td>
+                                    <td>${item.updatedDate}"</td>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>
@@ -71,7 +71,7 @@
                                             </div>
                                         </div></td>
                                 </tr>
-                            </c:forEach>--%>
+                            </c:forEach>
                         </tbody>
                     </table>
                 </div>

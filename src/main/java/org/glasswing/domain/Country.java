@@ -48,13 +48,13 @@ public class Country implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     private List<Committee> committeeList;
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     private List<CountryDepartment> countryDepartmentList;
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     private List<PersonalInfo> personalInfoList;
-    @OneToMany(mappedBy = "country", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "country", fetch = FetchType.EAGER)
     private List<Complaint> complaintList;
 
     public Country() {

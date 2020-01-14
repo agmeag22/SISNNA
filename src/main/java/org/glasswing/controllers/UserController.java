@@ -8,6 +8,7 @@ package org.glasswing.controllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 import org.glasswing.domain.Country;
@@ -18,18 +19,22 @@ import org.glasswing.domain.Municipality;
 import org.glasswing.domain.PersonalInfo;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
+import org.glasswing.service.CountryDepartmentService;
 import org.glasswing.service.CountryService;
 import org.glasswing.service.DepartmentService;
 import org.glasswing.service.GenderService;
+import org.glasswing.service.MunicipalityService;
 import org.glasswing.service.RoleService;
 import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller //manda a llamar a los metodos
@@ -42,6 +47,10 @@ public class UserController {
     DepartmentService departmentService;
     @Autowired
     CountryService countryService;
+    @Autowired
+    CountryDepartmentService cdServ;
+    @Autowired
+    MunicipalityService mService;
     @Autowired
     GenderService genderService;
     @Autowired
@@ -76,7 +85,7 @@ public class UserController {
         country_list = countryService.getAll();
         mav.addObject("role_list", role_list);
         mav.addObject("gender_list", gender_list);
-//        mav.addObject("country_list", country_list);
+        mav.addObject("country_list", country_list);
         mav.setViewName("user/new_user");
         return mav;
     }
@@ -93,26 +102,24 @@ public class UserController {
             @RequestParam(value = "lastname") String lastname,
             @RequestParam(value = "birthDate") String birthDate,
             @RequestParam(value = "address") String address,
-            @RequestParam(value = "guardianName") String guardianName,
-            @RequestParam(value = "guardianContact") String guardianContact,
+            @RequestParam(value = "guardian_name") String guardianName,
+            @RequestParam(value = "guardian_contact") String guardianContact,
             @RequestParam(value = "idGender") int idGender,
             @RequestParam(value = "id_country") int id_country,
             @RequestParam(value = "id_country_department") int id_country_department,
             @RequestParam(value = "id_municipality") int id_municipality,
             @RequestParam(value = "email") String email,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "role") int role,
-            @RequestParam(value = "department") int department,
-            @RequestParam(value = "committee") String committee) {
+            @RequestParam(value = "role") int role
+//            @RequestParam(value = "department") int department,
+//            @RequestParam(value = "committee") String committee
+    ) {
         ModelAndView mav = new ModelAndView();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         String date = new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date());
-        Date created_date = null;
-        Date update_date = null;
+      
         Date birthdate = null;
         try {
-            created_date = sdf.parse(date);
-            update_date = sdf.parse(date);
             birthdate = sdf.parse(birthDate);
         } catch (ParseException e1) {
             // TODO Auto-generated catch block
@@ -126,26 +133,29 @@ public class UserController {
         personalInfo.setName(name + " " + lastname);
         personalInfo.setGuardianName(guardianName);
         personalInfo.setGuardianContact(guardianContact);
-        personalInfo.setIdGender(idGender);
+        Gender g = new Gender();
+        g.setIdGender(idGender);
+        personalInfo.setGender(g);
         personalInfo.setBirthDate(birthdate);
-        personalInfo.setCountry(countryService.findOne(id_country));
+        Country c = new Country(id_country);
+        personalInfo.setCountry(c);
         personalInfo.setCountryDepartment(department1);
         personalInfo.setMunicipality(municipality);
-        personalInfo.setCreatedDate(created_date);
-        personalInfo.setUpdateDate(update_date);
-        User user = null;
-        user.setDepartment(departmentService.findOne(department));
-        user.setCreatedDate(created_date);
-        user.setUpdatedDate(update_date);
+        User user = new User();
+//        Department d = new Department();
+//        d.setIdDepartment(department);
+//        user.setDepartment(d);
         user.setEmail(email);
         user.setPassword(password);
-        user.setRole(roleService.findOne(role));
+        Role r = new Role();
+        r.setIdRole(role);
+        user.setRole(r);
         user.setPersonalInfo(personalInfo);
-        try {
+//        try {
             userService.save(user);
-        } catch (Exception e) {
-            mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
-        }
+//        } catch (Exception e) {
+//            mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
+//        }
 
         mav.addObject("respuesta", "Usuario añadido con éxito");
         mav.setViewName("user/user_list");
@@ -179,6 +189,28 @@ public class UserController {
 
         mav.setViewName("user/user_list");
         return mav;
+    }
+    
+    @RequestMapping("/country/{id}") 
+    public @ResponseBody HashMap<Integer,String> getDepartmentsOfCountryByID(@PathVariable("id") int id) {
+            Country c = countryService.findOne(id);
+            List<CountryDepartment> list =  cdServ.findByCountry(c);
+            HashMap<Integer,String> hm = new HashMap();
+            for(CountryDepartment item:list){
+                hm.put(item.getIdCountryDepartment(),item.getName());
+            }
+            return hm;
+    }
+    @RequestMapping("/department/{id}") 
+    public @ResponseBody HashMap<Integer,String> getMunicipalityOfDepartmentsByID(@PathVariable("id") int id) {
+            CountryDepartment c = cdServ.findOne(id);
+            List<Municipality> list = mService.findByCountryDepartment(c);
+             HashMap<Integer,String> hm = new HashMap();
+            for(Municipality item:list){
+                hm.put(item.getIdMunicipality(),item.getName());
+            }
+            return hm;
+            
     }
 
 }

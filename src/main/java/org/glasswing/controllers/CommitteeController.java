@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Logger;
 import org.glasswing.domain.Committee;
 import org.glasswing.domain.Country;
+import org.glasswing.domain.Members;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 import org.glasswing.service.CommitteeService;
@@ -59,9 +60,44 @@ public class CommitteeController {
 	}
         
         @RequestMapping("/comites/store")
-	public ModelAndView store_committee() {
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("committee/new_committee");
+	public ModelAndView store_committee(@RequestParam String name,@RequestParam int idCountry,@RequestParam String miembros,@RequestParam Integer puntoC) {
+                Committee c = new Committee();
+                Country co = new Country();
+                Date now = new Date();
+                co.setIdCountry(idCountry);
+                c.setCountry(co);
+                c.setName(name);
+                c.setUpdatedDate(now);
+                c.setCreatedDate(now);
+                List<Members> membersList = new ArrayList<Members>();
+                
+                miembros = miembros.replace("[", "");
+                miembros = miembros.replace("]", "");
+                String[] mList = miembros.split(",");
+                for (String mList1 : mList) {
+                    Integer id = Integer.parseInt(mList1);
+                    User u = new User();
+                    u.setIdUser(id);
+                    Members m = new Members();
+                    m.setUser(u);
+                    m.setCommittee(c);
+                    Role role = new Role();
+                    role.setIdRole(3);
+                    m.setRole(role);
+                    membersList.add(m);
+                }
+                User u = new User();
+                u.setIdUser(puntoC);
+                Members m = new Members();
+                m.setUser(u);
+                m.setCommittee(c);
+                Role role = new Role();
+                role.setIdRole(2);
+                m.setRole(role);
+                membersList.add(m);
+                c.setMembersList(membersList);
+                committeeServ.save(c);
+		ModelAndView mav = new ModelAndView("redirect:/comites/inicio_comites");
 		return mav;
 	}
 }

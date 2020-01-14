@@ -19,8 +19,7 @@
        <script src="${pageContext.request.contextPath}/resources/vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script>
-            var members = [];
-             var temp_listado_usuarios = [];
+            var members = [], PControl = null,puntoControl = false,temp_listado_usuarios = [];
              $(document).ready(function () {
                 $('#dataTable').DataTable({
                     select: true
@@ -50,20 +49,35 @@
                     $(query).removeClass("hidden");
                     temp_listado_usuarios.splice( temp_listado_usuarios.indexOf(item), 1 );
                 });
+                $('#userModal').on('hide.bs.modal', function (event) {
+                    if(puntoControl)puntoControl=false;
+                });
                 $('#userModal').on('shown.bs.modal', function (event) {
-                    temp_listado_usuarios = [...members];
-                    $(".addUserButton").removeClass("hidden");
-                    $(".removeUserButton").addClass("hidden");
-                    members.forEach(function(element){
-                        var query = '.addUserButton[data-id="'+element.id+'"]';
-                        $(query).addClass("hidden");
-                        var query = '.removeUserButton[data-id="'+element.id+'"]';
-                        $(query).removeClass("hidden");                        
-                    });
-                        
+                    if(!puntoControl){
+                        temp_listado_usuarios = [...members];
+                        $(".addUserButton").removeClass("hidden");
+                        $(".removeUserButton").addClass("hidden");
+                        $(".selectUserButton").addClass("hidden");
+                        $("#saveMembers").removeClass("hidden");
+                        members.forEach(function(element){
+                            var query = '.addUserButton[data-id="'+element.id+'"]';
+                            $(query).addClass("hidden");
+                            var query = '.removeUserButton[data-id="'+element.id+'"]';
+                            $(query).removeClass("hidden");                        
+                        });
+                    }else{
+                        $(".addUserButton").addClass("hidden");
+                        $(".removeUserButton").addClass("hidden");
+                        $(".selectUserButton").removeClass("hidden");
+                        $("#saveMembers").addClass("hidden");
+                    }
+                    
                   });
                   $('#saveMembers').on("click",function(){
                       members = [...temp_listado_usuarios];
+                      var lista = members.map(elemento => elemento.id);
+                      
+                      $("#miembros").val(JSON.stringify(lista));
                       updateMembersList();
                   });
                 });
@@ -76,6 +90,29 @@
                     list+="<tbody></table>"
                     container.innerHTML = list;
                 }
+                
+                function openpuntoControl(){
+                     puntoControl=true;
+                    $("#userModal").modal();
+                }
+                $('.selectUserButton').on("click",
+                function(){
+                    var id = $(this).data("id");
+                    var name = $(this).data("name");
+                    var email = $(this).data("email");
+                    PControl = {id:id,name:name,email:email};
+                    var container = document.getElementById("pcontrol-list")
+                    var list = "<table><tbody>"
+                     
+                        list+=`<tr><td>${"${PControl.name}"}</td><td> ${"${PControl.email}"}</td></tr>`
+                    list+="<tbody></table>"
+                    container.innerHTML = list;
+                    $("#puntoC").val(id);
+                     $("#userModal").modal("hide")
+                    
+                });
+                
+                
         </script>
       
     </jsp:attribute>
@@ -84,6 +121,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">Comites</h1>
         <br><br>
+        <form method="POST" action="${pageContext.request.contextPath}/comites/store"
         <div class="container1">
             <div class="card mb-4">
                 <div class="card-header">
@@ -94,7 +132,7 @@
                     <div><input type="text" class="form-control" name="name"></div>
                      <div class="form-group">
                                 <label>Pais</label>
-                                <select class="form-control">
+                                <select class="form-control" name="idCountry">
                                        <c:forEach items="${countries}" var="country">
                                         <option value="${country.idCountry}">${country.name}</option>
                                          </c:forEach>
@@ -126,28 +164,30 @@
                     PUNTO DE CONTROL
                 </div>
                 <div class="card-body card-body2">
-                    <div><a href="#" class="add_form_field btn btn-success btn-icon-split" style="margin-bottom: 10px;">
+                    <div><a type="button" href="#" class="add_form_field btn btn-success btn-icon-split" onclick="openpuntoControl()" style="margin-bottom: 10px;">
                             <span class="icon text-white-50">
                                 <i class="fas fa-edit"></i>
                             </span>
                             <span class="text">Seleccionar</span>
                         </a></div>
+                    <div id="pcontrol-list"></div>
                 </div>
             </div>
 
             <!--div><input type="text" class="form-control col-sm-4"  name="mytext[]"-->
 
-            <a href="${pageContext.request.contextPath}/comites" class="btn btn-warning btn-icon-split" >
+            <button class="btn btn-warning btn-icon-split" >
                     <span class="icon text-white-50">
                       <i class="far fa-save"></i>
                     </span>
                     <span class="text">Guardar Comite</span>
-                  </a>
+                  </button>
 
 
         </div>
-
-    
+        <input type="hidden" value="" name="miembros" id="miembros"/>
+        <input type="hidden" value="" name="puntoC" id="puntoC"/>
+    </form>
     <div class="modal" id="userModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
@@ -191,6 +231,9 @@
                                             </button>
                                              <button  class="btn btn-danger removeUserButton hidden" type="button" data-id="${item.idUser}" data-email="${item.email}" data-name="${item.personalInfo.name}" aria-expanded="false">
                                                 <p style="margin-bottom:0;"><em class="fa fa-trash"></em><span> Eliminar</span></p>
+                                            </button>
+                                            <button class="btn btn-success selectUserButton hidden" type="button" data-id="${item.idUser}" data-email="${item.email}" data-name="${item.personalInfo.name}" aria-expanded="false">
+                                                <p style="margin-bottom:0;"><em class="fa fa-plus"></em><span> Seleccionar</span></p>
                                             </button>
                                         </td>
                                 </tr>

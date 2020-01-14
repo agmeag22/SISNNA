@@ -66,7 +66,7 @@
                                     <td>
                                         <ul>
                                         <c:forEach items="${item.membersList}" var="member">
-                                            <li title='${member.user.email}'>${member.user.personalInfo.name}</li>
+                                            <li title='${member.user.email}'>${member.user.personalInfo.name} ${member.role.idRole eq 2?'(Punto de Control)':''}</li>
                                         </c:forEach>
                                         </ul>
                                     

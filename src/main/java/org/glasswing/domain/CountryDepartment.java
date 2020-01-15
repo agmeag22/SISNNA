@@ -44,11 +44,11 @@ public class CountryDepartment implements Serializable {
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
-    @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.LAZY)
     private List<Municipality> municipalityList;
-    @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.LAZY)
     private List<PersonalInfo> personalInfoList;
-    @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "countryDepartment", fetch = FetchType.LAZY)
     private List<Complaint> complaintList;
 
     public CountryDepartment() {

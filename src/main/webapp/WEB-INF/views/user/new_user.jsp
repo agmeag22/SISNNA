@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <t:admin-template>
     <jsp:attribute name="styles">
 
@@ -9,10 +10,65 @@
     <jsp:attribute name="marked">nuevo-usuario</jsp:attribute>
     <jsp:attribute name="scripts">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/new_user.css" type="text/css" media="screen">
+        <script>
+            function updateDepartments(){
+                var id= document.getElementById("country_list_id").value;
+                
+                $.ajax({
+                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
+                    type:'POST',
+                    dataType: 'json',
+                    success: function( json ) {
+                        document.getElementById('country_list_department_id').innerHTML = "";
+                        $.each(json, function(key, value) {  
+                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
+                        });
+                        updateMuni();
+                    }
+                  });
+            }
+            
+            function updateMuni(){
+                var id= document.getElementById("country_list_department_id").value;
+//                console.log("ENTRO");
+                $.ajax({
+                    url:`${pageContext.request.contextPath}/department/${"${id}"}`,
+                    type:'POST',
+                    dataType: 'json',
+                    success: function( json ) {
+//                        console.log("ENTRO");
+                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                        $.each(json, function(key, value) {  
+//                            console.log(value);
+                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_municipality_id');
+                        });
+                    }
+                  });
+            }
+            function clearMunicipalities(){
+                document.getElementById('country_list_department_municipality_id').innerHTML = "";
+            }
+             function clearDepartments(){
+                document.getElementById('country_list_department_id').innerHTML = "";
+            }
+             $(document).ready(function () {
+                 updateDepartments();
+                $("#country_list_id").on("change",function(){
+                    clearMunicipalities();
+                    clearDepartments();
+                    updateDepartments();
+                });
+                $("#country_list_department_id").on("change",function(){
+                    clearMunicipalities();
+                    updateMuni();
+                });
+            });
+            
+        </script>
     </jsp:attribute>
 
     <jsp:body>
-        <form action="${pageContext.request.contextPath}/usuarios/nuevo" method = "post" class="user">
+        <form action="${pageContext.request.contextPath}/usuarios/guardar" method = "post" class="user">
             <div class="container1">
                 <div class="container-grid-flex">
 
@@ -38,7 +94,7 @@
 
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su fecha de nacimiento.</small>
                             </div>  
-
+                                
                             <div class="form-group">
                                 <label for="gender_list">Genero</label> 
                                 <select class="custom-select" id="gendeid" name="idGender" aria-describedby="idGenderHelp" required> 
@@ -51,27 +107,23 @@
                             <div class="form-group">
                                 <label for="country_list">País</label> 
                                 <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp" required> 
-                                    <c:forEach items="${country_list}" var="item">
-                                        <option value="${item.idCountry}">${item.name}</option>
+                                    <c:forEach items="${country_list}" var="country">
+                                        <option value="${country.idCountry}">${country.name}</option>
                                     </c:forEach>
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el país.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
-                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp" required> 
-<!--                                    <c:forEach items="${country_list}" var="item">
-                                        <option value="${item.countryDepartmentList.idCountryDepartment}">${item.countryDepartmentList.name}</option>
-                                    </c:forEach>-->
+                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp"> 
+
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Municipio</label> 
-                                <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
-<!--                                    <c:forEach items="${country_list}" var="item">
-                                        <option value="${item.countryDepartmentList.municipalityList.idMunicipality}">${item.countryDepartmentList.municipalityList.name}</option>
-                                    </c:forEach>-->
+                                <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp"> 
+
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
                             </div>
@@ -122,7 +174,7 @@
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el rol.</small>
                             </div>
-                            <div class="form-group">
+<!--                            <div class="form-group">
                                 <label for="department_list">Comité</label> 
                                 <select class="custom-select" id="idDepartment" name="committee" aria-describedby="id_roleHelp" required> 
                                     <c:forEach items="${committee_list}" var="item">
@@ -130,7 +182,7 @@
                                     </c:forEach>
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el comité al que pertenece.</small>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="card mb-4 contact_info_container">

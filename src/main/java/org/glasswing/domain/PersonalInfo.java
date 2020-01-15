@@ -43,9 +43,6 @@ public class PersonalInfo implements Serializable {
     @Column(name = "id_personal_info")
     private Integer idPersonalInfo;
     @Size(max = 255)
-    @Column(name = "id_gender")
-    private Integer idGender;
-    @Size(max = 255)
     @Column(name = "name")
     private String name;
     @Column(name = "birth_date")
@@ -71,6 +68,9 @@ public class PersonalInfo implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
    
+    @JoinColumn(name = "id_gender",referencedColumnName = "id_gender")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Gender gender;
         @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
@@ -96,12 +96,12 @@ public class PersonalInfo implements Serializable {
         this.idPersonalInfo = idPersonalInfo;
     }
 
-    public Integer getIdGender() {
-        return idGender;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setIdGender(Integer idGender) {
-        this.idGender = idGender;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public String getName() {

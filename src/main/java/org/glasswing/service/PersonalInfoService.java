@@ -7,6 +7,7 @@ package org.glasswing.service;
 
 import java.util.List;
 import org.glasswing.domain.PersonalInfo;
+import org.glasswing.domain.User;
 import org.glasswing.repositories.PersonalInfoRepository;
 
 /**
@@ -17,4 +18,5 @@ import org.glasswing.repositories.PersonalInfoRepository;
 public interface PersonalInfoService {
 	public List<PersonalInfo> getAll();
 	public PersonalInfo findOne(Integer code);
+        public void save(PersonalInfo PersonalInfo);
 }

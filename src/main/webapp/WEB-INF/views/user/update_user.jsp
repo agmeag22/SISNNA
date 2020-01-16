@@ -69,7 +69,7 @@
     </jsp:attribute>
 
     <jsp:body>
-        <form action="${pageContext.request.contextPath}/usuarios/guardar_modificacion/${user.idUser}" method = "post" class="user">
+        <form action="${pageContext.request.contextPath}/usuarios/guardar_modificacion/${user.idUser}" method = "post">
             <div class="container1">
                 <div class="container-grid-flex">
 
@@ -81,14 +81,14 @@
                         <div class="card-body card-body2">
                             <div class="form-group">
                                 Nombres
-                                <input type="text" class="form-control " name="name" id="inputName" value="${user.personalInfo.name}"required>
+                                <input type="text" class="form-control " name="name" id="inputName" value="${user.personalInfo.name}" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese nombre completo</small>
                             </div>
 
                             <div class="form-group">
                                 Fecha de nacimiento
                                 <fmt:formatDate pattern="yyyy-MM-dd" value="${user.personalInfo.birthDate}" var="theFormattedDate" />
-                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" value="${theFormattedDate}"required>
+                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" value="${theFormattedDate}" required>
 
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su fecha de nacimiento.</small>
                             </div>  
@@ -96,7 +96,7 @@
                             <div class="form-group">
                                 <label for="gender_list">Genero</label> 
                                 <select class="custom-select" id="gendeid" name="idGender" aria-describedby="idGenderHelp" required> 
-                                    <option selected value="${user.personalInfo.gender.idGender}">${user.personalInfo.gender.name} </option>
+                                    <option value="${user.personalInfo.gender.idGender}">${user.personalInfo.gender.name} </option>
                                     <c:forEach items="${gender_list}" var="item">
                                         <option value="${item.idGender}">${item.name}</option>
                                     </c:forEach>
@@ -107,7 +107,7 @@
                                 <label for="country_list">País</label> 
                                 <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp"  required> 
                                     <option selected value="${user.personalInfo.country.idCountry}">${user.personalInfo.country.name} </option>
-                                    
+
                                     <c:forEach items="${country_list}" var="country">
                                         <option value="${country.idCountry}">${country.name}</option>
                                     </c:forEach>
@@ -117,17 +117,15 @@
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
                                 <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp"  required> 
-                                    <option selected value="N/A</option>
-                                    <%--<option selected value="${user.personalInfo.countryDepartment.idCountryDepartment}">${user.personalInfo.countryDepartment.name}</option>--%>
-
-                                </select> 
+                                    <option selected value="N/A"></option>
+                                </select>
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Municipio</label> 
                                 <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
-                                    <option selected value="N/A</option>
-                                    <%--<option selected  value="${user.personalInfo.municipality.idMunicipality}"> ${user.personalInfo.municipality.name}</option>--%>
+                                    <option selected value="N/A"></option>
+                                    <option selected  value="${user.personalInfo.municipality.idMunicipality}"> ${user.personalInfo.municipality.name}</option>
 
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
@@ -174,9 +172,9 @@
                             <div class="form-group">
                                 <label for="department_list">Departamento (Según función)</label> 
                                 <select class="custom-select" id="idDepartment" name="department" aria-describedby="id_roleHelp" required> 
-                                  
+
                                     <option selected value="${user.department.idDepartment}">${user.department.name} </option>
-                                    
+
                                     <c:forEach items="${department_list}" var="item">
                                         <option value="${item.idDepartment}">${item.name}</option>
                                     </c:forEach>
@@ -193,22 +191,26 @@
                         <div class="card-body ">
                             <div class="form-group">
                                 Nombre de representante
-                                <input type="text" class="form-control " name="guardian_name" id="inputguradian_name">
+                                <input type="text" class="form-control " name="guardian_name" id="inputguradian_name" value="${user.personalInfo.guardianName}">
                                 <small id="nameHelp" class="form-text text-muted">Ingrese nombre de representante (Padre,madre o responsable a cargo).</small>
                             </div>
 
                             <div class="form-group">
                                 Numero de telefono
-                                <input type="text" class="form-control "  name="guardian_contact" id="inputguradiancontact">
+                                <input type="text" class="form-control "  name="guardian_contact" id="inputguradiancontact" value="${user.personalInfo.guardianContact}">
                                 <small id="nameHelp" class="form-text text-muted">Ingrese el numero de contacto del representante.</small>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-user">
-                    Añadir Usuario
+                <button type="submit" class="btn btn-warning btn-user button">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">MODIFICAR USUARIO</span>
+
                 </button>
-            </div>
+
 
         </form>
     </jsp:body>

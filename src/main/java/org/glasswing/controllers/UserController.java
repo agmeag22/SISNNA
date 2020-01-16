@@ -96,12 +96,10 @@ public class UserController {
         return mav;
     }
 
-   
-
     @RequestMapping("/usuarios/modificar_usuario/{id}")
     public ModelAndView updateUser(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView();
-        User u = userService.findOne(id);
+        
         List<Role> role_list = null;
         List<Gender> gender_list = null;
         List<Country> country_list = null;
@@ -110,6 +108,7 @@ public class UserController {
         gender_list = genderService.getAll();
         country_list = countryService.getAll();
         department_list = departmentService.getAll();
+        User u = userService.findOne(id);
         mav.addObject("department_list", department_list);
         mav.addObject("role_list", role_list);
         mav.addObject("gender_list", gender_list);
@@ -119,7 +118,7 @@ public class UserController {
         return mav;
     }
 
-     @RequestMapping(value = "/usuarios/guardar", method = RequestMethod.POST)
+    @RequestMapping(value = "/usuarios/guardar", method = RequestMethod.POST)
     public ModelAndView create(@RequestParam(value = "name") String name,
             @RequestParam(value = "lastname") String lastname,
             @RequestParam(value = "birthDate") String birthDate,
@@ -135,14 +134,15 @@ public class UserController {
             @RequestParam(value = "role") int role,
             @RequestParam(value = "department") int idDepartment) {
         ModelAndView mav = new ModelAndView();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String date = new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date());
+        String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         Date birthdate = null;
         Date parsed_date = null;
         try {
             birthdate = sdf.parse(birthDate);
-            parsed_date = sdf.parse(date);
+            parsed_date = sdf2.parse(date);
         } catch (ParseException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -159,7 +159,7 @@ public class UserController {
         g.setIdGender(idGender);
         Department department = new Department();
         department.setIdDepartment(idDepartment);
-        
+
         PersonalInfo personalInfo = new PersonalInfo();
         personalInfo.setName(name + " " + lastname);
         personalInfo.setGuardianName(guardianName);
@@ -172,7 +172,7 @@ public class UserController {
         personalInfo.setCountry(c);
         personalInfo.setCountryDepartment(countryDepartment);
         personalInfo.setMunicipality(municipality);
-
+        personalInfo.setAddress(address);
         User user = new User();
         user.setEmail(email);
         user.setPassword(password);
@@ -184,7 +184,7 @@ public class UserController {
         user.setActiveState(0);
         try {
             userService.save(user);
-            
+
         } catch (Exception e) {
             mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
             mav.setViewName("redirect:/usuarios/inicio_usuarios");
@@ -194,11 +194,10 @@ public class UserController {
         mav.setViewName("redirect:/usuarios/inicio_usuarios");
         return mav;
     }
-    
-    @RequestMapping("/usuarios/guardar_modificacion/{id_user}")
+
+    @RequestMapping(value="/usuarios/guardar_modificacion/{id_user}",method = RequestMethod.POST)
     public ModelAndView modify(@PathVariable("id_user") int id_user,
             @RequestParam(value = "name") String name,
-            @RequestParam(value = "lastname") String lastname,
             @RequestParam(value = "birthDate") String birthDate,
             @RequestParam(value = "address") String address,
             @RequestParam(value = "guardian_name") String guardianName,
@@ -213,15 +212,17 @@ public class UserController {
             @RequestParam(value = "department") int idDepartment) {
         ModelAndView mav = new ModelAndView();
         User user = userService.findOne(id_user);
-        PersonalInfo personalInfo = personalInfoService.findOne(user.getPersonalInfo().getIdPersonalInfo());
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
-        String date = new SimpleDateFormat("dd-M-yyyy hh:mm:ss").format(new Date());
+        
+        PersonalInfo personalInfo =personalInfoService.findOne(user.getPersonalInfo().getIdPersonalInfo());
+        String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         Date birthdate = null;
         Date parsed_date = null;
         try {
             birthdate = sdf.parse(birthDate);
-            parsed_date = sdf.parse(date);
+            parsed_date = sdf2.parse(date);
         } catch (ParseException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -238,7 +239,7 @@ public class UserController {
         g.setIdGender(idGender);
         Department department = new Department();
         department.setIdDepartment(idDepartment);
-        personalInfo.setName(name + " " + lastname);
+        personalInfo.setName(name);
         personalInfo.setGuardianName(guardianName);
         personalInfo.setGuardianContact(guardianContact);
         personalInfo.setGender(g);
@@ -247,7 +248,7 @@ public class UserController {
         personalInfo.setCountry(c);
         personalInfo.setCountryDepartment(countryDepartment);
         personalInfo.setMunicipality(municipality);
-
+        personalInfo.setAddress(address);
         user.setEmail(email);
         user.setPassword(password);
         user.setDepartment(department);
@@ -255,9 +256,11 @@ public class UserController {
         user.setPersonalInfo(personalInfo);
         user.setUpdatedDate(parsed_date);
         try {
-            userService.save(user);
             
+            userService.save(user);
+
         } catch (Exception e) {
+            e.printStackTrace();
             mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
             mav.setViewName("redirect:/usuarios/inicio_usuarios");
             return mav;

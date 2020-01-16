@@ -46,7 +46,6 @@ public class PersonalInfo implements Serializable {
     @Column(name = "name")
     private String name;
     @Column(name = "birth_date")
-    @Temporal(TemporalType.DATE)
     private Date birthDate;
     @Size(max = 255)
     @Column(name = "address")
@@ -65,18 +64,18 @@ public class PersonalInfo implements Serializable {
     private Date updateDate;
    
         @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
    
     @JoinColumn(name = "id_gender",referencedColumnName = "id_gender")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Gender gender;
         @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CountryDepartment countryDepartment;
   
         @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Municipality municipality;
     @OneToMany(mappedBy = "personalInfo", fetch = FetchType.LAZY)
     private List<User> userList;

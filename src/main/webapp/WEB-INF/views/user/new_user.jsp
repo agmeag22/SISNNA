@@ -91,8 +91,7 @@
                             </div>
                             <div class="form-group">
                                 Fecha de nacimiento
-                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" required>
-
+                                <input type="date" class="form-control " id="fechainc" name="birthDate" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su fecha de nacimiento.</small>
                             </div>  
 
@@ -197,8 +196,12 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-user">
-                    Añadir Usuario
+                <button type="submit" class="btn btn-warning btn-user button">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">AÑADIR USUARIO</span>
+
                 </button>
             </div>
 

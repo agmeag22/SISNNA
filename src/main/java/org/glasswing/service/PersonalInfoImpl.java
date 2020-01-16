@@ -29,4 +29,9 @@ public class PersonalInfoImpl implements PersonalInfoService {
     public List<PersonalInfo> getAll() {
         return personalInfoRepository.findAll();
     }
+
+    @Override
+    public void save(PersonalInfo pi) {
+        personalInfoRepository.save(pi);
+    }
 }

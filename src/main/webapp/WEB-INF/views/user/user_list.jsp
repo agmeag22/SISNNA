@@ -62,7 +62,7 @@
                                     <td>${item.email}</td>
 
                                     <td>${item.createdDate}</td>
-                                    <td>${item.updatedDate}"</td>
+                                    <td>${item.updatedDate}</td>
                                     <c:set var="active" value="${item.activeState}" />
                                     <c:if test="${active>0}">
                                         <td><a class="btn btn-success btn-sm" href="">Activo</a></td>

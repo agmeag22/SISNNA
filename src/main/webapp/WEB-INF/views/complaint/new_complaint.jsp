@@ -10,7 +10,9 @@
         <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/new_user.css" type="text/css" media="screen">
         <style>
-            
+            .hidden{
+                display:none;
+            }
             
         </style>
     </jsp:attribute>

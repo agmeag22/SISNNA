@@ -40,7 +40,7 @@ public class ComplaintPrograms implements Serializable {
     @Column(name = "id_complaint_programs")
     private Integer idComplaintPrograms;
     @JoinColumn(name = "id_program", referencedColumnName = "id_program")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Program program;
     @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")
     @ManyToOne(fetch = FetchType.LAZY)

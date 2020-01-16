@@ -75,7 +75,7 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <!--<a class="dropdown-item" href="#">Eliminar</a>-->
-                                                <a class="dropdown-item" href="#">Ver</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/denuncias/ver_denuncia/${item.idComplaint}">Ver</a>
                                                 <a class="dropdown-item" href="#">...</a>
                                             </div>
                                         </div></td>

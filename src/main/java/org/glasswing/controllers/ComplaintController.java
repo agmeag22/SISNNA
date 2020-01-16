@@ -56,11 +56,12 @@ public class ComplaintController {
         ModelAndView mav = new ModelAndView();
         List complaint_list = null;
         try {
-            complaint_list = complaintService.getAll();
+            complaint_list = complaintService.findByStateNot(new State(4));
         } catch (Exception e) {
         }
+        mav.addObject("title", "Denuncias Pendientes");
         mav.addObject("lista", complaint_list);
-        mav.setViewName("complaint/pending_complaints");
+        mav.setViewName("complaint/list_complaints");
         return mav;
     }
     
@@ -69,12 +70,13 @@ public class ComplaintController {
         ModelAndView mav = new ModelAndView();
         List complaint_list = null;
         try {
-            complaint_list = complaintService.getAll();
+            complaint_list = complaintService.findByState(new State(4));
         } catch (Exception e) {
         }
+        mav.addObject("title", "Denuncias Procesadas");
         mav.addObject("list", complaint_list);
         
-        mav.setViewName("complaint/processed_complaints");
+        mav.setViewName("complaint/list_complaints");
         return mav;
     }
     

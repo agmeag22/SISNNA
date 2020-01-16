@@ -16,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -24,16 +23,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "personal_info")
+@Table(name = "personal_info", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PersonalInfo.findAll", query = "SELECT p FROM PersonalInfo p")})
+    @NamedQuery(name = "PersonalInfo.findAll", query = "SELECT p FROM PersonalInfo p"),
+    @NamedQuery(name = "PersonalInfo.findByIdPersonalInfo", query = "SELECT p FROM PersonalInfo p WHERE p.idPersonalInfo = :idPersonalInfo"),
+    @NamedQuery(name = "PersonalInfo.findByName", query = "SELECT p FROM PersonalInfo p WHERE p.name = :name"),
+    @NamedQuery(name = "PersonalInfo.findByBirthDate", query = "SELECT p FROM PersonalInfo p WHERE p.birthDate = :birthDate"),
+    @NamedQuery(name = "PersonalInfo.findByAddress", query = "SELECT p FROM PersonalInfo p WHERE p.address = :address"),
+    @NamedQuery(name = "PersonalInfo.findByGuardianName", query = "SELECT p FROM PersonalInfo p WHERE p.guardianName = :guardianName"),
+    @NamedQuery(name = "PersonalInfo.findByGuardianContact", query = "SELECT p FROM PersonalInfo p WHERE p.guardianContact = :guardianContact"),
+    @NamedQuery(name = "PersonalInfo.findByCreatedDate", query = "SELECT p FROM PersonalInfo p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "PersonalInfo.findByUpdatedDate", query = "SELECT p FROM PersonalInfo p WHERE p.updatedDate = :updatedDate")})
 public class PersonalInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,27 +68,28 @@ public class PersonalInfo implements Serializable {
     @Size(max = 255)
     @Column(name = "guardian_contact")
     private String guardianContact;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
-   
-        @JoinColumn(name = "id_country", referencedColumnName = "id_country")
+    private Date updatedDate;
+    @JoinColumn(name = "id_country", referencedColumnName = "id_country")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
-   
-    @JoinColumn(name = "id_gender",referencedColumnName = "id_gender")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Gender gender;
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
+    @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
-  
-        @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
+    @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
     @ManyToOne(fetch = FetchType.LAZY)
     private Municipality municipality;
+    @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Gender gender;
     @OneToMany(mappedBy = "personalInfo", fetch = FetchType.LAZY)
     private List<User> userList;
 
@@ -88,20 +100,18 @@ public class PersonalInfo implements Serializable {
         this.idPersonalInfo = idPersonalInfo;
     }
 
+    public PersonalInfo(Integer idPersonalInfo, Date createdDate, Date updatedDate) {
+        this.idPersonalInfo = idPersonalInfo;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
+
     public Integer getIdPersonalInfo() {
         return idPersonalInfo;
     }
 
     public void setIdPersonalInfo(Integer idPersonalInfo) {
         this.idPersonalInfo = idPersonalInfo;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
     }
 
     public String getName() {
@@ -152,12 +162,12 @@ public class PersonalInfo implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Date getUpdateDate() {
-        return updateDate;
+    public Date getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public Country getCountry() {
@@ -184,6 +194,15 @@ public class PersonalInfo implements Serializable {
         this.municipality = municipality;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    @XmlTransient
     public List<User> getUserList() {
         return userList;
     }

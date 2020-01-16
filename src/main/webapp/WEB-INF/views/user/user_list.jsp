@@ -65,8 +65,8 @@
                                                 <em class="fa fa-cog"></em>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="/usuarios/modificar_usuario/${item.idUser}"><i class="fas fa-edit"></i> Editar</a>
-                                                <a class="dropdown-item" href="/usuarios/eliminar/${item.idUser}"><i class="fas fa-trash"></i> Eliminar</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/usuarios/modificar_usuario/${item.idUser}"><i class="fas fa-edit"></i> Editar</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/usuarios/eliminar/${item.idUser}"><i class="fas fa-trash"></i> Eliminar</a>
                     
                                                 
                                             </div>

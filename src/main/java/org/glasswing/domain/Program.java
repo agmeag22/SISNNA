@@ -21,16 +21,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "program")
+@Table(name = "program", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Program.findAll", query = "SELECT p FROM Program p")})
+    @NamedQuery(name = "Program.findAll", query = "SELECT p FROM Program p"),
+    @NamedQuery(name = "Program.findByIdProgram", query = "SELECT p FROM Program p WHERE p.idProgram = :idProgram"),
+    @NamedQuery(name = "Program.findByName", query = "SELECT p FROM Program p WHERE p.name = :name"),
+    @NamedQuery(name = "Program.findByCreatedDate", query = "SELECT p FROM Program p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "Program.findByUpdatedDate", query = "SELECT p FROM Program p WHERE p.updatedDate = :updatedDate")})
 public class Program implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,20 +50,30 @@ public class Program implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
-    private List<Complaint> complaintList;
+    private List<ComplaintPrograms> complaintProgramsList;
 
     public Program() {
     }
 
     public Program(Integer idProgram) {
         this.idProgram = idProgram;
+    }
+
+    public Program(Integer idProgram, Date createdDate, Date updatedDate) {
+        this.idProgram = idProgram;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
     public Integer getIdProgram() {
@@ -90,12 +108,13 @@ public class Program implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public List<Complaint> getComplaintList() {
-        return complaintList;
+    @XmlTransient
+    public List<ComplaintPrograms> getComplaintProgramsList() {
+        return complaintProgramsList;
     }
 
-    public void setComplaintList(List<Complaint> complaintList) {
-        this.complaintList = complaintList;
+    public void setComplaintProgramsList(List<ComplaintPrograms> complaintProgramsList) {
+        this.complaintProgramsList = complaintProgramsList;
     }
 
     @Override

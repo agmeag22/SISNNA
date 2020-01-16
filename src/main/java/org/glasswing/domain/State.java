@@ -19,15 +19,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "state")
+@Table(name = "state", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s")})
+    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s"),
+    @NamedQuery(name = "State.findByIdState", query = "SELECT s FROM State s WHERE s.idState = :idState"),
+    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name")})
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,6 +72,7 @@ public class State implements Serializable {
         this.name = name;
     }
 
+    @XmlTransient
     public List<Process> getProcessList() {
         return processList;
     }
@@ -75,6 +81,7 @@ public class State implements Serializable {
         this.processList = processList;
     }
 
+    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

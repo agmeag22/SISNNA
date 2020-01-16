@@ -6,25 +6,33 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "gender")
+@Table(name = "gender", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Gender.findAll", query = "SELECT g FROM Gender g")})
+    @NamedQuery(name = "Gender.findAll", query = "SELECT g FROM Gender g"),
+    @NamedQuery(name = "Gender.findByIdGender", query = "SELECT g FROM Gender g WHERE g.idGender = :idGender"),
+    @NamedQuery(name = "Gender.findByName", query = "SELECT g FROM Gender g WHERE g.name = :name")})
 public class Gender implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,6 +44,10 @@ public class Gender implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
+    @OneToMany(mappedBy = "gender", fetch = FetchType.LAZY)
+    private List<PersonalInfo> personalInfoList;
+    @OneToMany(mappedBy = "gender", fetch = FetchType.LAZY)
+    private List<Complaint> complaintList;
 
     public Gender() {
     }
@@ -58,6 +70,24 @@ public class Gender implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @XmlTransient
+    public List<PersonalInfo> getPersonalInfoList() {
+        return personalInfoList;
+    }
+
+    public void setPersonalInfoList(List<PersonalInfo> personalInfoList) {
+        this.personalInfoList = personalInfoList;
+    }
+
+    @XmlTransient
+    public List<Complaint> getComplaintList() {
+        return complaintList;
+    }
+
+    public void setComplaintList(List<Complaint> complaintList) {
+        this.complaintList = complaintList;
     }
 
     @Override

@@ -19,15 +19,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "accused_type")
+@Table(name = "accused_type", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AccusedType.findAll", query = "SELECT a FROM AccusedType a")})
+    @NamedQuery(name = "AccusedType.findAll", query = "SELECT a FROM AccusedType a"),
+    @NamedQuery(name = "AccusedType.findByIdAccusedType", query = "SELECT a FROM AccusedType a WHERE a.idAccusedType = :idAccusedType"),
+    @NamedQuery(name = "AccusedType.findByName", query = "SELECT a FROM AccusedType a WHERE a.name = :name")})
 public class AccusedType implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -65,6 +70,7 @@ public class AccusedType implements Serializable {
         this.name = name;
     }
 
+    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

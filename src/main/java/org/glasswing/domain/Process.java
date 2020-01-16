@@ -16,25 +16,33 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "process")
+@Table(name = "process", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Process.findAll", query = "SELECT p FROM Process p")})
+    @NamedQuery(name = "Process.findAll", query = "SELECT p FROM Process p"),
+    @NamedQuery(name = "Process.findByIdProcess", query = "SELECT p FROM Process p WHERE p.idProcess = :idProcess"),
+    @NamedQuery(name = "Process.findByRecurrence", query = "SELECT p FROM Process p WHERE p.recurrence = :recurrence"),
+    @NamedQuery(name = "Process.findByGuardianNotificated", query = "SELECT p FROM Process p WHERE p.guardianNotificated = :guardianNotificated"),
+    @NamedQuery(name = "Process.findByCreatedDate", query = "SELECT p FROM Process p WHERE p.createdDate = :createdDate"),
+    @NamedQuery(name = "Process.findByUpdatedDate", query = "SELECT p FROM Process p WHERE p.updatedDate = :updatedDate")})
 public class Process implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -55,32 +63,39 @@ public class Process implements Serializable {
     private String evaluationResolution;
     @Column(name = "guardian_notificated")
     private Boolean guardianNotificated;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @ManyToMany(mappedBy = "processList", fetch = FetchType.LAZY)
-    private List<Evidence> evidenceList;
-  
-        @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")
+    @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")
     @ManyToOne(fetch = FetchType.LAZY)
     private Complaint complaint;
-  
-        @JoinColumn(name = "id_state", referencedColumnName = "id_state")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private State state;
-   
-        @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    @JoinColumn(name = "id_state", referencedColumnName = "id_state")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private State state;
+    @OneToMany(mappedBy = "process", fetch = FetchType.LAZY)
+    private List<InvestigationEvidence> investigationEvidenceList;
 
     public Process() {
     }
 
     public Process(Integer idProcess) {
         this.idProcess = idProcess;
+    }
+
+    public Process(Integer idProcess, Date createdDate, Date updatedDate) {
+        this.idProcess = idProcess;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
     public Integer getIdProcess() {
@@ -139,20 +154,20 @@ public class Process implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public List<Evidence> getEvidenceList() {
-        return evidenceList;
-    }
-
-    public void setEvidenceList(List<Evidence> evidenceList) {
-        this.evidenceList = evidenceList;
-    }
-
     public Complaint getComplaint() {
         return complaint;
     }
 
     public void setComplaint(Complaint complaint) {
         this.complaint = complaint;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public State getState() {
@@ -163,12 +178,13 @@ public class Process implements Serializable {
         this.state = state;
     }
 
-    public User getUser() {
-        return user;
+    @XmlTransient
+    public List<InvestigationEvidence> getInvestigationEvidenceList() {
+        return investigationEvidenceList;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setInvestigationEvidenceList(List<InvestigationEvidence> investigationEvidenceList) {
+        this.investigationEvidenceList = investigationEvidenceList;
     }
 
     @Override

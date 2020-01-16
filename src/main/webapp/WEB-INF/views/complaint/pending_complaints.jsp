@@ -31,6 +31,7 @@
                 <!--<h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>-->
             </div>
             <div class="card-body">
+                ${lista}
                 <div class="table-responsive">
                     <table data-role="table" class="table table-bordered ui-responsive" id="dataTable" width="100%" cellspacing="0">
                         <thead>

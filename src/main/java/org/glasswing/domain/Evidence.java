@@ -14,23 +14,25 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "evidence")
+@Table(name = "evidence", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Evidence.findAll", query = "SELECT e FROM Evidence e")})
+    @NamedQuery(name = "Evidence.findAll", query = "SELECT e FROM Evidence e"),
+    @NamedQuery(name = "Evidence.findByIdEvidence", query = "SELECT e FROM Evidence e WHERE e.idEvidence = :idEvidence")})
 public class Evidence implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,18 +49,10 @@ public class Evidence implements Serializable {
     @Size(max = 65535)
     @Column(name = "path")
     private String path;
-    @JoinTable(name = "investigation_evidence", joinColumns = {
-        @JoinColumn(name = "id_evidence", referencedColumnName = "id_evidence")}, inverseJoinColumns = {
-        @JoinColumn(name = "id_process", referencedColumnName = "id_process")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Process> processList;
-    @JoinTable(name = "complaint_evidence", joinColumns = {
-        
-        @JoinColumn(name = "id_evidence", referencedColumnName = "id_evidence")}, inverseJoinColumns = {
-       
-        @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Complaint> complaintList;
+    @OneToMany(mappedBy = "evidence", fetch = FetchType.LAZY)
+    private List<InvestigationEvidence> investigationEvidenceList;
+    @OneToMany(mappedBy = "evidence", fetch = FetchType.LAZY)
+    private List<ComplaintEvidence> complaintEvidenceList;
 
     public Evidence() {
     }
@@ -91,20 +85,22 @@ public class Evidence implements Serializable {
         this.path = path;
     }
 
-    public List<Process> getProcessList() {
-        return processList;
+    @XmlTransient
+    public List<InvestigationEvidence> getInvestigationEvidenceList() {
+        return investigationEvidenceList;
     }
 
-    public void setProcessList(List<Process> processList) {
-        this.processList = processList;
+    public void setInvestigationEvidenceList(List<InvestigationEvidence> investigationEvidenceList) {
+        this.investigationEvidenceList = investigationEvidenceList;
     }
 
-    public List<Complaint> getComplaintList() {
-        return complaintList;
+    @XmlTransient
+    public List<ComplaintEvidence> getComplaintEvidenceList() {
+        return complaintEvidenceList;
     }
 
-    public void setComplaintList(List<Complaint> complaintList) {
-        this.complaintList = complaintList;
+    public void setComplaintEvidenceList(List<ComplaintEvidence> complaintEvidenceList) {
+        this.complaintEvidenceList = complaintEvidenceList;
     }
 
     @Override

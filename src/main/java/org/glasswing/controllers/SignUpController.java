@@ -92,7 +92,7 @@ public class SignUpController {
                 role.setIdRole(1);
                 role.setName("USUARIO");
                 u.setRole(role);
-                
+                u.setActiveState(0);
                 Country c = new Country();
                 c.setCode("222");
                 c.setIdCountry(68);

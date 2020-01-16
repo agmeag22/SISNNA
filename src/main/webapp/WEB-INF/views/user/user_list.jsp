@@ -64,12 +64,14 @@
                                     <td>${item.createdDate}</td>
                                     <td>${item.updatedDate}</td>
                                     <c:set var="active" value="${item.activeState}" />
+                                    <td>
                                     <c:if test="${active>0}">
-                                        <td><a class="btn btn-success btn-sm" href="">Activo</a></td>
+                                        <a class="btn btn-success btn-sm" href="">Activo</a>
                                     </c:if>
                                     <c:if test="${active<1}">
-                                        <td><a class="btn btn-danger btn-sm" href="">Inactivo</a></td>
+                                        <a class="btn btn-danger btn-sm" href="">Inactivo</a>
                                     </c:if>
+                                    </td>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>

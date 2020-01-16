@@ -92,6 +92,7 @@ public class UserController {
         mav.addObject("role_list", role_list);
         mav.addObject("gender_list", gender_list);
         mav.addObject("country_list", country_list);
+         mav.addObject("department_list", department_list);
         mav.setViewName("user/new_user");
         return mav;
     }

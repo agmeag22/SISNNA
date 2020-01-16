@@ -166,6 +166,7 @@
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el rol.</small>
                             </div>
                             <div class="form-group">
+                                
                                 <label for="department_list">Departamento (Según función)</label> 
                                 <select class="custom-select" id="idDepartment" name="department" aria-describedby="id_roleHelp" required> 
                                     <c:forEach items="${department_list}" var="item">

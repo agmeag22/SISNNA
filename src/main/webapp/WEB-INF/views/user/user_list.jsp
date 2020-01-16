@@ -37,20 +37,20 @@
                             <tr>
                                 <th>ID</th>
                                 <th>USUARIO</th>
-                                <th>FECHA CREACIÃ“N</th>
-                                <th>ULTIMA ACTUALIZACIÃ“N</th>
+                                <th>FECHA CREACIÓN</th>
+                                <th>ULTIMA ACTUALIZACIÓN</th>
                                 <th>ESTADO</th>
-                                <th>ACCIÃ“N</th>
+                                <th>ACCIÓN</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
                                 <th>USUARIO</th>
-                                <th>FECHA CREACIÃ“N</th>
-                                <th>ULTIMA ACTUALIZACIÃ“N</th>
+                                <th>FECHA CREACIÓN</th>
+                                <th>ULTIMA ACTUALIZACIÓN</th>
                                 <th>ESTADO</th>
-                                <th>ACCIÃ“N</th>
+                                <th>ACCIÓN</th>
                                 
 
                             </tr>

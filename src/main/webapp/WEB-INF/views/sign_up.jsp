@@ -23,27 +23,28 @@
 
         <!-- Custom fonts for this template-->
         <link href="resources/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+        <script src="${pageContext.request.contextPath}/resources/vendor/jquery/jquery.min.js"></script>
         <!--<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">-->
 
         <!-- Custom styles for this template-->
         <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
         <script>
-            function updateDepartments(){
-                var id= document.getElementById("country_list_id").value;
-                
-                $.ajax({
-                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
-                    type:'POST',
-                    dataType: 'json',
-                    success: function( json ) {
-                        document.getElementById('country_list_department_id').innerHTML = "";
-                        $.each(json, function(key, value) {  
-                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
-                        });
-                        updateMuni();
-                    }
-                  });
-            }
+//            function updateDepartments(){
+//                var id= document.getElementById("country_list_id").value;
+//                
+//                $.ajax({
+//                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
+//                    type:'POST',
+//                    dataType: 'json',
+//                    success: function( json ) {
+//                        document.getElementById('country_list_department_id').innerHTML = "";
+//                        $.each(json, function(key, value) {  
+//                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
+//                        });
+//                        updateMuni();
+//                    }
+//                  });
+//            }
             
             function updateMuni(){
                 var id= document.getElementById("country_list_department_id").value;
@@ -69,12 +70,12 @@
                 document.getElementById('country_list_department_id').innerHTML = "";
             }
              $(document).ready(function () {
-                 updateDepartments();
-                $("#country_list_id").on("change",function(){
-                    clearMunicipalities();
-                    clearDepartments();
-                    updateDepartments();
-                });
+                 updateMuni();
+//                $("#country_list_id").on("change",function(){
+//                    clearMunicipalities();
+//                    clearDepartments();
+//                    updateDepartments();
+//                });
                 $("#country_list_department_id").on("change",function(){
                     clearMunicipalities();
                     updateMuni();
@@ -121,10 +122,10 @@
                                                 Apellido
                                               <input type="text" class="form-control form-control-user" name="lastname" id="inputLastName">
                                             </div>
-                                            <div class="form-group">
+<!--                                            <div class="form-group">
                                                 Usuario
                                               <input type="text" class="form-control form-control-user" name="username" id="inputUsername">
-                                            </div>
+                                            </div>-->
 
                                              <div class="form-group">
                                                 Contraseña
@@ -170,7 +171,7 @@
                                             <div class="form-group">
                                                 Departamento del país
                                               <div class="form-group">
-                                                  <select class="form-control" name="countryDepartment.idCountryDepartment">
+                                                  <select class="form-control" id="country_list_department_id" name="countryDepartment.idCountryDepartment">
                                                          <c:forEach items="${countryDepartments}" var="countryD">
                                                           <option value="${countryD.idCountryDepartment}">${countryD.name}</option>
                                                            </c:forEach>
@@ -180,10 +181,8 @@
                                             <div class="form-group">
                                                 Municipio
                                             <div class="form-group">
-                                                  <select class="form-control" name="municipality.idMunicipality">
-                                                         <c:forEach items="${municipalities}" var="municipality">
-                                                          <option value="${municipality.idMunicipality}">${municipality.name}</option>
-                                                           </c:forEach>
+                                                  <select class="form-control" id="country_list_department_municipality_id" name="municipality.idMunicipality">
+                                                       
                                                   </select>
                                               </div>
                                             </div>

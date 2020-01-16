@@ -17,6 +17,7 @@ import org.glasswing.domain.Country;
 import org.glasswing.domain.Gender;
 import org.glasswing.domain.Members;
 import org.glasswing.domain.Program;
+import org.glasswing.domain.State;
 import org.glasswing.domain.User;
 import org.glasswing.service.AbuseService;
 import org.glasswing.service.AccusedTypeService;
@@ -109,13 +110,11 @@ public class ComplaintController {
             m.setComplaint(c);
         }
         c.setComplaintProgramsList(y);
-        c.setUpdatedDate(new Date());
-        c.setCreatedDate(new Date());
-        User u = new User(1);
-        c.setUser(u);
-        c.setIsRecurrence(true);
+        c.setState(new State(1));
+      
         complaintService.save(c);
         ModelAndView mav = new ModelAndView();
+        
         
         mav.setViewName("redirect:/denuncias/denuncias_pendientes");
         return mav;

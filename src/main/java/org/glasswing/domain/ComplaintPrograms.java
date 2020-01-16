@@ -37,7 +37,6 @@ public class ComplaintPrograms implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_complaint_programs")
     private Integer idComplaintPrograms;
     @JoinColumn(name = "id_program", referencedColumnName = "id_program")

@@ -73,7 +73,7 @@ public class Complaint implements Serializable {
     private Date misdemeanorTime;
     @Lob
     @Size(max = 65535)
-    @Column(name = "accused _name")
+    @Column(name = "accused_name")
     private String accusedName;
     @Lob
     @Size(max = 65535)

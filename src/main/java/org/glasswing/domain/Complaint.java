@@ -107,28 +107,28 @@ public class Complaint implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Process> processList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintPrograms> complaintProgramsList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintEvidence> complaintEvidenceList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintAbuses> complaintAbusesList;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
     @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CountryDepartment countryDepartment;
     @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Municipality municipality;
     @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AccusedType accusedType;
     @JoinColumn(name = "id_state", referencedColumnName = "id_state")
     @ManyToOne(fetch = FetchType.EAGER)

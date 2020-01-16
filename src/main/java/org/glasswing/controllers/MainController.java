@@ -5,31 +5,12 @@
  */
 package org.glasswing.controllers;
 
-import java.util.List;
 import java.util.logging.Logger;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.servlet.http.HttpServletRequest;
-import org.glasswing.domain.Committee;
-import org.glasswing.domain.Country;
-import org.glasswing.domain.CountryDepartment;
-import org.glasswing.domain.Department;
-import org.glasswing.domain.Gender;
-import org.glasswing.domain.Members;
-import org.glasswing.domain.Municipality;
-import org.glasswing.domain.PersonalInfo;
-import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
-import org.glasswing.service.CountryDepartmentService;
-import org.glasswing.service.CountryService;
-import org.glasswing.service.DepartmentService;
-import org.glasswing.service.GenderService;
-import org.glasswing.service.MunicipalityService;
 import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,6 +39,7 @@ public class MainController {
 	public ModelAndView login(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView();
                 //if(username.equals("usuario") && password.equals("glasswing")){
+                
 		if(userServ.findOneUser(username, password)) {
 			log.info("Entrando a funcion init-min" + log.getName());    
 			mav= new ModelAndView("redirect:/dashboard");
@@ -68,6 +50,4 @@ public class MainController {
 			log.info("No se pudo realizar" + log.getName() +"u:::::::"+ username+ "p::::::"+password);
 		return mav; 
 	}
-	
-	
 }

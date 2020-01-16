@@ -14,23 +14,25 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "role")
+@Table(name = "role", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")})
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
+    @NamedQuery(name = "Role.findByIdRole", query = "SELECT r FROM Role r WHERE r.idRole = :idRole"),
+    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
 public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,13 +44,8 @@ public class Role implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @JoinTable(name = "role_permissions", joinColumns = {
-       
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role")}, inverseJoinColumns = {
-       
-        @JoinColumn(name = "id_role_permissions", referencedColumnName = "id_permission")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    private List<Permission> permissionList;
+    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+    private List<RolePermissions> rolePermissionsList;
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     private List<Members> membersList;
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
@@ -77,14 +74,16 @@ public class Role implements Serializable {
         this.name = name;
     }
 
-    public List<Permission> getPermissionList() {
-        return permissionList;
+    @XmlTransient
+    public List<RolePermissions> getRolePermissionsList() {
+        return rolePermissionsList;
     }
 
-    public void setPermissionList(List<Permission> permissionList) {
-        this.permissionList = permissionList;
+    public void setRolePermissionsList(List<RolePermissions> rolePermissionsList) {
+        this.rolePermissionsList = rolePermissionsList;
     }
 
+    @XmlTransient
     public List<Members> getMembersList() {
         return membersList;
     }
@@ -93,6 +92,7 @@ public class Role implements Serializable {
         this.membersList = membersList;
     }
 
+    @XmlTransient
     public List<User> getUserList() {
         return userList;
     }

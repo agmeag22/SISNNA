@@ -15,22 +15,26 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "municipality")
+@Table(name = "municipality", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Municipality.findAll", query = "SELECT m FROM Municipality m")})
+    @NamedQuery(name = "Municipality.findAll", query = "SELECT m FROM Municipality m"),
+    @NamedQuery(name = "Municipality.findByIdMunicipality", query = "SELECT m FROM Municipality m WHERE m.idMunicipality = :idMunicipality"),
+    @NamedQuery(name = "Municipality.findByName", query = "SELECT m FROM Municipality m WHERE m.name = :name")})
 public class Municipality implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,8 +46,7 @@ public class Municipality implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    
-        @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
+    @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
     @OneToMany(mappedBy = "municipality", fetch = FetchType.LAZY)
@@ -82,6 +85,7 @@ public class Municipality implements Serializable {
         this.countryDepartment = countryDepartment;
     }
 
+    @XmlTransient
     public List<PersonalInfo> getPersonalInfoList() {
         return personalInfoList;
     }
@@ -90,6 +94,7 @@ public class Municipality implements Serializable {
         this.personalInfoList = personalInfoList;
     }
 
+    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

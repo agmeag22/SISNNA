@@ -21,16 +21,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "abuse")
+@Table(name = "abuse", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Abuse.findAll", query = "SELECT a FROM Abuse a")})
+    @NamedQuery(name = "Abuse.findAll", query = "SELECT a FROM Abuse a"),
+    @NamedQuery(name = "Abuse.findByIdAbuse", query = "SELECT a FROM Abuse a WHERE a.idAbuse = :idAbuse"),
+    @NamedQuery(name = "Abuse.findByName", query = "SELECT a FROM Abuse a WHERE a.name = :name"),
+    @NamedQuery(name = "Abuse.findByCreatedDate", query = "SELECT a FROM Abuse a WHERE a.createdDate = :createdDate"),
+    @NamedQuery(name = "Abuse.findByUpdatedDate", query = "SELECT a FROM Abuse a WHERE a.updatedDate = :updatedDate")})
 public class Abuse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -42,20 +50,30 @@ public class Abuse implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @OneToMany(mappedBy = "abuse", fetch = FetchType.LAZY)
-    private List<Complaint> complaintList;
+    private List<ComplaintAbuses> complaintAbusesList;
 
     public Abuse() {
     }
 
     public Abuse(Integer idAbuse) {
         this.idAbuse = idAbuse;
+    }
+
+    public Abuse(Integer idAbuse, Date createdDate, Date updatedDate) {
+        this.idAbuse = idAbuse;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
     public Integer getIdAbuse() {
@@ -90,12 +108,13 @@ public class Abuse implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public List<Complaint> getComplaintList() {
-        return complaintList;
+    @XmlTransient
+    public List<ComplaintAbuses> getComplaintAbusesList() {
+        return complaintAbusesList;
     }
 
-    public void setComplaintList(List<Complaint> complaintList) {
-        this.complaintList = complaintList;
+    public void setComplaintAbusesList(List<ComplaintAbuses> complaintAbusesList) {
+        this.complaintAbusesList = complaintAbusesList;
     }
 
     @Override

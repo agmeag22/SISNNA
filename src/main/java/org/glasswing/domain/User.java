@@ -1,4 +1,5 @@
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -45,6 +46,8 @@ public class User implements Serializable {
     @Column(name = "id_user")
     private Integer idUser;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Column(name = "active_state")
+    private Integer activeState;
     @Size(max = 255)
     @Column(name = "email")
     private String email;
@@ -169,6 +172,14 @@ public class User implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public Integer getActiveState() {
+        return activeState;
+    }
+
+    public void setActiveState(Integer activeState) {
+        this.activeState = activeState;
     }
 
     @Override

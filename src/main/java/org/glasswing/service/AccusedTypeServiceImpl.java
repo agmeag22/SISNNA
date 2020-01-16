@@ -10,6 +10,7 @@ import org.glasswing.repositories.AccusedTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 
@@ -27,20 +28,20 @@ public class AccusedTypeServiceImpl implements AccusedTypeService {
 		// TODO Auto-generated method stub
 		return accusedTypeRepository.findById(id).get();
 	}
-            
+        @Transactional    
 	public void deleteAccusedType(AccusedType accusedType) {
 		accusedTypeRepository.delete(accusedType);
 		
 	}
 
-
+@Transactional
 	@Override
 	public void delete(AccusedType accusedType) {
 		accusedTypeRepository.delete(accusedType);
 		
 	}
 
-
+@Transactional
 	@Override
 	public void save(AccusedType accusedType) {
 		accusedTypeRepository.save(accusedType);

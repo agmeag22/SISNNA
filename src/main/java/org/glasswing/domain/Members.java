@@ -14,20 +14,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "members")
+@Table(name = "members", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Members.findAll", query = "SELECT m FROM Members m")})
+    @NamedQuery(name = "Members.findAll", query = "SELECT m FROM Members m"),
+    @NamedQuery(name = "Members.findByIdMembers", query = "SELECT m FROM Members m WHERE m.idMembers = :idMembers")})
 public class Members implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -36,18 +38,15 @@ public class Members implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_members")
     private Integer idMembers;
-    
-    @JoinColumn(name = "id_committee", referencedColumnName = "id_committee")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Committee committee;
-   
-    @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Role role;
-    
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
+    @JoinColumn(name = "id_committee", referencedColumnName = "id_committee")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Committee committee;
+    @JoinColumn(name = "id_role", referencedColumnName = "id_role")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Role role;
 
     public Members() {
     }
@@ -64,6 +63,14 @@ public class Members implements Serializable {
         this.idMembers = idMembers;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Committee getCommittee() {
         return committee;
     }
@@ -78,14 +85,6 @@ public class Members implements Serializable {
 
     public void setRole(Role role) {
         this.role = role;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 
     @Override

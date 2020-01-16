@@ -6,47 +6,47 @@
 package org.glasswing.service;
 
 import java.util.List;
-import org.glasswing.domain.Role;
-import org.glasswing.repositories.RoleRepository;
+import org.glasswing.domain.Program;
+import org.glasswing.repositories.ProgramRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class RoleServiceImpl implements RoleService {
+public class ProgramServiceImpl implements ProgramService {
 
     @Autowired
-    RoleRepository RoleRepository;
+    ProgramRepository programRepository;
 
     @Override
-    public Role findOne(Integer id) {
+    public Program findOne(Integer id) {
         // TODO Auto-generated method stub
-        return RoleRepository.findById(id).get();
+        return programRepository.findById(id).get();
     }
 
     @Transactional
-    public void deleteRole(Role role) {
-        RoleRepository.delete(role);
-
-    }
-
-    @Transactional
-    @Override
-    public void delete(Role role) {
-        RoleRepository.delete(role);
+    public void deleteProgram(Program program) {
+        programRepository.delete(program);
 
     }
 
     @Transactional
     @Override
-    public void save(Role role) {
-        RoleRepository.save(role);
+    public void delete(Program program) {
+        programRepository.delete(program);
+
+    }
+
+    @Transactional
+    @Override
+    public void save(Program program) {
+        programRepository.save(program);
 
     }
 
     @Override
-    public List<Role> getAll() throws DataAccessException {
-        return RoleRepository.findAll();
+    public List<Program> getAll() throws DataAccessException {
+        return programRepository.findAll();
     }
 }

@@ -24,7 +24,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-	@Query(nativeQuery=true, value="select count(*) from user where email= :username and password= :password")
+	@Query(nativeQuery=true, value="select count(*) from user where email= :username and password= :password and active_state=true")
 	public int findOneUser(@Param("username")String username,@Param("password") String password) throws DataAccessException ;
         
         public List<User> findByRoleNot(Role id);

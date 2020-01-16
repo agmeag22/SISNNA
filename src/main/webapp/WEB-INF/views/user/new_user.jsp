@@ -12,59 +12,59 @@
     <jsp:attribute name="scripts">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/new_user.css" type="text/css" media="screen">
         <script>
-            function updateDepartments(){
-                var id= document.getElementById("country_list_id").value;
-                
+            function updateDepartments() {
+                var id = document.getElementById("country_list_id").value;
+
                 $.ajax({
-                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
-                    type:'POST',
-                    dataType: 'json',
-                    success: function( json ) {
-                        document.getElementById('country_list_department_id').innerHTML = "";
-                        $.each(json, function(key, value) {  
-                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
-                        });
-                        updateMuni();
-                    }
-                  });
-            }
-            
-            function updateMuni(){
-                var id= document.getElementById("country_list_department_id").value;
+                    url: `${pageContext.request.contextPath}/country/${"${id}"}`,
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (json) {
+                                    document.getElementById('country_list_department_id').innerHTML = "";
+                                    $.each(json, function (key, value) {
+                                        $('<option></option>', {text: value}).attr('value', key).appendTo('#country_list_department_id');
+                                    });
+                                    updateMuni();
+                                }
+                            });
+                        }
+
+                        function updateMuni() {
+                            var id = document.getElementById("country_list_department_id").value;
 //                console.log("ENTRO");
-                $.ajax({
-                    url:`${pageContext.request.contextPath}/department/${"${id}"}`,
-                    type:'POST',
-                    dataType: 'json',
-                    success: function( json ) {
+                            $.ajax({
+                                url: `${pageContext.request.contextPath}/department/${"${id}"}`,
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            success: function (json) {
 //                        console.log("ENTRO");
-                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
-                        $.each(json, function(key, value) {  
+                                                document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                                                $.each(json, function (key, value) {
 //                            console.log(value);
-                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_municipality_id');
-                        });
-                    }
-                  });
-            }
-            function clearMunicipalities(){
-                document.getElementById('country_list_department_municipality_id').innerHTML = "";
-            }
-             function clearDepartments(){
-                document.getElementById('country_list_department_id').innerHTML = "";
-            }
-             $(document).ready(function () {
-                 updateDepartments();
-                $("#country_list_id").on("change",function(){
-                    clearMunicipalities();
-                    clearDepartments();
-                    updateDepartments();
-                });
-                $("#country_list_department_id").on("change",function(){
-                    clearMunicipalities();
-                    updateMuni();
-                });
-            });
-            
+                                                    $('<option></option>', {text: value}).attr('value', key).appendTo('#country_list_department_municipality_id');
+                                                });
+                                            }
+                                        });
+                                    }
+                                    function clearMunicipalities() {
+                                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                                    }
+                                    function clearDepartments() {
+                                        document.getElementById('country_list_department_id').innerHTML = "";
+                                    }
+                                    $(document).ready(function () {
+                                        updateDepartments();
+                                        $("#country_list_id").on("change", function () {
+                                            clearMunicipalities();
+                                            clearDepartments();
+                                            updateDepartments();
+                                        });
+                                        $("#country_list_department_id").on("change", function () {
+                                            clearMunicipalities();
+                                            updateMuni();
+                                        });
+                                    });
+
         </script>
     </jsp:attribute>
 
@@ -91,11 +91,10 @@
                             </div>
                             <div class="form-group">
                                 Fecha de nacimiento
-                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" required>
-
+                                <input type="date" class="form-control " id="fechainc" name="birthDate" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su fecha de nacimiento.</small>
                             </div>  
-                                
+
                             <div class="form-group">
                                 <label for="gender_list">Genero</label> 
                                 <select class="custom-select" id="gendeid" name="idGender" aria-describedby="idGenderHelp" required> 
@@ -117,14 +116,14 @@
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
                                 <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp" required> 
-
+                                    <option selected>N/A</option>
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Municipio</label> 
                                 <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
-
+                                    <option selected>N/A</option>
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
                             </div>
@@ -197,8 +196,12 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-user">
-                    Añadir Usuario
+                <button type="submit" class="btn btn-warning btn-user button">
+                    <span class="icon text-white-50">
+                        <i class="fas fa-edit"></i>
+                    </span>
+                    <span class="text">AÑADIR USUARIO</span>
+
                 </button>
             </div>
 

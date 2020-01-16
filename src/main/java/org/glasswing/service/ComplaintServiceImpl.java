@@ -7,6 +7,7 @@ package org.glasswing.service;
 
 import java.util.List;
 import org.glasswing.domain.Complaint;
+import org.glasswing.domain.State;
 import org.glasswing.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -48,5 +49,14 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public List<Complaint> getAll() throws DataAccessException {
         return complaintRepository.findAll();
+    }
+
+    @Override
+    public List<Complaint> findByStateNot(State s) throws DataAccessException {
+         return complaintRepository.findByStateNot(s);
+    }
+    @Override
+    public List<Complaint> findByState(State s) throws DataAccessException {
+         return complaintRepository.findByState(s);
     }
 }

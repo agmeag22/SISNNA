@@ -7,6 +7,7 @@ package org.glasswing.service;
 
 import java.util.List;
 import org.glasswing.domain.Complaint;
+import org.glasswing.domain.State;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -17,6 +18,8 @@ import org.springframework.dao.DataAccessException;
 public interface ComplaintService {
 
 	public List<Complaint> getAll() throws DataAccessException;
+        public List<Complaint> findByStateNot(State s) throws DataAccessException;
+        public List<Complaint> findByState(State s) throws DataAccessException;
 	public Complaint findOne(Integer code);
 	public void delete(Complaint c);
 	public void save(Complaint c);

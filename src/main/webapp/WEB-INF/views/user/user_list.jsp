@@ -37,20 +37,20 @@
                             <tr>
                                 <th>ID</th>
                                 <th>USUARIO</th>
-                                <th>FECHA CREACIÓN</th>
-                                <th>ULTIMA ACTUALIZACIÓN</th>
+                                <th>FECHA CREACIÃ“N</th>
+                                <th>ULTIMA ACTUALIZACIÃ“N</th>
                                 <th>ESTADO</th>
-                                <th>ACCIÓN</th>
+                                <th>ACCIÃ“N</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
                                 <th>USUARIO</th>
-                                <th>FECHA CREACIÓN</th>
-                                <th>ULTIMA ACTUALIZACIÓN</th>
+                                <th>FECHA CREACIÃ“N</th>
+                                <th>ULTIMA ACTUALIZACIÃ“N</th>
                                 <th>ESTADO</th>
-                                <th>ACCIÓN</th>
+                                <th>ACCIÃ“N</th>
                                 
 
                             </tr>
@@ -84,7 +84,6 @@
                                                 <c:if test="${active>0}">
                                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/usuarios/activar_inactivar/${item.idUser}/${item.activeState}"><i class="fas fa-ban"></i>   Inhabilitar</a>
                                                 </c:if>
-
                                             </div>
                                         </div></td>
                                 </tr>

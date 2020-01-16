@@ -2,6 +2,7 @@
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <t:admin-template>
     <jsp:attribute name="styles">
 
@@ -11,64 +12,64 @@
     <jsp:attribute name="scripts">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/new_user.css" type="text/css" media="screen">
         <script>
-            function updateDepartments(){
-                var id= document.getElementById("country_list_id").value;
-                
+            function updateDepartments() {
+                var id = document.getElementById("country_list_id").value;
+
                 $.ajax({
-                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
-                    type:'POST',
-                    dataType: 'json',
-                    success: function( json ) {
-                        document.getElementById('country_list_department_id').innerHTML = "";
-                        $.each(json, function(key, value) {  
-                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
-                        });
-                        updateMuni();
-                    }
-                  });
-            }
-            
-            function updateMuni(){
-                var id= document.getElementById("country_list_department_id").value;
+                    url: `${pageContext.request.contextPath}/country/${"${id}"}`,
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (json) {
+                                    document.getElementById('country_list_department_id').innerHTML = "";
+                                    $.each(json, function (key, value) {
+                                        $('<option></option>', {text: value}).attr('value', key).appendTo('#country_list_department_id');
+                                    });
+                                    updateMuni();
+                                }
+                            });
+                        }
+
+                        function updateMuni() {
+                            var id = document.getElementById("country_list_department_id").value;
 //                console.log("ENTRO");
-                $.ajax({
-                    url:`${pageContext.request.contextPath}/department/${"${id}"}`,
-                    type:'POST',
-                    dataType: 'json',
-                    success: function( json ) {
+                            $.ajax({
+                                url: `${pageContext.request.contextPath}/department/${"${id}"}`,
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            success: function (json) {
 //                        console.log("ENTRO");
-                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
-                        $.each(json, function(key, value) {  
+                                                document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                                                $.each(json, function (key, value) {
 //                            console.log(value);
-                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_municipality_id');
-                        });
-                    }
-                  });
-            }
-            function clearMunicipalities(){
-                document.getElementById('country_list_department_municipality_id').innerHTML = "";
-            }
-             function clearDepartments(){
-                document.getElementById('country_list_department_id').innerHTML = "";
-            }
-             $(document).ready(function () {
-                 updateDepartments();
-                $("#country_list_id").on("change",function(){
-                    clearMunicipalities();
-                    clearDepartments();
-                    updateDepartments();
-                });
-                $("#country_list_department_id").on("change",function(){
-                    clearMunicipalities();
-                    updateMuni();
-                });
-            });
-            
+                                                    $('<option></option>', {text: value}).attr('value', key).appendTo('#country_list_department_municipality_id');
+                                                });
+                                            }
+                                        });
+                                    }
+                                    function clearMunicipalities() {
+                                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                                    }
+                                    function clearDepartments() {
+                                        document.getElementById('country_list_department_id').innerHTML = "";
+                                    }
+                                    $(document).ready(function () {
+                                        updateDepartments();
+                                        $("#country_list_id").on("change", function () {
+                                            clearMunicipalities();
+                                            clearDepartments();
+                                            updateDepartments();
+                                        });
+                                        $("#country_list_department_id").on("change", function () {
+                                            clearMunicipalities();
+                                            updateMuni();
+                                        });
+                                    });
+
         </script>
     </jsp:attribute>
 
     <jsp:body>
-        <form action="${pageContext.request.contextPath}/usuarios/guardar" method = "post" class="user">
+        <form action="${pageContext.request.contextPath}/usuarios/guardar_modificacion/${user.idUser}" method = "post" class="user">
             <div class="container1">
                 <div class="container-grid-flex">
 
@@ -80,24 +81,22 @@
                         <div class="card-body card-body2">
                             <div class="form-group">
                                 Nombres
-                                <input type="text" class="form-control " name="name" id="inputName" required>
-                                <small id="nameHelp" class="form-text text-muted">Ingrese nombres.</small>
+                                <input type="text" class="form-control " name="name" id="inputName" value="${user.personalInfo.name}"required>
+                                <small id="nameHelp" class="form-text text-muted">Ingrese nombre completo</small>
                             </div>
-                            <div class="form-group">
-                                Apellidos
-                                <input type="text" class="form-control " name="lastname" id="inputLastName" required >
-                                <small id="nameHelp" class="form-text text-muted">Ingrese apellidos.</small>
-                            </div>
+
                             <div class="form-group">
                                 Fecha de nacimiento
-                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" required>
+                                <fmt:formatDate pattern="yyyy-MM-dd" value="${user.personalInfo.birthDate}" var="theFormattedDate" />
+                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" value="${theFormattedDate}"required>
 
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su fecha de nacimiento.</small>
                             </div>  
-                                
+
                             <div class="form-group">
                                 <label for="gender_list">Genero</label> 
                                 <select class="custom-select" id="gendeid" name="idGender" aria-describedby="idGenderHelp" required> 
+                                    <option selected value="${user.personalInfo.gender.idGender}">${user.personalInfo.gender.name} </option>
                                     <c:forEach items="${gender_list}" var="item">
                                         <option value="${item.idGender}">${item.name}</option>
                                     </c:forEach>
@@ -106,7 +105,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="country_list">País</label> 
-                                <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp" required> 
+                                <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp"  required> 
+                                    <option selected value="${user.personalInfo.country.idCountry}">${user.personalInfo.country.name} </option>
+                                    
                                     <c:forEach items="${country_list}" var="country">
                                         <option value="${country.idCountry}">${country.name}</option>
                                     </c:forEach>
@@ -115,7 +116,9 @@
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
-                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp" required> 
+                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp"  required> 
+                                    <option selected value="N/A</option>
+                                    <%--<option selected value="${user.personalInfo.countryDepartment.idCountryDepartment}">${user.personalInfo.countryDepartment.name}</option>--%>
 
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
@@ -123,13 +126,15 @@
                             <div class="form-group">
                                 <label for="country_department_list">Municipio</label> 
                                 <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
+                                    <option selected value="N/A</option>
+                                    <%--<option selected  value="${user.personalInfo.municipality.idMunicipality}"> ${user.personalInfo.municipality.name}</option>--%>
 
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
                             </div>
                             <div class="form-group">
                                 Direccion
-                                <input type="text" class="form-control " name="address" id="address" required>
+                                <input type="text" class="form-control " name="address" id="address" value="${user.personalInfo.address}" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su dirección.</small>
                             </div>
 
@@ -143,22 +148,23 @@
                         <div class="card-body">
                             <div class="form-group">
                                 E-mail
-                                <input type="email" class="form-control " name="email" id="inputEmail" required>
+                                <input type="email" class="form-control " name="email" id="inputEmail" value="${user.email}" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su correo electrónico</small>
                             </div>
 
                             <div class="form-group">
                                 Password
-                                <input type="password" class="form-control " name="password" id="inputPassword" required>
+                                <input type="password" class="form-control " name="password" id="inputPassword" required value="${user.password}" >
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su contraseña.</small>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control " name="password2" id="inputPassword2" required>
+                                <input type="password" class="form-control " name="password2" id="inputPassword2" value="${user.password}" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese de nuevo su contraseña.</small>
                             </div>
                             <div class="form-group">
                                 <label for="role_list">Rol</label> 
-                                <select class="custom-select" id="country_list_department_municipality_id" name="role" aria-describedby="id_roleHelp" required> 
+                                <select class="custom-select" id="country_list_department_municipality_id" name="role" aria-describedby="id_roleHelp"  required> 
+                                    <option selected value="${user.role.idRole}">${user.role.name} </option>
                                     <c:forEach items="${role_list}" var="item">
                                         <option value="${item.idRole}">${item.name}</option>
                                     </c:forEach>
@@ -168,6 +174,9 @@
                             <div class="form-group">
                                 <label for="department_list">Departamento (Según función)</label> 
                                 <select class="custom-select" id="idDepartment" name="department" aria-describedby="id_roleHelp" required> 
+                                  
+                                    <option selected value="${user.department.idDepartment}">${user.department.name} </option>
+                                    
                                     <c:forEach items="${department_list}" var="item">
                                         <option value="${item.idDepartment}">${item.name}</option>
                                     </c:forEach>

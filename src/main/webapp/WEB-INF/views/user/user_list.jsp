@@ -23,7 +23,7 @@
     <jsp:body>
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">USUARIOS</h1>
-      
+
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -36,19 +36,22 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>PAIS</th>
-                                <th>MIEMBROS</th>
+                                <th>USUARIO</th>
+                                <th>FECHA CREACIÓN</th>
+                                <th>ULTIMA ACTUALIZACIÓN</th>
+                                <th>ESTADO</th>
                                 <th>ACCIÓN</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>PAIS</th>
-                                <th>MIEMBROS</th>
+                                <th>USUARIO</th>
+                                <th>FECHA CREACIÓN</th>
+                                <th>ULTIMA ACTUALIZACIÓN</th>
+                                <th>ESTADO</th>
                                 <th>ACCIÓN</th>
+                                
 
                             </tr>
                         </tfoot>
@@ -60,15 +63,28 @@
 
                                     <td>${item.createdDate}</td>
                                     <td>${item.updatedDate}"</td>
+                                    <c:set var="active" value="${item.activeState}" />
+                                    <c:if test="${active>0}">
+                                        <td><a class="btn btn-success btn-sm" href="">Activo</a></td>
+                                    </c:if>
+                                    <c:if test="${active<1}">
+                                        <td><a class="btn btn-danger btn-sm" href="">Inactivo</a></td>
+                                    </c:if>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <a class="dropdown-item" href="/usuarios/modificar_usuario/${item.idUser}"><i class="fas fa-edit"></i> Editar</a>
-                                                <a class="dropdown-item" href="/usuarios/eliminar/${item.idUser}"><i class="fas fa-trash"></i> Eliminar</a>
-                    
-                                                
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/usuarios/modificar_usuario/${item.idUser}"><i class="fas fa-edit"></i>   Editar</a>
+
+                                                <c:set var="active" value="${item.activeState}" />
+                                                <c:if test="${active<1}">
+                                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/usuarios/activar_inactivar/${item.idUser}/${item.activeState}"><i class="fas fa-unlock-alt"></i>   Habilitar</a>
+                                                </c:if>
+                                                <c:if test="${active>0}">
+                                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/usuarios/activar_inactivar/${item.idUser}/${item.activeState}"><i class="fas fa-ban"></i>   Inhabilitar</a>
+                                                </c:if>
+
                                             </div>
                                         </div></td>
                                 </tr>
@@ -78,5 +94,5 @@
                 </div>
             </div>
         </div>
-                </jsp:body>
-            </t:admin-template> 
+    </jsp:body>
+</t:admin-template> 

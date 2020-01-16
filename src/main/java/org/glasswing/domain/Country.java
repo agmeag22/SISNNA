@@ -19,15 +19,23 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "country")
+@Table(name = "country", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c")})
+    @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c"),
+    @NamedQuery(name = "Country.findByIdCountry", query = "SELECT c FROM Country c WHERE c.idCountry = :idCountry"),
+    @NamedQuery(name = "Country.findByCode", query = "SELECT c FROM Country c WHERE c.code = :code"),
+    @NamedQuery(name = "Country.findByIso3166a1", query = "SELECT c FROM Country c WHERE c.iso3166a1 = :iso3166a1"),
+    @NamedQuery(name = "Country.findByIso3166a2", query = "SELECT c FROM Country c WHERE c.iso3166a2 = :iso3166a2"),
+    @NamedQuery(name = "Country.findByName", query = "SELECT c FROM Country c WHERE c.name = :name")})
 public class Country implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -104,6 +112,7 @@ public class Country implements Serializable {
         this.name = name;
     }
 
+    @XmlTransient
     public List<Committee> getCommitteeList() {
         return committeeList;
     }
@@ -112,6 +121,7 @@ public class Country implements Serializable {
         this.committeeList = committeeList;
     }
 
+    @XmlTransient
     public List<CountryDepartment> getCountryDepartmentList() {
         return countryDepartmentList;
     }
@@ -120,6 +130,7 @@ public class Country implements Serializable {
         this.countryDepartmentList = countryDepartmentList;
     }
 
+    @XmlTransient
     public List<PersonalInfo> getPersonalInfoList() {
         return personalInfoList;
     }
@@ -128,6 +139,7 @@ public class Country implements Serializable {
         this.personalInfoList = personalInfoList;
     }
 
+    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

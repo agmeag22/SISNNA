@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -80,17 +81,17 @@
                         <div class="card-body card-body2">
                             <div class="form-group">
                                 Nombres
-                                <input type="text" class="form-control " name="name" id="inputName">
+                                <input type="text" class="form-control " name="name" id="inputName" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese nombres.</small>
                             </div>
                             <div class="form-group">
                                 Apellidos
-                                <input type="text" class="form-control " name="lastname" id="inputLastName">
+                                <input type="text" class="form-control " name="lastname" id="inputLastName" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese apellidos.</small>
                             </div>
                             <div class="form-group">
                                 Fecha de nacimiento
-                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate">
+                                <input type="date" class="form-control " id="fechainc" max="2020-1-13" name="birthDate" required>
 
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su fecha de nacimiento.</small>
                             </div>  
@@ -115,21 +116,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
-                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp"> 
+                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp" required> 
 
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Municipio</label> 
-                                <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp"> 
+                                <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
 
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
                             </div>
                             <div class="form-group">
                                 Direccion
-                                <input type="text" class="form-control " name="address" id="address">
+                                <input type="text" class="form-control " name="address" id="address" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su dirección.</small>
                             </div>
 
@@ -143,17 +144,17 @@
                         <div class="card-body">
                             <div class="form-group">
                                 E-mail
-                                <input type="email" class="form-control " name="email" id="inputEmail">
+                                <input type="email" class="form-control " name="email" id="inputEmail" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su correo electrónico</small>
                             </div>
 
                             <div class="form-group">
                                 Password
-                                <input type="password" class="form-control " name="password" id="inputPassword">
+                                <input type="password" class="form-control " name="password" id="inputPassword" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese su contraseña.</small>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control " name="password2" id="inputPassword2">
+                                <input type="password" class="form-control " name="password2" id="inputPassword2" required>
                                 <small id="nameHelp" class="form-text text-muted">Ingrese de nuevo su contraseña.</small>
                             </div>
                             <div class="form-group">
@@ -172,17 +173,9 @@
                                         <option value="${item.idDepartment}">${item.name}</option>
                                     </c:forEach>
                                 </select> 
-                                <small id="nameHelp" class="form-text text-muted">Seleccione el rol.</small>
+                                <small id="nameHelp" class="form-text text-muted">Seleccione el departamento al que pertenece.</small>
                             </div>
-<!--                            <div class="form-group">
-                                <label for="department_list">Comité</label> 
-                                <select class="custom-select" id="idDepartment" name="committee" aria-describedby="id_roleHelp" required> 
-                                    <c:forEach items="${committee_list}" var="item">
-                                        <option value="${item.committeeList.idCommittee}">${item.name}</option>
-                                    </c:forEach>
-                                </select> 
-                                <small id="nameHelp" class="form-text text-muted">Seleccione el comité al que pertenece.</small>
-                            </div>-->
+
                         </div>
                     </div>
                     <div class="card mb-4 contact_info_container">
@@ -198,7 +191,7 @@
 
                             <div class="form-group">
                                 Numero de telefono
-                                <input type="number" max="99999999" class="form-control "  name="guardian_contact" id="inputguradiancontact">
+                                <input type="text" class="form-control "  name="guardian_contact" id="inputguradiancontact">
                                 <small id="nameHelp" class="form-text text-muted">Ingrese el numero de contacto del representante.</small>
                             </div>
                         </div>

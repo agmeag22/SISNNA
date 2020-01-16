@@ -21,15 +21,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "country_department")
+@Table(name = "country_department", catalog = "sisnna", schema = "")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CountryDepartment.findAll", query = "SELECT c FROM CountryDepartment c")})
+    @NamedQuery(name = "CountryDepartment.findAll", query = "SELECT c FROM CountryDepartment c"),
+    @NamedQuery(name = "CountryDepartment.findByIdCountryDepartment", query = "SELECT c FROM CountryDepartment c WHERE c.idCountryDepartment = :idCountryDepartment"),
+    @NamedQuery(name = "CountryDepartment.findByName", query = "SELECT c FROM CountryDepartment c WHERE c.name = :name")})
 public class CountryDepartment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -82,6 +87,7 @@ public class CountryDepartment implements Serializable {
         this.country = country;
     }
 
+    @XmlTransient
     public List<Municipality> getMunicipalityList() {
         return municipalityList;
     }
@@ -90,6 +96,7 @@ public class CountryDepartment implements Serializable {
         this.municipalityList = municipalityList;
     }
 
+    @XmlTransient
     public List<PersonalInfo> getPersonalInfoList() {
         return personalInfoList;
     }
@@ -98,6 +105,7 @@ public class CountryDepartment implements Serializable {
         this.personalInfoList = personalInfoList;
     }
 
+    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

@@ -27,7 +27,11 @@ public class UserServiceImpl implements UserService {
 			if(userRepository.findOneUser(username, password)==1) result=true;
 			return result;
 	}
-        
+   
+        @Override
+	public User findByEmail(String email) throws DataAccessException {
+			return userRepository.findByEmail(email);
+	}
         @Override
         public User findOne(Integer id) {
 		// TODO Auto-generated method stub

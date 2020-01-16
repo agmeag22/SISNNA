@@ -83,9 +83,11 @@ public class UserController {
         role_list = roleService.getAll();
         gender_list = genderService.getAll();
         country_list = countryService.getAll();
+        department_list = departmentService.getAll();
         mav.addObject("role_list", role_list);
         mav.addObject("gender_list", gender_list);
         mav.addObject("country_list", country_list);
+        mav.addObject("department_list", department_list);
         mav.setViewName("user/new_user");
         return mav;
     }
@@ -110,8 +112,8 @@ public class UserController {
             @RequestParam(value = "id_municipality") int id_municipality,
             @RequestParam(value = "email") String email,
             @RequestParam(value = "password") String password,
-            @RequestParam(value = "role") int role
-//            @RequestParam(value = "department") int department,
+            @RequestParam(value = "role") int role,
+            @RequestParam(value = "department") int department
 //            @RequestParam(value = "committee") String committee
     ) {
         ModelAndView mav = new ModelAndView();
@@ -142,9 +144,9 @@ public class UserController {
         personalInfo.setCountryDepartment(department1);
         personalInfo.setMunicipality(municipality);
         User user = new User();
-//        Department d = new Department();
-//        d.setIdDepartment(department);
-//        user.setDepartment(d);
+        Department d = new Department();
+        d.setIdDepartment(department);
+        user.setDepartment(d);
         user.setEmail(email);
         user.setPassword(password);
         Role r = new Role();
@@ -212,5 +214,7 @@ public class UserController {
             return hm;
             
     }
+    
+    
 
 }

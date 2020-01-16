@@ -27,7 +27,61 @@
 
         <!-- Custom styles for this template-->
         <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
-
+        <script>
+            function updateDepartments(){
+                var id= document.getElementById("country_list_id").value;
+                
+                $.ajax({
+                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
+                    type:'POST',
+                    dataType: 'json',
+                    success: function( json ) {
+                        document.getElementById('country_list_department_id').innerHTML = "";
+                        $.each(json, function(key, value) {  
+                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
+                        });
+                        updateMuni();
+                    }
+                  });
+            }
+            
+            function updateMuni(){
+                var id= document.getElementById("country_list_department_id").value;
+//                console.log("ENTRO");
+                $.ajax({
+                    url:`${pageContext.request.contextPath}/department/${"${id}"}`,
+                    type:'POST',
+                    dataType: 'json',
+                    success: function( json ) {
+//                        console.log("ENTRO");
+                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                        $.each(json, function(key, value) {  
+//                            console.log(value);
+                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_municipality_id');
+                        });
+                    }
+                  });
+            }
+            function clearMunicipalities(){
+                document.getElementById('country_list_department_municipality_id').innerHTML = "";
+            }
+             function clearDepartments(){
+                document.getElementById('country_list_department_id').innerHTML = "";
+            }
+             $(document).ready(function () {
+                 updateDepartments();
+                $("#country_list_id").on("change",function(){
+                    clearMunicipalities();
+                    clearDepartments();
+                    updateDepartments();
+                });
+                $("#country_list_department_id").on("change",function(){
+                    clearMunicipalities();
+                    updateMuni();
+                });
+            });
+            
+        </script>
     </head>
 
     <body class="bg-gradient-primary">
@@ -49,10 +103,11 @@
                                         <div class="text-center">
                                             <h1 class="h6 text-gray-900 mb-4">Registro de usuario en el sistema</h1>
                                             <h2 class="h6 text-gray-900 mb-4">Inserte sus datos personales</h2>
+                                            ${respuesta}
                                         </div>
 
                                 <form action="${pageContext.request.contextPath}/signUser" method = "post" class="user">
-                                    ${respuesta}
+                                    
                                     <!--
                                             <div class="form-group">
                                                 ID
@@ -77,7 +132,7 @@
                                             </div>
                                             <div class="form-group">
                                                 E-mail
-                                              <input type="text" class="form-control form-control-user" name="email" id="inputEmail">
+                                              <input type="email" class="form-control form-control-user" name="email" id="inputEmail">
                                             </div>
                                             <div class="form-group">
                                                 Dirección
@@ -99,11 +154,22 @@
                                             <input type="date" class="form-control" id="fechainc" >
                                         
                                             </div>
-                                            
+                                    <!--
+                                            <div class="form-group">
+                                                País
+                                              <div class="form-group">
+                                                 <select class="form-control" name="country.idCountry" value="68">
+                                                         <c:forEach items="${country}" var="co">
+                                                          <option value="${co.idCountry}">${co.name}</option>
+                                                           </c:forEach>
+                                                </select>
+                                                    </div>
+                                            </div> -->
+                                    
+                                    
                                             <div class="form-group">
                                                 Departamento del país
                                               <div class="form-group">
-
                                                   <select class="form-control" name="countryDepartment.idCountryDepartment">
                                                          <c:forEach items="${countryDepartments}" var="countryD">
                                                           <option value="${countryD.idCountryDepartment}">${countryD.name}</option>
@@ -136,6 +202,17 @@
                                                 Cargo
                                               <input type="text" class="form-control form-control-user" name="position" id="inputPosition">
                                             </div>
+                                    
+                                    <!--Hidden and preset attributes-->
+                                    <!-- Pais a El Salvador -->
+                                    <!--          <input type="hidden" class="form-control form-control-user" name="role" id="inputRole" value="${country}"> -->
+                                                
+                                    
+                                                <!-- Role -->
+                                              <!-- <input type="hidden" class="form-control form-control-user" name="role" id="inputRole"> -->
+                                            <!-- State -->
+                                            <!-- <input type="text" class="form-control form-control-user" name="State" id="inputState" readonly="true" hidden="true"> -->
+                                            
                                     
                                             <button type="submit" class="btn btn-primary btn-user">
                                               Registrarse

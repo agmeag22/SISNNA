@@ -116,14 +116,12 @@
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
                                 <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp"> 
-
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Municipio</label> 
                                 <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp"> 
-
                                 </select> 
                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
                             </div>

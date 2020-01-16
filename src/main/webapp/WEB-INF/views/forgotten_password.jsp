@@ -43,15 +43,16 @@
                                             <h1 class="h6 text-gray-900 mb-4">BIENVENIDO A SISTEMA DE ALERTAS</h1>
                                             <h2 class="h6 text-gray-900 mb-4">Recuperación de contraseña</h2>
                                         </div>
-                                        <form action="${pageContext.request.contextPath}/forgottenPass" method = "post" class="user">
+                                        <form action="${pageContext.request.contextPath}/pedir_contrasena" method = "post" class="user">
                                             <div class="form-group">
-                                                <input type="text" class="form-control form-control-user" name="username" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Ingresa tu usuario">
+                                                <input type="email" class="form-control form-control-user" name="email" id="idEmail" aria-describedby="emailHelp" placeholder="Ingrese su email">
                                             </div>
                                             
                                             <button type="submit" class="btn btn-primary btn-user btn-block">
                                                 Enviar enlace de recuperación
                                             </button>
-                                            
+                                           
+                                            ${respuesta}
                                         </form>
                                     </div>
                                 </div>

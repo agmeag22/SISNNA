@@ -46,17 +46,6 @@ public class MainController {
 	@Autowired
 	private UserService userServ;
         
-        @Autowired
-	private CountryDepartmentService countryDepartmentServ;
-        
-        @Autowired
-	private MunicipalityService munServ;
-        
-        @Autowired
-	private GenderService genServ;
-        
-        @Autowired
-	private DepartmentService deptServ;
 	@RequestMapping("/")
 	public ModelAndView initMain() {
 		
@@ -79,51 +68,6 @@ public class MainController {
 			log.info("No se pudo realizar" + log.getName() +"u:::::::"+ username+ "p::::::"+password);
 		return mav; 
 	}
-	
-	
-	@RequestMapping(value="/registrar")
-	public ModelAndView signUp() {
-		
-		ModelAndView mav = new ModelAndView();
-                
-                
-                List<CountryDepartment> cdepts = countryDepartmentServ.getAll();
-                List<Municipality> mun = munServ.getAll();
-                List<Gender> gen = genServ.getAll();
-                List<Department> dept = deptServ.getAll();
-                mav.addObject("countryDepartments" , cdepts);
-                mav.addObject("municipalities" , mun);
-                mav.addObject("genders" , gen);
-                mav.addObject("departments" , dept);
-                                
-		mav.setViewName("sign_up");
-		return mav;
-	}
-        
-        @RequestMapping(value="/signUser")
-        @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	public ModelAndView signUser(@ModelAttribute User u) {
-		//(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpServletRequest request)
-		ModelAndView mav = new ModelAndView();
-                
-                userServ.save(u);
-	
-		mav.setViewName("sign_up");
-		return mav;
-	}
-        
-        
-        @RequestMapping(value="/contrasena_olvidada")
-	public ModelAndView forgottenPassword() {
-		
-		ModelAndView mav = new ModelAndView();
-		mav.setViewName("forgotten_password");
-		return mav;
-	}
-        
-	
-	
-	
 	
 	
 }

@@ -27,6 +27,10 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	@Query(nativeQuery=true, value="select count(*) from user where email= :username and password= :password")
 	public int findOneUser(@Param("username")String username,@Param("password") String password) throws DataAccessException ;
         
+        @Query(nativeQuery=true, value="select * from user where email= :email")
+	public User findByEmail(@Param("email")String email) throws DataAccessException ;
+        
+        
         public List<User> findByRoleNot(Role id);
 //	@Query(nativeQuery=true, value="select * from table_user where id_store=:code")
 //	public List<User> findBySucursal(@Param("code") int code) throws DataAccessException ;

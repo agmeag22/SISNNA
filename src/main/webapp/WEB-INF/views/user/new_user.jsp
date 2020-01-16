@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
          pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
@@ -102,16 +101,16 @@
                                         <option value="${item.idGender}">${item.name}</option>
                                     </c:forEach>
                                 </select> 
-                                <small id="nameHelp" class="form-text text-muted">Seleccione su género.</small>
+                                <small id="nameHelp" class="form-text text-muted">Seleccione su gÃ©nero.</small>
                             </div>
                             <div class="form-group">
-                                <label for="country_list">País</label> 
+                                <label for="country_list">PaÃ­s</label> 
                                 <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp" required> 
                                     <c:forEach items="${country_list}" var="country">
                                         <option value="${country.idCountry}">${country.name}</option>
                                     </c:forEach>
                                 </select> 
-                                <small id="nameHelp" class="form-text text-muted">Seleccione el país.</small>
+                                <small id="nameHelp" class="form-text text-muted">Seleccione el paÃ­s.</small>
                             </div>
                             <div class="form-group">
                                 <label for="country_department_list">Departamento</label> 
@@ -130,7 +129,7 @@
                             <div class="form-group">
                                 Direccion
                                 <input type="text" class="form-control " name="address" id="address" required>
-                                <small id="nameHelp" class="form-text text-muted">Ingrese su dirección.</small>
+                                <small id="nameHelp" class="form-text text-muted">Ingrese su direcciÃ³n.</small>
                             </div>
 
 
@@ -144,17 +143,17 @@
                             <div class="form-group">
                                 E-mail
                                 <input type="email" class="form-control " name="email" id="inputEmail" required>
-                                <small id="nameHelp" class="form-text text-muted">Ingrese su correo electrónico</small>
+                                <small id="nameHelp" class="form-text text-muted">Ingrese su correo electrÃ³nico</small>
                             </div>
 
                             <div class="form-group">
                                 Password
                                 <input type="password" class="form-control " name="password" id="inputPassword" required>
-                                <small id="nameHelp" class="form-text text-muted">Ingrese su contraseña.</small>
+                                <small id="nameHelp" class="form-text text-muted">Ingrese su contraseÃ±a.</small>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control " name="password2" id="inputPassword2" required>
-                                <small id="nameHelp" class="form-text text-muted">Ingrese de nuevo su contraseña.</small>
+                                <small id="nameHelp" class="form-text text-muted">Ingrese de nuevo su contraseÃ±a.</small>
                             </div>
                             <div class="form-group">
                                 <label for="role_list">Rol</label> 
@@ -167,7 +166,7 @@
                             </div>
                             <div class="form-group">
                                 
-                                <label for="department_list">Departamento (Según función)</label> 
+                                <label for="department_list">Departamento (SegÃºn funciÃ³n)</label> 
                                 <select class="custom-select" id="idDepartment" name="department" aria-describedby="id_roleHelp" required> 
                                     <c:forEach items="${department_list}" var="item">
                                         <option value="${item.idDepartment}">${item.name}</option>
@@ -201,7 +200,7 @@
                     <span class="icon text-white-50">
                         <i class="fas fa-edit"></i>
                     </span>
-                    <span class="text">AÑADIR USUARIO</span>
+                    <span class="text">AÃ‘ADIR USUARIO</span>
 
                 </button>
             </div>
@@ -209,3 +208,4 @@
         </form>
     </jsp:body>
 </t:admin-template>
+

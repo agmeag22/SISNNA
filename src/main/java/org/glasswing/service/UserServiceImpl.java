@@ -58,4 +58,9 @@ public class UserServiceImpl implements UserService {
     public List<User> findByIdRoleNot(Role id) throws DataAccessException {
         return userRepository.findByRoleNot(id);
     }
+       @Override
+	public User findByEmail(String email) throws DataAccessException {
+			return userRepository.findByEmail(email);
+	}
 }
+

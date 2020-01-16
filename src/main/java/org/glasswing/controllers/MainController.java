@@ -50,10 +50,4 @@ public class MainController {
 			log.info("No se pudo realizar" + log.getName() +"u:::::::"+ username+ "p::::::"+password);
 		return mav; 
 	}
-	
-	
-	
-	
-	
-	
 }

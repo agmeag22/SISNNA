@@ -289,7 +289,7 @@
                         <span class="icon text-white-50">
                             <i class="far fa-save"></i>
                         </span>
-                        <span class="text">Guardar Comite</span>
+                        <span class="text">Enviar Denuncia</span>
                     </button>
                 </form>
             </div>

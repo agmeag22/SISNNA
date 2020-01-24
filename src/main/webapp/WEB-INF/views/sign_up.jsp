@@ -29,59 +29,59 @@
         <!-- Custom styles for this template-->
         <link href="resources/css/sb-admin-2.min.css" rel="stylesheet">
         <script>
-//            function updateDepartments(){
-//                var id= document.getElementById("country_list_id").value;
-//                
-//                $.ajax({
-//                    url:`${pageContext.request.contextPath}/country/${"${id}"}`,
-//                    type:'POST',
-//                    dataType: 'json',
-//                    success: function( json ) {
-//                        document.getElementById('country_list_department_id').innerHTML = "";
-//                        $.each(json, function(key, value) {  
-//                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_id');
-//                        });
-//                        updateMuni();
-//                    }
-//                  });
-//            }
-            
-            function updateMuni(){
-                var id= document.getElementById("country_list_department_id").value;
-//                console.log("ENTRO");
+            function updateDepartments() {
+                var id = document.getElementById("country_list_id").value;
+
                 $.ajax({
-                    url:`${pageContext.request.contextPath}/department/${"${id}"}`,
-                    type:'POST',
-                    dataType: 'json',
-                    success: function( json ) {
+                    url: `${pageContext.request.contextPath}/country/${"${id}"}`,
+                                type: 'POST',
+                                dataType: 'json',
+                                success: function (json) {
+                                    document.getElementById('country_list_department_id').innerHTML = "";
+                                    $.each(json, function (key, value) {
+                                        $('<option></option>', {text: value}).attr('value', key).appendTo('#country_list_department_id');
+                                    });
+                                    updateMuni();
+                                }
+                            });
+                        }
+
+                        function updateMuni() {
+                            var id = document.getElementById("country_list_department_id").value;
+//                console.log("ENTRO");
+                            $.ajax({
+                                url: `${pageContext.request.contextPath}/department/${"${id}"}`,
+                                            type: 'POST',
+                                            dataType: 'json',
+                                            success: function (json) {
 //                        console.log("ENTRO");
-                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
-                        $.each(json, function(key, value) {  
+                                                document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                                                $.each(json, function (key, value) {
 //                            console.log(value);
-                           $('<option></option>', {text:value}).attr('value', key).appendTo('#country_list_department_municipality_id');
-                        });
-                    }
-                  });
-            }
-            function clearMunicipalities(){
-                document.getElementById('country_list_department_municipality_id').innerHTML = "";
-            }
-             function clearDepartments(){
-                document.getElementById('country_list_department_id').innerHTML = "";
-            }
-             $(document).ready(function () {
-                 updateMuni();
-//                $("#country_list_id").on("change",function(){
-//                    clearMunicipalities();
-//                    clearDepartments();
-//                    updateDepartments();
-//                });
-                $("#country_list_department_id").on("change",function(){
-                    clearMunicipalities();
-                    updateMuni();
-                });
-            });
-            
+                                                    $('<option></option>', {text: value}).attr('value', key).appendTo('#country_list_department_municipality_id');
+                                                });
+                                            }
+                                        });
+                                    }
+                                    function clearMunicipalities() {
+                                        document.getElementById('country_list_department_municipality_id').innerHTML = "";
+                                    }
+                                    function clearDepartments() {
+                                        document.getElementById('country_list_department_id').innerHTML = "";
+                                    }
+                                    $(document).ready(function () {
+                                        updateDepartments();
+                                        $("#country_list_id").on("change", function () {
+                                            clearMunicipalities();
+                                            clearDepartments();
+                                            updateDepartments();
+                                        });
+                                        $("#country_list_department_id").on("change", function () {
+                                            clearMunicipalities();
+                                            updateMuni();
+                                        });
+                                    });
+
         </script>
     </head>
 
@@ -115,11 +115,11 @@
                                               <input type="text" class="form-control form-control-user" name="id" id="inputId">
                                             </div> -->
                                             <div class="form-group">
-                                                Nombre
+                                                Nombres
                                               <input type="text" class="form-control form-control-user" name="name" id="inputName">
                                             </div>
                                             <div class="form-group">
-                                                Apellido
+                                                Apellidos
                                               <input type="text" class="form-control form-control-user" name="lastname" id="inputLastName">
                                             </div>
 <!--                                            <div class="form-group">
@@ -135,10 +135,13 @@
                                                 E-mail
                                               <input type="email" class="form-control form-control-user" name="email" id="inputEmail">
                                             </div>
+
+<!--
                                             <div class="form-group">
                                                 Dirección
                                               <input type="text" class="form-control form-control-user" name="address" id="inputAddress">
-                                            </div>
+                                            </div> -->
+
                                             <div class="form-group">
                                                 Género
                                                 <div class="form-group">
@@ -155,36 +158,29 @@
                                             <input type="date" class="form-control" id="fechainc" >
                                         
                                             </div>
-                                    <!--
-                                            <div class="form-group">
-                                                País
-                                              <div class="form-group">
-                                                 <select class="form-control" name="country.idCountry" value="68">
-                                                         <c:forEach items="${country}" var="co">
-                                                          <option value="${co.idCountry}">${co.name}</option>
-                                                           </c:forEach>
-                                                </select>
-                                                    </div>
-                                            </div> -->
                                     
-                                    
+
                                             <div class="form-group">
-                                                Departamento del país
-                                              <div class="form-group">
-                                                  <select class="form-control" id="country_list_department_id" name="countryDepartment.idCountryDepartment">
-                                                         <c:forEach items="${countryDepartments}" var="countryD">
-                                                          <option value="${countryD.idCountryDepartment}">${countryD.name}</option>
-                                                           </c:forEach>
-                                                  </select>
-                                              </div>
+                                                <label for="country_list">País</label> 
+                                                <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp" required> 
+                                                    <c:forEach items="${country_list}" var="country">
+                                                        <option value="${country.idCountry}">${country.name}</option>
+                                                    </c:forEach>
+                                                </select> 
                                             </div>
                                             <div class="form-group">
-                                                Municipio
+                                                <label for="country_department_list">Departamento/Estado</label> 
+                                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp" required> 
+                                                    <option selected>N/A</option>
+                                                </select> 
+                                                <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
+                                            </div>
                                             <div class="form-group">
-                                                  <select class="form-control" id="country_list_department_municipality_id" name="municipality.idMunicipality">
-                                                       
-                                                  </select>
-                                              </div>
+                                                <label for="country_department_list">Municipio</label> 
+                                                <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
+                                                    <option selected>N/A</option>
+                                                </select> 
+                                                <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
                                             </div>
                                             <div class="form-group">
                                                 Departamento de Trabajo en Glasswings

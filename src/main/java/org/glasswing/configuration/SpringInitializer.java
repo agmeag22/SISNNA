@@ -15,6 +15,9 @@ public class SpringInitializer implements WebApplicationInitializer {
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(SpringConfiguration.class);
 		ctx.setServletContext(container);
+                
+                
+                
 		
 		ServletRegistration.Dynamic servlet = container.addServlet("sis-nna",new DispatcherServlet(ctx));
 		
@@ -22,5 +25,7 @@ public class SpringInitializer implements WebApplicationInitializer {
 		servlet.setLoadOnStartup(1);
 		
 	}
+        
+        
 
 }

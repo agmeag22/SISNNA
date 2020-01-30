@@ -105,7 +105,8 @@
         <div id="collapse_settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ajustes</h6>
-            <a class="collapse-item ${marked eq 'ajustes-departamentos' ? ' active' : ''}" href="${pageContext.request.contextPath}/usuarios/nuevo">Gestion de departamentos</a>
+            <a class="collapse-item ${marked eq 'ajustes-departamentos' ? ' active' : ''}" href="${pageContext.request.contextPath}/ajustes/departamento">Gestion de departamentos</a>
+            <a class="collapse-item ${marked eq 'ajustes-cargos' ? ' active' : ''}" href="${pageContext.request.contextPath}/ajustes/cargo">Gestion de cargos</a>
           </div>
         </div>
       </li>

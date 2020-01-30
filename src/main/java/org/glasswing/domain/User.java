@@ -1,5 +1,3 @@
-
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -66,18 +64,22 @@ public class User implements Serializable {
     private List<Complaint> complaintList;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Members> membersList;
-    
-        @JoinColumn(name = "id_department", referencedColumnName = "id_department")
+
+    @JoinColumn(name = "id_department", referencedColumnName = "id_department")
     @ManyToOne(fetch = FetchType.EAGER)
     private Department department;
-   
-        @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+
+    @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private PersonalInfo personalInfo;
-    
-        @JoinColumn(name = "id_role", referencedColumnName = "id_role")
+
+    @JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
+
+    @JoinColumn(name = "id_position", referencedColumnName = "id_position")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Position position;
 
     public User() {
     }
@@ -182,6 +184,15 @@ public class User implements Serializable {
         this.activeState = activeState;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -206,5 +217,5 @@ public class User implements Serializable {
     public String toString() {
         return "org.glasswing.domain.User[ idUser=" + idUser + " ]";
     }
-    
+
 }

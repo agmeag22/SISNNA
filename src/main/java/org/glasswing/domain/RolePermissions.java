@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "RolePermissions.findAll", query = "SELECT r FROM RolePermissions r"),
     @NamedQuery(name = "RolePermissions.findByIdRolePermissions", query = "SELECT r FROM RolePermissions r WHERE r.idRolePermissions = :idRolePermissions"),
-    @NamedQuery(name = "RolePermissions.findByIdPermission", query = "SELECT r FROM RolePermissions r WHERE r.idPermission = :idPermission")})
+    })
 public class RolePermissions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,12 +40,10 @@ public class RolePermissions implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_role_permissions")
     private Integer idRolePermissions;
-    @Column(name = "id_permission")
-    private Integer idPermission;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
-    @JoinColumn(name = "id_role_permissions", referencedColumnName = "id_permission", insertable = false, updatable = false)
+    @JoinColumn(name = "id_permission", referencedColumnName = "id_permission")
     @OneToOne(optional = false, fetch = FetchType.LAZY)
     private Permission permission;
 
@@ -64,13 +62,7 @@ public class RolePermissions implements Serializable {
         this.idRolePermissions = idRolePermissions;
     }
 
-    public Integer getIdPermission() {
-        return idPermission;
-    }
-
-    public void setIdPermission(Integer idPermission) {
-        this.idPermission = idPermission;
-    }
+   
 
     public Role getRole() {
         return role;

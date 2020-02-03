@@ -96,6 +96,7 @@ public class UserController {
         return mav;
     }
 
+    
     @RequestMapping("/usuarios/modificar_usuario/{id}")
     public ModelAndView updateUser(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView();

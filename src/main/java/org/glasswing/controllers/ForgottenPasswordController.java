@@ -78,44 +78,50 @@ public class ForgottenPasswordController {
                        
 
                         
+                       //What happens when you ask for password?
+                       //Generate recuperation code
+                       //Give it to the user
+                       //He uses it to get his password back, modify the user
                        
-                // Reading Email Form Input Parameters      
-                emailSubject = "Recuperacion contraseña Glasswings";
-                emailMessage = "Este mensaje es para recuperar la contraseña del correo " + email;
-                emailToRecipient = email;
-
-                // Logging The Email Form Parameters For Debugging Purpose
-                System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");   
                        
 
-                mailSenderObj.send(new MimeMessagePreparator() {
-                    public void prepare(MimeMessage mimeMessage) throws Exception {
+                    // Reading Email Form Input Parameters      
+                    emailSubject = "Recuperacion contraseña Glasswings";
+                    emailMessage = "Este mensaje es para recuperar la contraseña del correo " + email;
+                    emailToRecipient = email;
 
-                        MimeMessageHelper mimeMsgHelperObj = new MimeMessageHelper(mimeMessage, true, "UTF-8");             
-                        mimeMsgHelperObj.setTo(emailToRecipient);
-                        mimeMsgHelperObj.setFrom(emailFromRecipient);               
-                        mimeMsgHelperObj.setText(emailMessage);
-                        mimeMsgHelperObj.setSubject(emailSubject);
+                    // Logging The Email Form Parameters For Debugging Purpose
+                    System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");   
 
-                      
+
+                    mailSenderObj.send(new MimeMessagePreparator() {
+                        public void prepare(MimeMessage mimeMessage) throws Exception {
+
+                            MimeMessageHelper mimeMsgHelperObj = new MimeMessageHelper(mimeMessage, true, "UTF-8");             
+                            mimeMsgHelperObj.setTo(emailToRecipient);
+                            mimeMsgHelperObj.setFrom(emailFromRecipient);               
+                            mimeMsgHelperObj.setText(emailMessage);
+                            mimeMsgHelperObj.setSubject(emailSubject);
+
+
+                        }
+                    });
+
+                    //enviar codigo de recuperacion
+
+
+                    System.out.println("\nMessage Send Successfully.... Hurrey!\n");
+
+
+
+
+                        mav.addObject("respuesta","Se ha enviado un codigo de recuperacion al correo " + email);                    
+                    }else {
+                        mav.addObject("respuesta","Ese correo no existe");                    
                     }
-                });
-                
-                //enviar codigo de recuperacion
-                       
-                
-                System.out.println("\nMessage Send Successfully.... Hurrey!\n");
 
-                       
-                
-
-                    mav.addObject("respuesta","Se ha enviado un codigo de recuperacion al correo " + email);                    
-                }else {
-                    mav.addObject("respuesta","Ese correo no existe");                    
-                }
-
-                mav.setViewName("forgotten_password");
-                return mav;
+                    mav.setViewName("forgotten_password");
+                    return mav;
            }
 //           
 //           /*

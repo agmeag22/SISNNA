@@ -28,6 +28,8 @@ import org.glasswing.service.PersonalInfoService;
 import org.glasswing.service.RoleService;
 import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +60,10 @@ public class UserController {
     GenderService genderService;
     @Autowired
     RoleService roleService;
+    
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 // static List<InfoUsuario> list = new ArrayList<InfoUsuario>();
     @RequestMapping("/usuarios/inicio_usuarios")
@@ -175,7 +181,7 @@ public class UserController {
         personalInfo.setAddress(address);
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder().encode(password));
         user.setDepartment(department);
         user.setRole(r);
         user.setPersonalInfo(personalInfo);
@@ -250,7 +256,7 @@ public class UserController {
         personalInfo.setMunicipality(municipality);
         personalInfo.setAddress(address);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder().encode(password));
         user.setDepartment(department);
         user.setRole(r);
         user.setPersonalInfo(personalInfo);

@@ -1,0 +1,68 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : ene 22, 2020, 3:19:29 p.m.
+    Author     : MiguelAviles
+*/
+.container-grid{
+    display:grid;
+    justify-items: center;
+    grid-gap:20px;
+}
+#complaint_pending_button{
+    grid-column:1/-1;
+    grid-row:1/3;
+}
+#complaint_processed_button{
+    grid-column:2/3;
+    grid-row:1/3;
+}
+#user_button{
+    grid-column:1/-1;
+    grid-row:3/4;
+}
+#committee_button{
+    grid-column:2/3;
+    grid-row:3/4;
+}
+
+.container-button{
+display: flex;
+flex-wrap: wrap;
+width: 100%;
+justify-content: center;
+
+}
+
+/*@media (max-width: 800px) {
+    .container-grid{
+    display:flex;
+    flex-wrap: wrap;
+    }
+.container-button{
+display: flex;
+flex-wrap: wrap;
+width: 100%;
+justify-content: center;
+}
+}*/
+
+.container-button:hover{
+    background-color: #443c39 !important; 
+}
+.container-button:hover .btn-up{
+    background-color: #443c39 !important;
+    color: white !important;
+}
+.container-button:hover .btn-down{
+    background-color: #5b0000 !important;
+    color: white !important;
+}
+
+
+
+
+

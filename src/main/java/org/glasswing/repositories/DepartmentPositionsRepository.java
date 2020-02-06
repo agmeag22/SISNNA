@@ -9,14 +9,15 @@ package org.glasswing.repositories;
  *
  * @author elect
  */
-import org.glasswing.domain.Department;
+import java.util.List;
+import org.glasswing.domain.DepartmentPositions;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface DepartmentRepository extends JpaRepository<Department, Integer> {
+public interface DepartmentPositionsRepository extends JpaRepository<DepartmentPositions, Integer> {
 
-    @Query("select count(*) from Department WHERE id_department= :iddepartment")
-    int exists(@Param("iddepartment") int iddepartment);
+    @Query("select c from Department_Positions c WHERE c.id_department= :iddepartment")
+    List<DepartmentPositions> findAllforDepartmentId(@Param("iddepartmpent") int iddepartment);
 
 }

@@ -1,0 +1,53 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : ene 28, 2020, 8:06:31 p.m.
+    Author     : MiguelAviles
+*/
+
+.card-body{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.inputs{
+    width: auto !important; 
+    margin-top: 10px;
+}
+#submit-button{
+        margin-top: 10px;
+    }
+
+@media (min-width: 800px) {
+    #container{
+        display: grid;
+        grid-gap:20px;
+    }
+    #table-container{
+        grid-column:1/-1;
+        grid-row:1/4;
+    }
+    #input-new-container{
+        grid-column:2/3;
+        grid-row:1/2;
+    }
+    #input-update-container{
+        grid-column:2/3;
+        grid-row:2/3;
+    }
+}
+
+
+@media (max-width: 800px) {
+     #container{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card{
+        width: auto;
+    }
+    
+}

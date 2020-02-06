@@ -14,6 +14,7 @@ public class SpringInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) throws ServletException {
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
 		ctx.register(SpringConfiguration.class);
+                ctx.register(WebSecConfig.class);
 		ctx.setServletContext(container);
 		
 		ServletRegistration.Dynamic servlet = container.addServlet("sis-nna",new DispatcherServlet(ctx));

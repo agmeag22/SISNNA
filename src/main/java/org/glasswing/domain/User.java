@@ -50,6 +50,7 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
     @Size(max = 255)
+    @Basic(fetch = FetchType.LAZY)
     @Column(name = "password")
     private String password;
     @Column(name = "created_date")

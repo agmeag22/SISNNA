@@ -6,6 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
+import org.glasswing.domain.Department;
 import org.glasswing.domain.DepartmentPositions;
 import org.springframework.dao.DataAccessException;
 
@@ -21,5 +22,5 @@ public interface DepartmentPositionsService {
 	public DepartmentPositions findOne(Integer code);
 	public void delete(DepartmentPositions c);
 	public void save(DepartmentPositions c);
-        public  List<DepartmentPositions> findAllbyDepartmentId(int iddepartment);
+        public  List<DepartmentPositions> findAllbyDepartment(Department iddepartment);
 }

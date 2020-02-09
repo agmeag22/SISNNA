@@ -6,6 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
+import org.glasswing.domain.Department;
 import org.glasswing.domain.DepartmentPositions;
 import org.glasswing.repositories.DepartmentPositionsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class DepartmentPositionsServiceImpl implements DepartmentPositionsServic
     }
 
     @Override
-    public List<DepartmentPositions> findAllbyDepartmentId(int iddepartment) {
-       return DepartmentPositionsRepository.findAllforDepartmentId(iddepartment);
+    public List<DepartmentPositions> findAllbyDepartment(Department iddepartment) {
+       return DepartmentPositionsRepository.findByDepartment(iddepartment);
     }
 }

@@ -52,6 +52,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Controller //manda a llamar a los metodos
 public class ForgottenPasswordController {
 //    
@@ -67,9 +70,9 @@ public class ForgottenPasswordController {
         
         @Autowired
         private JavaMailSender mailSenderObj;
-        
-//        @Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
+       
+        @Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
         @RequestMapping(value="/contrasena_olvidada")
            public ModelAndView forgottenPassword() {
@@ -154,8 +157,8 @@ public class ForgottenPasswordController {
 			User resetUser = user.get(); 
             
 			// Set new password    
-                        resetUser.setPassword(pass1);
-                        //     resetUser.setPassword(bCryptPasswordEncoder.encode(requestParams.get("password")));
+                        //resetUser.setPassword(pass1);
+                        resetUser.setPassword(bCryptPasswordEncoder.encode(pass1));
             
 			// Set the reset token to null so it cannot be used again
 			resetUser.setResetToken(null);
@@ -186,101 +189,4 @@ public class ForgottenPasswordController {
 		return modelAndView;
 	}
         
-//           
-//           @RequestMapping(value="/pedir_contrasena", method = RequestMethod.POST)
-//           public ModelAndView recuperatePassword(@RequestParam("email") String userEmail, HttpServletRequest request) {
-//
-//                   ModelAndView mav = new ModelAndView();
-//
-//                   User u= userService.findByEmail(userEmail);
-//
-//                   if(!(u==null)){
-//                       
-//
-//                        
-//                       //What happens when you ask for password?
-//                       //Generate recuperation code
-//                       //Give it to the user
-//                       //He uses it to get his password back, modify the user
-//                       
-//                       
-//
-//                    // Reading Email Form Input Parameters      
-//                    emailSubject = "Recuperacion contraseña Glasswings";
-//                    emailMessage = "Este mensaje es para recuperar la contraseña del correo " + email;
-//                    emailToRecipient = userEmail;
-//
-//                    // Logging The Email Form Parameters For Debugging Purpose
-//                    System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");   
-//
-//
-//                    mailSenderObj.send(new MimeMessagePreparator() {
-//                        public void prepare(MimeMessage mimeMessage) throws Exception {
-//
-//                            MimeMessageHelper mimeMsgHelperObj = new MimeMessageHelper(mimeMessage, true, "UTF-8");             
-//                            mimeMsgHelperObj.setTo(emailToRecipient);
-//                            mimeMsgHelperObj.setFrom(emailFromRecipient);               
-//                            mimeMsgHelperObj.setText(emailMessage);
-//                            mimeMsgHelperObj.setSubject(emailSubject);
-//
-//
-//                        }
-//                    });
-//
-//                    //enviar codigo de recuperacion
-//
-//
-//                    System.out.println("\nMessage Send Successfully.... Hurrey!\n");
-//
-//
-//
-//
-//                        mav.addObject("respuesta","Se ha enviado un codigo de recuperacion al correo " + email);                    
-//                    }else {
-//                        mav.addObject("respuesta","Ese correo no existe");                    
-//                    }
-//
-//                    mav.setViewName("forgotten_password");
-//                    return mav;
-//           }
-//           
-//           /*
-//            // This Method Is Used To Prepare The Email Message And Send It To The Client
-//            @RequestMapping(value = "sendEmail", method = RequestMethod.POST)
-//            public ModelAndView sendEmailToClient(HttpServletRequest request, final @RequestParam CommonsMultipartFile attachFileObj) {
-//
-//                // Reading Email Form Input Parameters      
-//                
-//                mailSenderObj.send(new MimeMessagePreparator() {
-//                    public void prepare(MimeMessage mimeMessage) throws Exception {
-//
-//                        MimeMessageHelper mimeMsgHelperObj = new MimeMessageHelper(mimeMessage, true, "UTF-8");             
-//                        mimeMsgHelperObj.setTo(emailToRecipient);
-//                        mimeMsgHelperObj.setFrom(emailFromRecipient);               
-//                        mimeMsgHelperObj.setText(emailMessage);
-//                        mimeMsgHelperObj.setSubject(emailSubject);
-//
-//                        // Determine If There Is An File Upload. If Yes, Attach It To The Client Email              
-//                        if ((attachFileObj != null) && (attachFileObj.getSize() > 0) && (!attachFileObj.equals(""))) {
-//                            System.out.println("\nAttachment Name?= " + attachFileObj.getOriginalFilename() + "\n");
-//                            mimeMsgHelperObj.addAttachment(attachFileObj.getOriginalFilename(), new InputStreamSource() {                   
-//                                public InputStream getInputStream() throws IOException {
-//                                    return attachFileObj.getInputStream();
-//                                }
-//                            });
-//                        } else {
-//                            System.out.println("\nNo Attachment Is Selected By The User. Sending Text Email!\n");
-//                        }
-//                    }
-//                });
-//                System.out.println("\nMessage Send Successfully.... Hurrey!\n");
-//
-//                
-//                ModelAndView mav = new ModelAndView();
-//                mav.setViewName("forgotten_password");
-//                return mav;
-//                //modelViewObj = new ModelAndView("success","messageObj","Thank You! Your Email Has Been Sent!");
-//                //return  modelViewObj;   
-//            }
-//*/
 }

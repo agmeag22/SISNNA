@@ -62,6 +62,9 @@ public class Department implements Serializable {
     private Date updatedDate;
     @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
     private List<User> userList;
+    
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    private List<DepartmentPositions> departmentPositions;
 
     public Department() {
     }
@@ -107,6 +110,15 @@ public class Department implements Serializable {
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
     }
+
+    public List<DepartmentPositions> getDepartmentPositions() {
+        return departmentPositions;
+    }
+
+    public void setDepartmentPositions(List<DepartmentPositions> departmentPositions) {
+        this.departmentPositions = departmentPositions;
+    }
+    
 
     @XmlTransient
     public List<User> getUserList() {

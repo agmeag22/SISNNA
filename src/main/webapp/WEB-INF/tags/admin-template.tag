@@ -105,23 +105,8 @@
         <div id="collapse_settings" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Ajustes</h6>
-            <a class="collapse-item ${marked eq 'ajustes-departamentos' ? ' active' : ''}" href="${pageContext.request.contextPath}/usuarios/nuevo">Gestion de departamentos</a>
-          </div>
-        </div>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_countries" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fa fa-envelope"></i>
-          <span>Países/Regiones</span>
-        </a>
-        <div id="collapse_countries" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">PAÍSES/REGIONES</h6>
-            <a class="collapse-item ${marked eq 'listado-paises' ? ' active' : ''}" href="${pageContext.request.contextPath}/paises/listado_paises">Listado de países</a>
-            <a class="collapse-item ${marked eq 'nuevo-pais' ? ' active' : ''}" href="${pageContext.request.contextPath}/paises/nuevo">Nuevo País</a>
-            <a class="collapse-item ${marked eq 'nueva-region' ? ' active' : ''}" href="${pageContext.request.contextPath}/paises/nueva_region">Nuevo Estado/Región</a>
-            <a class="collapse-item ${marked eq 'nuevo-municipio' ? ' active' : ''}" href="${pageContext.request.contextPath}/paises/nuevo_municipio">Nuevo Municipio</a>
+            <a class="collapse-item ${marked eq 'ajustes-departamentos' ? ' active' : ''}" href="${pageContext.request.contextPath}/ajustes/departamento">Gestion de departamentos</a>
+            <a class="collapse-item ${marked eq 'ajustes-cargos' ? ' active' : ''}" href="${pageContext.request.contextPath}/ajustes/cargo">Gestion de cargos</a>
           </div>
         </div>
       </li>
@@ -374,8 +359,8 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <!-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> -->
+                <span class="mr-2  d-lg-inline text-gray-600 small">${userFullName} (${userEmail})</span>
+                <img class="img-profile rounded-circle" src="${pageContext.request.contextPath}/resources/img/user.png">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -441,15 +426,15 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <h5 class="modal-title" id="exampleModalLabel">¿Listo para cerrar sesion?</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-body">Selecciona "Logout" si estas listo para cerrar sesion.</div>
         <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+          <a class="btn btn-primary" href="${pageContext.request.contextPath}/logout">Logout</a>
         </div>
       </div>
     </div>

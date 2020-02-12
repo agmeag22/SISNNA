@@ -9,19 +9,14 @@ package org.glasswing.repositories;
  *
  * @author elect
  */
-import java.util.List;
 import org.glasswing.domain.Department;
-import org.glasswing.domain.User;
-
-
-
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
-
-public interface DepartmentRepository extends JpaRepository<Department, Integer>{
+    @Query("select count(*) from Department WHERE id_department= :iddepartment")
+    int exists(@Param("iddepartment") int iddepartment);
 
 }

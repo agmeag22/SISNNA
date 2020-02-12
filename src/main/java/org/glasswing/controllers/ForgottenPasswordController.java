@@ -5,35 +5,21 @@
  */
 package org.glasswing.controllers;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Logger;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang3.RandomStringUtils;
 
-import org.glasswing.domain.Country;
-import org.glasswing.domain.CountryDepartment;
-import org.glasswing.domain.Department;
-import org.glasswing.domain.Gender;
-import org.glasswing.domain.Members;
-import org.glasswing.domain.Municipality;
-import org.glasswing.domain.PersonalInfo;
-import org.glasswing.domain.Role;
+
 import org.glasswing.domain.User;
-import org.glasswing.service.CountryDepartmentService;
-import org.glasswing.service.CountryService;
-import org.glasswing.service.DepartmentService;
-import org.glasswing.service.GenderService;
-import org.glasswing.service.MunicipalityService;
+
 import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamSource;
+
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -56,6 +42,10 @@ public class ForgottenPasswordController {
         
         @Autowired
         private JavaMailSender mailSenderObj;
+        
+        public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
         @RequestMapping(value="/contrasena_olvidada")
            public ModelAndView forgottenPassword() {
@@ -75,21 +65,16 @@ public class ForgottenPasswordController {
                    User u= userService.findByEmail(email);
 
                    if(!(u==null)){
-                       
-
-                        
-                       //What happens when you ask for password?
-                       //Generate recuperation code
-                       //Give it to the user
-                       //He uses it to get his password back, modify the user
-                       
-                       
-
+                    String temporal_password = generateRandomString(10);
+                    u.setPassword(passwordEncoder().encode(temporal_password));
+                    userService.save(u);
                     // Reading Email Form Input Parameters      
                     emailSubject = "Recuperacion contraseña Glasswings";
-                    emailMessage = "Este mensaje es para recuperar la contraseña del correo " + email;
+                    emailMessage = "Este mensaje es para recuperar la contraseña del correo " + email +
+                                   "\n Se ha generado la contraseña temporal \n"+temporal_password+
+                                   "\n Recomendamos al iniciar sesion cambiar esta contraseña.";
                     emailToRecipient = email;
-
+                    
                     // Logging The Email Form Parameters For Debugging Purpose
                     System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");   
 
@@ -123,6 +108,15 @@ public class ForgottenPasswordController {
                     mav.setViewName("forgotten_password");
                     return mav;
            }
+           
+    public String generateRandomString(int length) {
+  
+    boolean useLetters = true;
+    boolean useNumbers = true;
+    String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+ 
+    return generatedString;
+}
 //           
 //           /*
 //            // This Method Is Used To Prepare The Email Message And Send It To The Client

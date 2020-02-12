@@ -6,7 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
-import org.glasswing.domain.Department;
+import org.glasswing.domain.Position;
 import org.springframework.dao.DataAccessException;
 
 /**
@@ -14,11 +14,11 @@ import org.springframework.dao.DataAccessException;
  * @author elect
  */
 
-public interface DepartmentService {
+public interface PositionService {
 
-	public List<Department> getAll() throws DataAccessException;
-	public Department findOne(Integer code);
-	public void delete(Department c);
-	public void save(Department c);
+	public List<Position> getAll() throws DataAccessException;
+	public Position findOne(Integer code);
+	public void delete(Position c);
+	public void save(Position c);
         public boolean findOneBoolean(int idposition);
 }

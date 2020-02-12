@@ -49,4 +49,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> getAll() throws DataAccessException {
         return departmentRepository.findAll();
     }
+    @Override
+    public boolean findOneBoolean(int iddepartment) {
+        if(departmentRepository.exists(iddepartment)>0){
+        return true;    
+        }
+        return false;
+    }
 }

@@ -166,7 +166,7 @@
                             </div>
                             <div class="form-group">
                                 
-                                <label for="department_list">Departamento (SegÃºn funciÃ³n)</label> 
+                                <label for="department_list">Departamento (Según función)</label> 
                                 <select class="custom-select" id="idDepartment" name="department" aria-describedby="id_roleHelp" required> 
                                     <c:forEach items="${department_list}" var="item">
                                         <option value="${item.idDepartment}">${item.name}</option>

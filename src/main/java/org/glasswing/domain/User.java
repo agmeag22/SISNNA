@@ -60,6 +60,10 @@ public class User implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
+    @Column(name = "last_login")
+    private Date lastLogin;
+    @Column(name = "reset_token")
+    private String resetToken;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Process> processList;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -180,6 +184,22 @@ public class User implements Serializable {
 
     public void setActiveState(Integer activeState) {
         this.activeState = activeState;
+    }
+    
+    public Date getLastLogin() {
+		return lastLogin;
+	}
+
+    public void setLastLogin(Date lastLogin) {
+            this.lastLogin = lastLogin;
+    }
+
+    public String getResetToken() {
+            return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+            this.resetToken = resetToken;
     }
 
     @Override

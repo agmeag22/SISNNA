@@ -11,6 +11,7 @@ package org.glasswing.repositories;
  * @author elect
  */
 import java.util.List;
+import java.util.Optional;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 
@@ -30,6 +31,7 @@ public interface UserRepository extends JpaRepository<User, Integer>{
   @Query(nativeQuery=true, value="select * from user where email= :email")
 	public User findByEmail(@Param("email")String email) throws DataAccessException ;      
   public List<User> findByRoleNot(Role id);
+  Optional<User> findByResetToken(String resetToken);
 //	@Query(nativeQuery=true, value="select * from table_user where id_store=:code")
 //	public List<User> findBySucursal(@Param("code") int code) throws DataAccessException ;
 }

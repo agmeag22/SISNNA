@@ -58,6 +58,8 @@
                                                 <input type="password" class="form-control form-control-user" name="passwordConfirm" id="exampleInputPasswordConfirm" placeholder="Confirme Contraseña">
                                             </div>
                                             <input type="hidden" class="form-control form-control-user" name="tokenId" id="theToken" value="${resetToken}">
+                                            
+                                           
                                            
                                             
                                             <button type="submit" class="btn btn-primary btn-user btn-block">

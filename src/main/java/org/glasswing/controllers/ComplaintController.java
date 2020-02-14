@@ -16,7 +16,6 @@ import org.glasswing.domain.Country;
 import org.glasswing.domain.Gender;
 import org.glasswing.domain.Program;
 import org.glasswing.domain.State;
-import org.glasswing.domain.User;
 import org.glasswing.service.AbuseService;
 import org.glasswing.service.AccusedTypeService;
 import org.glasswing.service.ComplaintService;

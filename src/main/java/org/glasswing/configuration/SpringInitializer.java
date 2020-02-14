@@ -23,5 +23,4 @@ public class SpringInitializer implements WebApplicationInitializer {
 		servlet.setLoadOnStartup(1);
 		
 	}
-
 }

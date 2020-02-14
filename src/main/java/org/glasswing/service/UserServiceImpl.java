@@ -6,6 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
+import java.util.Optional;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 import org.glasswing.repositories.UserRepository;
@@ -61,6 +62,11 @@ public class UserServiceImpl implements UserService {
        @Override
 	public User findByEmail(String email) throws DataAccessException {
 			return userRepository.findByEmail(email);
+	}
+        
+        @Override
+	public Optional findUserByResetToken(String resetToken) {
+		return userRepository.findByResetToken(resetToken);
 	}
 }
 

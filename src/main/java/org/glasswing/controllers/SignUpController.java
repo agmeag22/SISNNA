@@ -5,21 +5,14 @@
  */
 package org.glasswing.controllers;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
-import javax.servlet.http.HttpServletRequest;
-import org.glasswing.domain.Committee;
+
 import org.glasswing.domain.Country;
 import org.glasswing.domain.CountryDepartment;
 import org.glasswing.domain.Department;
 import org.glasswing.domain.Gender;
-import org.glasswing.domain.Members;
 import org.glasswing.domain.Municipality;
-import org.glasswing.domain.PersonalInfo;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 import org.glasswing.service.CountryDepartmentService;
@@ -31,12 +24,7 @@ import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller //manda a llamar a los metodos
@@ -73,11 +61,11 @@ public class SignUpController {
                 List<Gender> gen = genderService.getAll();
                 List<Department> dept = departmentService.getAll();
                 List<Country> co = countryService.getAll();
-                mav.addObject("countryDepartments" , cdepts);
-                mav.addObject("municipalities" , mun);
+                //mav.addObject("country_list_department_id" , cdepts);
+                //mav.addObject("country_list_department_municipality_id" , mun);
                 mav.addObject("genders" , gen);
                 mav.addObject("departments" , dept);
-                mav.addObject("country" , co);
+                mav.addObject("country_list" , co);
                 
 		mav.setViewName("sign_up");
 		return mav;
@@ -93,6 +81,8 @@ public class SignUpController {
                 role.setName("USUARIO");
                 u.setRole(role);
                 u.setActiveState(0);
+                
+                /*
                 Country c = new Country();
                 c.setCode("222");
                 c.setIdCountry(68);
@@ -104,16 +94,37 @@ public class SignUpController {
                 pf.setCountry(c);
                 
                 u.setPersonalInfo(pf);
-                
+                */
                 mav.addObject("respuesta","Usuario Registrado");                    
                 
-                userService.save(u);
-	
+                try {
+
+                    userService.save(u);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
+                    mav.setViewName("redirect:/usuarios/inicio_usuarios");
+                    return mav;
+                }
+                List<CountryDepartment> cdepts = cdServ.getAll();
+                List<Municipality> mun = mService.getAll();
+                List<Gender> gen = genderService.getAll();
+                List<Department> dept = departmentService.getAll();
+                List<Country> co = countryService.getAll();
+                mav.addObject("countryDepartments" , cdepts);
+                mav.addObject("municipalities" , mun);
+                mav.addObject("genders" , gen);
+                mav.addObject("departments" , dept);
+                mav.addObject("country" , co);
+                
 		mav.setViewName("sign_up");
 		return mav;
 	}
         
+        //Selectionbox control in UserController
         
+        /*
         @RequestMapping(value="/contrasena_olvidada")
 	public ModelAndView forgottenPassword() {
 		
@@ -139,6 +150,6 @@ public class SignUpController {
                 
 		mav.setViewName("forgotten_password");
 		return mav;
-	}
+	}*/
 }   
 

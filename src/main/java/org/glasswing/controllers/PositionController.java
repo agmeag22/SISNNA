@@ -10,13 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
-import org.glasswing.domain.DepartmentPositions;
 import org.glasswing.domain.Position;
 import org.glasswing.service.DepartmentService;
 import org.glasswing.service.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

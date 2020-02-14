@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.glasswing.domain;
 
 import java.io.Serializable;
@@ -53,6 +48,10 @@ public class User implements Serializable {
     @Basic(fetch = FetchType.LAZY)
     @Column(name = "password")
     private String password;
+    @Column(name = "last_login")
+    private Date lastLogin;
+    @Column(name = "reset_token")
+    private String resetToken;
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -192,6 +191,23 @@ public class User implements Serializable {
     public void setPosition(Position position) {
         this.position = position;
     }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+    
 
     
     @Override

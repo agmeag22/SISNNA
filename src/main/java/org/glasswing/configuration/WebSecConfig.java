@@ -47,6 +47,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/resources/**").permitAll()
+                .antMatchers("/reset/**").permitAll()
                 .antMatchers("/contrasena_olvidada**").permitAll()
                 .antMatchers("/pedir_contrasena**").permitAll()
                 .antMatchers("/denuncias/denuncias_pendientes").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")

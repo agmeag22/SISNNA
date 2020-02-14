@@ -5,7 +5,6 @@
  */
 package org.glasswing.controllers;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -13,9 +12,7 @@ import org.glasswing.domain.Country;
 import org.glasswing.domain.CountryDepartment;
 import org.glasswing.domain.Department;
 import org.glasswing.domain.Gender;
-import org.glasswing.domain.Members;
 import org.glasswing.domain.Municipality;
-import org.glasswing.domain.PersonalInfo;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 import org.glasswing.service.CountryDepartmentService;
@@ -27,11 +24,7 @@ import org.glasswing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller //manda a llamar a los metodos

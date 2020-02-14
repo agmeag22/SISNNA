@@ -6,6 +6,7 @@
 package org.glasswing.service;
 
 import java.util.List;
+import java.util.Optional;
 import org.glasswing.domain.Role;
 import org.glasswing.domain.User;
 import org.springframework.dao.DataAccessException;
@@ -23,4 +24,5 @@ public interface UserService {
 	public User findOne(Integer code);
 	public void delete(User user);
 	public void save(User user);
+        public Optional<User> findUserByResetToken(String resetToken);
 }

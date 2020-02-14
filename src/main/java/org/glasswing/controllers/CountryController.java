@@ -7,13 +7,6 @@ package org.glasswing.controllers;
 
 import java.util.List;
 import org.glasswing.domain.Country;
-import org.glasswing.domain.CountryDepartment;
-import org.glasswing.domain.Department;
-import org.glasswing.domain.Gender;
-import org.glasswing.domain.Municipality;
-import org.glasswing.domain.Role;
-import org.glasswing.domain.State;
-import org.glasswing.domain.User;
 import org.glasswing.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

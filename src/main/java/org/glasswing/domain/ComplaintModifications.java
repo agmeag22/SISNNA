@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,10 +36,10 @@ public class ComplaintModifications implements Serializable {
     @Column(name = "id_complaint_modifications")
     private Integer idComplaintModifications;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Complaint complaint;
 
     public ComplaintModifications() {

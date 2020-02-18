@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,8 +37,8 @@ public class DepartmentPositions implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_deparment_positions")
-    private Integer idDeparmentPositions;
+    @Column(name = "id_department_positions")
+    private Integer idDepartmentPositions;
     @Basic(optional = false)
     @NotNull
     @Column(name = "created_date")
@@ -48,32 +49,32 @@ public class DepartmentPositions implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @JoinColumn(name = "id_deparment", referencedColumnName = "id_department")
-    @ManyToOne
+    @JoinColumn(name = "id_department", referencedColumnName = "id_department")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
     @JoinColumn(name = "id_position", referencedColumnName = "id_position")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Position position;
 
     public DepartmentPositions() {
     }
 
-    public DepartmentPositions(Integer idDeparmentPositions) {
-        this.idDeparmentPositions = idDeparmentPositions;
+    public DepartmentPositions(Integer idDepartmentPositions) {
+        this.idDepartmentPositions = idDepartmentPositions;
     }
 
-    public DepartmentPositions(Integer idDeparmentPositions, Date createdDate, Date updatedDate) {
-        this.idDeparmentPositions = idDeparmentPositions;
+    public DepartmentPositions(Integer idDepartmentPositions, Date createdDate, Date updatedDate) {
+        this.idDepartmentPositions = idDepartmentPositions;
         this.createdDate = createdDate;
         this.updatedDate = updatedDate;
     }
 
-    public Integer getIdDeparmentPositions() {
-        return idDeparmentPositions;
+    public Integer getIdDepartmentPositions() {
+        return idDepartmentPositions;
     }
 
-    public void setIdDeparmentPositions(Integer idDeparmentPositions) {
-        this.idDeparmentPositions = idDeparmentPositions;
+    public void setIdDepartmentPositions(Integer idDepartmentPositions) {
+        this.idDepartmentPositions = idDepartmentPositions;
     }
 
     public Date getCreatedDate() {
@@ -111,7 +112,7 @@ public class DepartmentPositions implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idDeparmentPositions != null ? idDeparmentPositions.hashCode() : 0);
+        hash += (idDepartmentPositions != null ? idDepartmentPositions.hashCode() : 0);
         return hash;
     }
 
@@ -122,7 +123,7 @@ public class DepartmentPositions implements Serializable {
             return false;
         }
         DepartmentPositions other = (DepartmentPositions) object;
-        if ((this.idDeparmentPositions == null && other.idDeparmentPositions != null) || (this.idDeparmentPositions != null && !this.idDeparmentPositions.equals(other.idDeparmentPositions))) {
+        if ((this.idDepartmentPositions == null && other.idDepartmentPositions != null) || (this.idDepartmentPositions != null && !this.idDepartmentPositions.equals(other.idDepartmentPositions))) {
             return false;
         }
         return true;
@@ -130,7 +131,7 @@ public class DepartmentPositions implements Serializable {
 
     @Override
     public String toString() {
-        return "org.glasswing.domain.DepartmentPositions[ idDeparmentPositions=" + idDeparmentPositions + " ]";
+        return "org.glasswing.domain.DepartmentPositions[ idDepartmentPositions=" + idDepartmentPositions + " ]";
     }
     
 }

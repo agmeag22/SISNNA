@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -102,35 +103,35 @@ public class Complaint implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "complaint")
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
     private List<ComplaintPrograms> complaintProgramsList;
-    @OneToMany(mappedBy = "complaint")
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
     private List<ComplaintAbuses> complaintAbusesList;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
     @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
     @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Municipality municipality;
     @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private AccusedType accusedType;
     @JoinColumn(name = "id_state", referencedColumnName = "id_state")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private State state;
     @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Gender gender;
     @JoinColumn(name = "id_priority", referencedColumnName = "id_priority")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Priority priority;
-    @OneToMany(mappedBy = "complaint")
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
     private List<ComplaintModifications> complaintModificationsList;
 
     public Complaint() {

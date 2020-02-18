@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,9 +39,9 @@ public class Gender implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "gender")
+    @OneToMany(mappedBy = "gender", fetch = FetchType.LAZY)
     private List<PersonalInfo> personalInfoList;
-    @OneToMany(mappedBy = "gender")
+    @OneToMany(mappedBy = "gender", fetch = FetchType.LAZY)
     private List<Complaint> complaintList;
 
     public Gender() {

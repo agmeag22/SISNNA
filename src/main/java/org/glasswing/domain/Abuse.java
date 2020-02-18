@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,13 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "abuse", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Abuse.findAll", query = "SELECT a FROM Abuse a"),
-    @NamedQuery(name = "Abuse.findByIdAbuse", query = "SELECT a FROM Abuse a WHERE a.idAbuse = :idAbuse"),
-    @NamedQuery(name = "Abuse.findByName", query = "SELECT a FROM Abuse a WHERE a.name = :name"),
-    @NamedQuery(name = "Abuse.findByCreatedDate", query = "SELECT a FROM Abuse a WHERE a.createdDate = :createdDate"),
-    @NamedQuery(name = "Abuse.findByUpdatedDate", query = "SELECT a FROM Abuse a WHERE a.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Abuse.findAll", query = "SELECT a FROM Abuse a")})
 public class Abuse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,7 +52,7 @@ public class Abuse implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "abuse", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "abuse")
     private List<ComplaintAbuses> complaintAbusesList;
 
     public Abuse() {
@@ -108,7 +100,6 @@ public class Abuse implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    @XmlTransient
     public List<ComplaintAbuses> getComplaintAbusesList() {
         return complaintAbusesList;
     }

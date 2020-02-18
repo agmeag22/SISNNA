@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,11 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "accused_type", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "AccusedType.findAll", query = "SELECT a FROM AccusedType a"),
-    @NamedQuery(name = "AccusedType.findByIdAccusedType", query = "SELECT a FROM AccusedType a WHERE a.idAccusedType = :idAccusedType"),
-    @NamedQuery(name = "AccusedType.findByName", query = "SELECT a FROM AccusedType a WHERE a.name = :name")})
+    @NamedQuery(name = "AccusedType.findAll", query = "SELECT a FROM AccusedType a")})
 public class AccusedType implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +38,7 @@ public class AccusedType implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "accusedType", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "accusedType")
     private List<Complaint> complaintList;
 
     public AccusedType() {
@@ -70,7 +64,6 @@ public class AccusedType implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

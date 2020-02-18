@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,8 +24,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,13 +31,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "committee", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Committee.findAll", query = "SELECT c FROM Committee c"),
-    @NamedQuery(name = "Committee.findByIdCommittee", query = "SELECT c FROM Committee c WHERE c.idCommittee = :idCommittee"),
-    @NamedQuery(name = "Committee.findByName", query = "SELECT c FROM Committee c WHERE c.name = :name"),
-    @NamedQuery(name = "Committee.findByCreatedDate", query = "SELECT c FROM Committee c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "Committee.findByUpdatedDate", query = "SELECT c FROM Committee c WHERE c.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Committee.findAll", query = "SELECT c FROM Committee c")})
 public class Committee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,19 +45,19 @@ public class Committee implements Serializable {
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Country country;
-    @OneToMany(mappedBy = "committee", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "committee")
     private List<Members> membersList;
 
     public Committee() {
@@ -122,7 +113,6 @@ public class Committee implements Serializable {
         this.country = country;
     }
 
-    @XmlTransient
     public List<Members> getMembersList() {
         return membersList;
     }

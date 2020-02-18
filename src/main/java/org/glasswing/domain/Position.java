@@ -7,22 +7,21 @@ package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -30,11 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "position", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Position.findAll", query = "SELECT r FROM Position r"),
-    @NamedQuery(name = "Position.findByIdPosition", query = "SELECT r FROM Position r WHERE r.idPosition = :idPosition"),
-    @NamedQuery(name = "Position.findByName", query = "SELECT r FROM Position r WHERE r.name = :name")})
+    @NamedQuery(name = "Position.findAll", query = "SELECT p FROM Position p")})
 public class Position implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -46,25 +42,32 @@ public class Position implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
-
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    
-    /*@OneToOne(cascade = CascadeType.ALL, mappedBy = "position", fetch = FetchType.LAZY)
-    private DepartmentPositions departmentPositions;
-    */
- 
+    @OneToMany(mappedBy = "position")
+    private List<DepartmentPositions> departmentPositionsList;
+    @OneToMany(mappedBy = "position")
+    private List<User> userList;
 
     public Position() {
     }
 
     public Position(Integer idPosition) {
         this.idPosition = idPosition;
+    }
+
+    public Position(Integer idPosition, Date createdDate, Date updatedDate) {
+        this.idPosition = idPosition;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
     public Integer getIdPosition() {
@@ -98,16 +101,23 @@ public class Position implements Serializable {
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
     }
-/*
-    public DepartmentPositions getDepartmentPositions() {
-        return departmentPositions;
+
+    public List<DepartmentPositions> getDepartmentPositionsList() {
+        return departmentPositionsList;
     }
 
-    public void setDepartmentPositions(DepartmentPositions departmentPositions) {
-        this.departmentPositions = departmentPositions;
+    public void setDepartmentPositionsList(List<DepartmentPositions> departmentPositionsList) {
+        this.departmentPositionsList = departmentPositionsList;
     }
-*/
-    
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -132,5 +142,5 @@ public class Position implements Serializable {
     public String toString() {
         return "org.glasswing.domain.Position[ idPosition=" + idPosition + " ]";
     }
-
+    
 }

@@ -84,13 +84,10 @@ public class ComplaintController {
         ModelAndView mav = new ModelAndView();
         Complaint complaint = complaintService.findOne(id);
         List<ComplaintAbuses> complaintAbuses = complaint.getComplaintAbusesList();
-        // List<ComplaintEvidence> complaintEvidence=complaint.getComplaintEvidenceList();
         List<ComplaintPrograms> complaintPrograms = complaint.getComplaintProgramsList();
         mav.addObject("complaintAbuses", complaintAbuses);
         mav.addObject("complaintPrograms", complaintPrograms);
-        //mav.addObject("complaintEvidence", complaintEvidence);
         mav.addObject("complaint", complaint);
-        // mav.addObject("user", user);
         mav.setViewName("complaint/view_complaint");
         return mav;
     }

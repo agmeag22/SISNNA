@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,9 +25,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -37,16 +32,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  */
 @Entity
 @Table(name = "complaint", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Complaint.findAll", query = "SELECT c FROM Complaint c"),
-    @NamedQuery(name = "Complaint.findByIdComplaint", query = "SELECT c FROM Complaint c WHERE c.idComplaint = :idComplaint"),
-    @NamedQuery(name = "Complaint.findByMisdemeanorDate", query = "SELECT c FROM Complaint c WHERE c.misdemeanorDate = :misdemeanorDate"),
-    @NamedQuery(name = "Complaint.findByMisdemeanorTime", query = "SELECT c FROM Complaint c WHERE c.misdemeanorTime = :misdemeanorTime"),
-    @NamedQuery(name = "Complaint.findByVictimAge", query = "SELECT c FROM Complaint c WHERE c.victimAge = :victimAge"),
-    @NamedQuery(name = "Complaint.findByIsRecurrence", query = "SELECT c FROM Complaint c WHERE c.isRecurrence = :isRecurrence"),
-    @NamedQuery(name = "Complaint.findByCreatedDate", query = "SELECT c FROM Complaint c WHERE c.createdDate = :createdDate"),
-    @NamedQuery(name = "Complaint.findByUpdatedDate", query = "SELECT c FROM Complaint c WHERE c.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Complaint.findAll", query = "SELECT c FROM Complaint c")})
 public class Complaint implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,11 +50,9 @@ public class Complaint implements Serializable {
     @Size(max = 65535)
     @Column(name = "scholar_center")
     private String scholarCenter;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "misdemeanor_date")
     @Temporal(TemporalType.DATE)
     private Date misdemeanorDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "misdemeanor_time")
     @Temporal(TemporalType.DATE)
     private Date misdemeanorTime;
@@ -99,47 +84,54 @@ public class Complaint implements Serializable {
     private String situationLocation;
     @Column(name = "is_recurrence")
     private Boolean isRecurrence;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "clasification_comment")
+    private String clasificationComment;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "resolution")
+    private String resolution;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<Process> processList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint")
     private List<ComplaintPrograms> complaintProgramsList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-    private List<ComplaintEvidence> complaintEvidenceList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "complaint")
     private List<ComplaintAbuses> complaintAbusesList;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private User user;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Country country;
     @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private CountryDepartment countryDepartment;
     @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Municipality municipality;
     @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private AccusedType accusedType;
     @JoinColumn(name = "id_state", referencedColumnName = "id_state")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private State state;
-    
     @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Gender gender;
     @JoinColumn(name = "id_priority", referencedColumnName = "id_priority")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Priority priority;
+    @OneToMany(mappedBy = "complaint")
+    private List<ComplaintModifications> complaintModificationsList;
 
     public Complaint() {
     }
@@ -258,6 +250,22 @@ public class Complaint implements Serializable {
         this.isRecurrence = isRecurrence;
     }
 
+    public String getClasificationComment() {
+        return clasificationComment;
+    }
+
+    public void setClasificationComment(String clasificationComment) {
+        this.clasificationComment = clasificationComment;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -274,16 +282,6 @@ public class Complaint implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    @XmlTransient
-    public List<Process> getProcessList() {
-        return processList;
-    }
-
-    public void setProcessList(List<Process> processList) {
-        this.processList = processList;
-    }
-
-    @XmlTransient
     public List<ComplaintPrograms> getComplaintProgramsList() {
         return complaintProgramsList;
     }
@@ -292,16 +290,6 @@ public class Complaint implements Serializable {
         this.complaintProgramsList = complaintProgramsList;
     }
 
-    @XmlTransient
-    public List<ComplaintEvidence> getComplaintEvidenceList() {
-        return complaintEvidenceList;
-    }
-
-    public void setComplaintEvidenceList(List<ComplaintEvidence> complaintEvidenceList) {
-        this.complaintEvidenceList = complaintEvidenceList;
-    }
-
-    @XmlTransient
     public List<ComplaintAbuses> getComplaintAbusesList() {
         return complaintAbusesList;
     }
@@ -372,6 +360,14 @@ public class Complaint implements Serializable {
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+    }
+
+    public List<ComplaintModifications> getComplaintModificationsList() {
+        return complaintModificationsList;
+    }
+
+    public void setComplaintModificationsList(List<ComplaintModifications> complaintModificationsList) {
+        this.complaintModificationsList = complaintModificationsList;
     }
 
     @Override

@@ -6,11 +6,10 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,49 +17,79 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author elect
  */
 @Entity
-@Table(name = "Department_Positions", catalog = "sisnna", schema = "")
+@Table(name = "department_positions", catalog = "sisnna", schema = "")
+@NamedQueries({
+    @NamedQuery(name = "DepartmentPositions.findAll", query = "SELECT d FROM DepartmentPositions d")})
 public class DepartmentPositions implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_department_positions")
-    private Integer idDepartmentPositions;
-
-    @JoinColumn(name = "id_department", referencedColumnName = "id_department")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "id_deparment_positions")
+    private Integer idDeparmentPositions;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "created_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedDate;
+    @JoinColumn(name = "id_deparment", referencedColumnName = "id_department")
+    @ManyToOne
     private Department department;
-    
     @JoinColumn(name = "id_position", referencedColumnName = "id_position")
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Position position;
 
     public DepartmentPositions() {
     }
 
-    public DepartmentPositions(Integer idDepartmentPositions) {
-        this.idDepartmentPositions = idDepartmentPositions;
+    public DepartmentPositions(Integer idDeparmentPositions) {
+        this.idDeparmentPositions = idDeparmentPositions;
     }
 
-    public Integer getIdDepartmentPositions() {
-        return idDepartmentPositions;
+    public DepartmentPositions(Integer idDeparmentPositions, Date createdDate, Date updatedDate) {
+        this.idDeparmentPositions = idDeparmentPositions;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
-    public void setIdDepartmentPositions(Integer idDepartmentPositions) {
-        this.idDepartmentPositions = idDepartmentPositions;
+    public Integer getIdDeparmentPositions() {
+        return idDeparmentPositions;
+    }
+
+    public void setIdDeparmentPositions(Integer idDeparmentPositions) {
+        this.idDeparmentPositions = idDeparmentPositions;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public Department getDepartment() {
@@ -79,12 +108,10 @@ public class DepartmentPositions implements Serializable {
         this.position = position;
     }
 
-   
-
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idDepartmentPositions != null ? idDepartmentPositions.hashCode() : 0);
+        hash += (idDeparmentPositions != null ? idDeparmentPositions.hashCode() : 0);
         return hash;
     }
 
@@ -95,7 +122,7 @@ public class DepartmentPositions implements Serializable {
             return false;
         }
         DepartmentPositions other = (DepartmentPositions) object;
-        if ((this.idDepartmentPositions == null && other.idDepartmentPositions != null) || (this.idDepartmentPositions != null && !this.idDepartmentPositions.equals(other.idDepartmentPositions))) {
+        if ((this.idDeparmentPositions == null && other.idDeparmentPositions != null) || (this.idDeparmentPositions != null && !this.idDeparmentPositions.equals(other.idDeparmentPositions))) {
             return false;
         }
         return true;
@@ -103,7 +130,7 @@ public class DepartmentPositions implements Serializable {
 
     @Override
     public String toString() {
-        return "org.glasswing.domain.DepartmentPositions[ idDepartmentPositions=" + idDepartmentPositions + " ]";
+        return "org.glasswing.domain.DepartmentPositions[ idDeparmentPositions=" + idDeparmentPositions + " ]";
     }
-
+    
 }

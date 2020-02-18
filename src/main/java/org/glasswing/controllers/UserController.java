@@ -175,7 +175,7 @@ public class UserController {
         personalInfo.setGender(g);
         personalInfo.setBirthDate(birthdate);
         personalInfo.setCreatedDate(parsed_date);
-        personalInfo.setUpdateDate(parsed_date);
+        personalInfo.setUpdatedDate(parsed_date);
         personalInfo.setCountry(c);
         personalInfo.setCountryDepartment(countryDepartment);
         personalInfo.setMunicipality(municipality);
@@ -251,7 +251,7 @@ public class UserController {
         personalInfo.setGuardianContact(guardianContact);
         personalInfo.setGender(g);
         personalInfo.setBirthDate(birthdate);
-        personalInfo.setUpdateDate(parsed_date);
+        personalInfo.setUpdatedDate(parsed_date);
         personalInfo.setCountry(c);
         personalInfo.setCountryDepartment(countryDepartment);
         personalInfo.setMunicipality(municipality);

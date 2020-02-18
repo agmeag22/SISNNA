@@ -23,45 +23,45 @@ import javax.persistence.Table;
  * @author elect
  */
 @Entity
-@Table(name = "complaint_programs", catalog = "sisnna", schema = "")
+@Table(name = "complaint_modifications", catalog = "sisnna", schema = "")
 @NamedQueries({
-    @NamedQuery(name = "ComplaintPrograms.findAll", query = "SELECT c FROM ComplaintPrograms c")})
-public class ComplaintPrograms implements Serializable {
+    @NamedQuery(name = "ComplaintModifications.findAll", query = "SELECT c FROM ComplaintModifications c")})
+public class ComplaintModifications implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_complaint_programs")
-    private Integer idComplaintPrograms;
-    @JoinColumn(name = "id_program", referencedColumnName = "id_program")
+    @Column(name = "id_complaint_modifications")
+    private Integer idComplaintModifications;
+    @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne
-    private Program program;
+    private User user;
     @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")
     @ManyToOne
     private Complaint complaint;
 
-    public ComplaintPrograms() {
+    public ComplaintModifications() {
     }
 
-    public ComplaintPrograms(Integer idComplaintPrograms) {
-        this.idComplaintPrograms = idComplaintPrograms;
+    public ComplaintModifications(Integer idComplaintModifications) {
+        this.idComplaintModifications = idComplaintModifications;
     }
 
-    public Integer getIdComplaintPrograms() {
-        return idComplaintPrograms;
+    public Integer getIdComplaintModifications() {
+        return idComplaintModifications;
     }
 
-    public void setIdComplaintPrograms(Integer idComplaintPrograms) {
-        this.idComplaintPrograms = idComplaintPrograms;
+    public void setIdComplaintModifications(Integer idComplaintModifications) {
+        this.idComplaintModifications = idComplaintModifications;
     }
 
-    public Program getProgram() {
-        return program;
+    public User getUser() {
+        return user;
     }
 
-    public void setProgram(Program program) {
-        this.program = program;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Complaint getComplaint() {
@@ -75,18 +75,18 @@ public class ComplaintPrograms implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idComplaintPrograms != null ? idComplaintPrograms.hashCode() : 0);
+        hash += (idComplaintModifications != null ? idComplaintModifications.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ComplaintPrograms)) {
+        if (!(object instanceof ComplaintModifications)) {
             return false;
         }
-        ComplaintPrograms other = (ComplaintPrograms) object;
-        if ((this.idComplaintPrograms == null && other.idComplaintPrograms != null) || (this.idComplaintPrograms != null && !this.idComplaintPrograms.equals(other.idComplaintPrograms))) {
+        ComplaintModifications other = (ComplaintModifications) object;
+        if ((this.idComplaintModifications == null && other.idComplaintModifications != null) || (this.idComplaintModifications != null && !this.idComplaintModifications.equals(other.idComplaintModifications))) {
             return false;
         }
         return true;
@@ -94,7 +94,7 @@ public class ComplaintPrograms implements Serializable {
 
     @Override
     public String toString() {
-        return "org.glasswing.domain.ComplaintPrograms[ idComplaintPrograms=" + idComplaintPrograms + " ]";
+        return "org.glasswing.domain.ComplaintModifications[ idComplaintModifications=" + idComplaintModifications + " ]";
     }
     
 }

@@ -1,18 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.glasswing.domain;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -20,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -27,7 +30,7 @@ import javax.validation.constraints.Size;
  * @author elect
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user", catalog = "sisnna", schema = "")
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User implements Serializable {
@@ -38,48 +41,49 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_user")
     private Integer idUser;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Column(name = "active_state")
     private Integer activeState;
+    @Column(name = "last_login")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastLogin;
+    @Size(max = 36)
+    @Column(name = "reset_token")
+    private String resetToken;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Size(max = 255)
     @Column(name = "email")
     private String email;
     @Size(max = 255)
-    @Basic(fetch = FetchType.LAZY)
     @Column(name = "password")
     private String password;
-    @Column(name = "last_login")
-    private Date lastLogin;
-    @Column(name = "reset_token")
-    private String resetToken;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Process> processList;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Complaint> complaintList;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Members> membersList;
-
-    @JoinColumn(name = "id_department", referencedColumnName = "id_department")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Department department;
-
     @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     private PersonalInfo personalInfo;
-
+    @JoinColumn(name = "id_department", referencedColumnName = "id_department")
+    @ManyToOne
+    private Department department;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Role role;
-
     @JoinColumn(name = "id_position", referencedColumnName = "id_position")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Position position;
+    @OneToMany(mappedBy = "user")
+    private List<ComplaintModifications> complaintModificationsList;
 
     public User() {
     }
@@ -88,12 +92,42 @@ public class User implements Serializable {
         this.idUser = idUser;
     }
 
+    public User(Integer idUser, Date createdDate, Date updatedDate) {
+        this.idUser = idUser;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
+    }
+
     public Integer getIdUser() {
         return idUser;
     }
 
     public void setIdUser(Integer idUser) {
         this.idUser = idUser;
+    }
+
+    public Integer getActiveState() {
+        return activeState;
+    }
+
+    public void setActiveState(Integer activeState) {
+        this.activeState = activeState;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
     }
 
     public String getEmail() {
@@ -128,14 +162,6 @@ public class User implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public List<Process> getProcessList() {
-        return processList;
-    }
-
-    public void setProcessList(List<Process> processList) {
-        this.processList = processList;
-    }
-
     public List<Complaint> getComplaintList() {
         return complaintList;
     }
@@ -152,20 +178,20 @@ public class User implements Serializable {
         this.membersList = membersList;
     }
 
-    public Department getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
-
     public PersonalInfo getPersonalInfo() {
         return personalInfo;
     }
 
     public void setPersonalInfo(PersonalInfo personalInfo) {
         this.personalInfo = personalInfo;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public Role getRole() {
@@ -176,14 +202,6 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public Integer getActiveState() {
-        return activeState;
-    }
-
-    public void setActiveState(Integer activeState) {
-        this.activeState = activeState;
-    }
-
     public Position getPosition() {
         return position;
     }
@@ -192,24 +210,14 @@ public class User implements Serializable {
         this.position = position;
     }
 
-    public Date getLastLogin() {
-        return lastLogin;
+    public List<ComplaintModifications> getComplaintModificationsList() {
+        return complaintModificationsList;
     }
 
-    public void setLastLogin(Date lastLogin) {
-        this.lastLogin = lastLogin;
+    public void setComplaintModificationsList(List<ComplaintModifications> complaintModificationsList) {
+        this.complaintModificationsList = complaintModificationsList;
     }
 
-    public String getResetToken() {
-        return resetToken;
-    }
-
-    public void setResetToken(String resetToken) {
-        this.resetToken = resetToken;
-    }
-    
-
-    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -234,5 +242,5 @@ public class User implements Serializable {
     public String toString() {
         return "org.glasswing.domain.User[ idUser=" + idUser + " ]";
     }
-
+    
 }

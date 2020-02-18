@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,8 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,10 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "complaint_abuses", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ComplaintAbuses.findAll", query = "SELECT c FROM ComplaintAbuses c"),
-    @NamedQuery(name = "ComplaintAbuses.findByIdComplaintAbuses", query = "SELECT c FROM ComplaintAbuses c WHERE c.idComplaintAbuses = :idComplaintAbuses")})
+    @NamedQuery(name = "ComplaintAbuses.findAll", query = "SELECT c FROM ComplaintAbuses c")})
 public class ComplaintAbuses implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,10 +35,10 @@ public class ComplaintAbuses implements Serializable {
     @Column(name = "id_complaint_abuses")
     private Integer idComplaintAbuses;
     @JoinColumn(name = "id_abuse", referencedColumnName = "id_abuse")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     private Abuse abuse;
     @JoinColumn(name = "id_complaint", referencedColumnName = "id_complaint")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Complaint complaint;
 
     public ComplaintAbuses() {

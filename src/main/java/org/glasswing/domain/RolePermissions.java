@@ -9,7 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,9 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,11 +24,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "role_permissions", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "RolePermissions.findAll", query = "SELECT r FROM RolePermissions r"),
-    @NamedQuery(name = "RolePermissions.findByIdRolePermissions", query = "SELECT r FROM RolePermissions r WHERE r.idRolePermissions = :idRolePermissions"),
-    })
+    @NamedQuery(name = "RolePermissions.findAll", query = "SELECT r FROM RolePermissions r")})
 public class RolePermissions implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,10 +35,10 @@ public class RolePermissions implements Serializable {
     @Column(name = "id_role_permissions")
     private Integer idRolePermissions;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Role role;
     @JoinColumn(name = "id_permission", referencedColumnName = "id_permission")
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne
     private Permission permission;
 
     public RolePermissions() {
@@ -61,8 +55,6 @@ public class RolePermissions implements Serializable {
     public void setIdRolePermissions(Integer idRolePermissions) {
         this.idRolePermissions = idRolePermissions;
     }
-
-   
 
     public Role getRole() {
         return role;

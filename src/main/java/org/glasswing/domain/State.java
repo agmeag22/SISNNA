@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,8 +18,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -28,11 +25,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "state", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s"),
-    @NamedQuery(name = "State.findByIdState", query = "SELECT s FROM State s WHERE s.idState = :idState"),
-    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name")})
+    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s")})
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,9 +38,7 @@ public class State implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
-    private List<Process> processList;
-    @OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "state")
     private List<Complaint> complaintList;
 
     public State() {
@@ -72,16 +64,6 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
-    public List<Process> getProcessList() {
-        return processList;
-    }
-
-    public void setProcessList(List<Process> processList) {
-        this.processList = processList;
-    }
-
-    @XmlTransient
     public List<Complaint> getComplaintList() {
         return complaintList;
     }

@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,13 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "department", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d"),
-    @NamedQuery(name = "Department.findByIdDepartment", query = "SELECT d FROM Department d WHERE d.idDepartment = :idDepartment"),
-    @NamedQuery(name = "Department.findByName", query = "SELECT d FROM Department d WHERE d.name = :name"),
-    @NamedQuery(name = "Department.findByCreatedDate", query = "SELECT d FROM Department d WHERE d.createdDate = :createdDate"),
-    @NamedQuery(name = "Department.findByUpdatedDate", query = "SELECT d FROM Department d WHERE d.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Department.findAll", query = "SELECT d FROM Department d")})
 public class Department implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,11 +52,10 @@ public class Department implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "department")
+    private List<DepartmentPositions> departmentPositionsList;
+    @OneToMany(mappedBy = "department")
     private List<User> userList;
-    
-    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
-    private List<DepartmentPositions> departmentPositions;
 
     public Department() {
     }
@@ -111,16 +102,14 @@ public class Department implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    public List<DepartmentPositions> getDepartmentPositions() {
-        return departmentPositions;
+    public List<DepartmentPositions> getDepartmentPositionsList() {
+        return departmentPositionsList;
     }
 
-    public void setDepartmentPositions(List<DepartmentPositions> departmentPositions) {
-        this.departmentPositions = departmentPositions;
+    public void setDepartmentPositionsList(List<DepartmentPositions> departmentPositionsList) {
+        this.departmentPositionsList = departmentPositionsList;
     }
-    
 
-    @XmlTransient
     public List<User> getUserList() {
         return userList;
     }

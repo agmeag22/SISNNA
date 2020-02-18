@@ -6,20 +6,18 @@
 package org.glasswing.domain;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -27,11 +25,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "permission", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM Permission p"),
-    @NamedQuery(name = "Permission.findByIdPermission", query = "SELECT p FROM Permission p WHERE p.idPermission = :idPermission"),
-    @NamedQuery(name = "Permission.findByName", query = "SELECT p FROM Permission p WHERE p.name = :name")})
+    @NamedQuery(name = "Permission.findAll", query = "SELECT p FROM Permission p")})
 public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,8 +38,8 @@ public class Permission implements Serializable {
     @Size(max = 255)
     @Column(name = "name")
     private String name;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "permission", fetch = FetchType.LAZY)
-    private RolePermissions rolePermissions;
+    @OneToMany(mappedBy = "permission")
+    private List<RolePermissions> rolePermissionsList;
 
     public Permission() {
     }
@@ -69,12 +64,12 @@ public class Permission implements Serializable {
         this.name = name;
     }
 
-    public RolePermissions getRolePermissions() {
-        return rolePermissions;
+    public List<RolePermissions> getRolePermissionsList() {
+        return rolePermissionsList;
     }
 
-    public void setRolePermissions(RolePermissions rolePermissions) {
-        this.rolePermissions = rolePermissions;
+    public void setRolePermissionsList(List<RolePermissions> rolePermissionsList) {
+        this.rolePermissionsList = rolePermissionsList;
     }
 
     @Override

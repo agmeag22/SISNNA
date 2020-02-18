@@ -11,7 +11,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,8 +22,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,13 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @Table(name = "program", catalog = "sisnna", schema = "")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Program.findAll", query = "SELECT p FROM Program p"),
-    @NamedQuery(name = "Program.findByIdProgram", query = "SELECT p FROM Program p WHERE p.idProgram = :idProgram"),
-    @NamedQuery(name = "Program.findByName", query = "SELECT p FROM Program p WHERE p.name = :name"),
-    @NamedQuery(name = "Program.findByCreatedDate", query = "SELECT p FROM Program p WHERE p.createdDate = :createdDate"),
-    @NamedQuery(name = "Program.findByUpdatedDate", query = "SELECT p FROM Program p WHERE p.updatedDate = :updatedDate")})
+    @NamedQuery(name = "Program.findAll", query = "SELECT p FROM Program p")})
 public class Program implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,7 +52,7 @@ public class Program implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "program", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "program")
     private List<ComplaintPrograms> complaintProgramsList;
 
     public Program() {
@@ -108,7 +100,6 @@ public class Program implements Serializable {
         this.updatedDate = updatedDate;
     }
 
-    @XmlTransient
     public List<ComplaintPrograms> getComplaintProgramsList() {
         return complaintProgramsList;
     }

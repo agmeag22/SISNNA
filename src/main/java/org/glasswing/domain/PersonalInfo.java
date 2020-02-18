@@ -58,12 +58,12 @@ public class PersonalInfo implements Serializable {
     @Column(name = "guardian_contact")
     private String guardianContact;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;

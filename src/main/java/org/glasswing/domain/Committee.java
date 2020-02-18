@@ -47,12 +47,12 @@ public class Committee implements Serializable {
     @Column(name = "name")
     private String name;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;

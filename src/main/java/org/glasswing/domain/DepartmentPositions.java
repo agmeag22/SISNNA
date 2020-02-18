@@ -40,12 +40,12 @@ public class DepartmentPositions implements Serializable {
     @Column(name = "id_department_positions")
     private Integer idDepartmentPositions;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;

@@ -26,6 +26,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -53,9 +54,11 @@ public class Complaint implements Serializable {
     private String scholarCenter;
     @Column(name = "misdemeanor_date")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date misdemeanorDate;
     @Column(name = "misdemeanor_time")
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date misdemeanorTime;
     @Lob
     @Size(max = 65535)
@@ -94,12 +97,12 @@ public class Complaint implements Serializable {
     @Column(name = "resolution")
     private String resolution;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;

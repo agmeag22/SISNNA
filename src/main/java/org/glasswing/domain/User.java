@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,23 +67,23 @@ public class User implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Complaint> complaintList;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Members> membersList;
     @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private PersonalInfo personalInfo;
     @JoinColumn(name = "id_department", referencedColumnName = "id_department")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
     @JoinColumn(name = "id_position", referencedColumnName = "id_position")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Position position;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<ComplaintModifications> complaintModificationsList;
 
     public User() {

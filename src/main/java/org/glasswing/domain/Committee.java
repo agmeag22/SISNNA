@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,9 +57,9 @@ public class Committee implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
-    @OneToMany(mappedBy = "committee")
+    @OneToMany(mappedBy = "committee", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Members> membersList;
 
     public Committee() {

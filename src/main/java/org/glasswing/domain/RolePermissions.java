@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,10 +36,10 @@ public class RolePermissions implements Serializable {
     @Column(name = "id_role_permissions")
     private Integer idRolePermissions;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
     @JoinColumn(name = "id_permission", referencedColumnName = "id_permission")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Permission permission;
 
     public RolePermissions() {

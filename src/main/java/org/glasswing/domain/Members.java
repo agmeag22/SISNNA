@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,13 +36,13 @@ public class Members implements Serializable {
     @Column(name = "id_members")
     private Integer idMembers;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @JoinColumn(name = "id_committee", referencedColumnName = "id_committee")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Committee committee;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
     public Members() {
@@ -107,5 +108,5 @@ public class Members implements Serializable {
     public String toString() {
         return "org.glasswing.domain.Members[ idMembers=" + idMembers + " ]";
     }
-    
+
 }

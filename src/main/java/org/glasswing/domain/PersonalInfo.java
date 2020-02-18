@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -67,18 +68,18 @@ public class PersonalInfo implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
     @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private CountryDepartment countryDepartment;
     @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Municipality municipality;
     @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Gender gender;
-    @OneToMany(mappedBy = "personalInfo")
+    @OneToMany(mappedBy = "personalInfo", fetch = FetchType.LAZY)
     private List<User> userList;
 
     public PersonalInfo() {

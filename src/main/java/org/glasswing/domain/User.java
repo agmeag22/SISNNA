@@ -72,13 +72,13 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Members> membersList;
     @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PersonalInfo personalInfo;
     @JoinColumn(name = "id_department", referencedColumnName = "id_department")
     @ManyToOne(fetch = FetchType.LAZY)
     private Department department;
     @JoinColumn(name = "id_role", referencedColumnName = "id_role")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
     @JoinColumn(name = "id_position", referencedColumnName = "id_position")
     @ManyToOne(fetch = FetchType.LAZY)

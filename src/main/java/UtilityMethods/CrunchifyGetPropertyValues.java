@@ -37,13 +37,16 @@ public class CrunchifyGetPropertyValues {
 			Date time = new Date(System.currentTimeMillis());
  
 			// get the property value and print it out
-			String user = prop.getProperty("user");
-			String company1 = prop.getProperty("company1");
-			String company2 = prop.getProperty("company2");
-			String company3 = prop.getProperty("company3");
+			String userDB = prop.getProperty("usuarioBD");
+			String passwordDB = prop.getProperty("contrasenaBD");
+			String urlDB = prop.getProperty("urlBD");
+			String nameDB = prop.getProperty("nombreBD");
+                        String mailRepo = prop.getProperty("correoRecuperacion");
+                        String mailRepoUser = prop.getProperty("mailRecuperacion");
+                        String passwordRepoUser = prop.getProperty("contrasenaRecuperacion");
+                        
  
-			result = "Company List = " + company1 + ", " + company2 + ", " + company3;
-			System.out.println(result + "\nProgram Ran on " + time + " by user=" + user);
+			result = userDB + ", " + passwordDB + ", " + urlDB + ", " + nameDB + ", " + mailRepo + ", " + mailRepoUser + ", "+ passwordRepoUser;
 		} catch (Exception e) {
 			System.out.println("Exception: " + e);
 		} finally {

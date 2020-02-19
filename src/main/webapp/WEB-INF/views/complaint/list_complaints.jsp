@@ -26,7 +26,7 @@
         <!-- Page Heading -->
         <h1 class="h3 mb-2 text-gray-800">${title}</h1>
 
-       <!-- DataTales Example -->
+        <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
 
@@ -57,18 +57,17 @@
                             </tr>
                         </tfoot>
                         <tbody>
-                            
+
                             <c:forEach items="${lista}" var="item">
-                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${item.createdDate}" var="createdDate" />
-                                    <fmt:formatDate pattern="yyyy-MM-dd" value="${item.updatedDate}" var="updatedDate" />
+                                <fmt:formatDate pattern="yyyy-MM-dd" value="${item.createdDate}" var="createdDate" />
+                                <fmt:formatDate pattern="yyyy-MM-dd" value="${item.updatedDate}" var="updatedDate" />
                                 <tr>
-                                    
+
                                     <td>${item.idComplaint}</td>
                                     <td>${createdDate}</td>
                                     <td>${item.state.name}</td>
                                     <td>${updatedDate}</td>
-                                    
-                                    <td></td>
+                                    <td>${item.priority.name}</td>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>
@@ -83,5 +82,9 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                </jsp:body>
-            </t:admin-template>
+                </div>
+            </div>
+        </div>
+
+    </jsp:body>
+</t:admin-template>

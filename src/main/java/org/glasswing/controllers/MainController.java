@@ -53,12 +53,12 @@ public class MainController {
     }
     @RequestMapping(value="/login",method=RequestMethod.POST)
     public ModelAndView login(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpServletRequest request,Model model) {
-     User ux = userServ.findByEmail(username);
-        String password2 = passwordEncoder().encode(password);
+     User ux = userServ.findByEmail(username.trim());
+//        String password2 = passwordEncoder().encode(password.trim());
         ModelAndView mav = new ModelAndView();
         //if(username.equals("usuario") && password.equals("glasswing")){
         UsernamePasswordAuthenticationToken authReq
-                = new UsernamePasswordAuthenticationToken(username, password);
+                = new UsernamePasswordAuthenticationToken(username.trim(), password.trim());
         Authentication auth = authManager.authenticate(authReq);
         
         SecurityContext sc = SecurityContextHolder.getContext();

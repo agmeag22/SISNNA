@@ -126,13 +126,13 @@ public class Complaint implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private AccusedType accusedType;
     @JoinColumn(name = "id_state", referencedColumnName = "id_state")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private State state;
     @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
     @ManyToOne(fetch = FetchType.LAZY)
     private Gender gender;
     @JoinColumn(name = "id_priority", referencedColumnName = "id_priority")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Priority priority;
     @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
     private List<ComplaintModifications> complaintModificationsList;

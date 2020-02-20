@@ -1,6 +1,6 @@
 package org.glasswing.configuration;
 
-import UtilityMethods.CrunchifyGetPropertyValues;
+import UtilityMethods.GetPropertyValues;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -24,11 +24,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "org.glasswing.repositories")
 public class JpaConfiguration {
 
-    CrunchifyGetPropertyValues getproperties = new CrunchifyGetPropertyValues();
-    String[] properties;
+    GetPropertyValues getproperties = new GetPropertyValues();
+    Properties prop;
 
     public JpaConfiguration() throws IOException {
-        this.properties = getproperties.getPropValues();
+        this.prop = getproperties.getPropValues();
     }
         
     @Bean
@@ -56,9 +56,9 @@ public class JpaConfiguration {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         
-        dataSource.setUrl(properties[2]);
-        dataSource.setUsername(properties[0]);
-        dataSource.setPassword(properties[1]);
+        dataSource.setUrl("jdbc:mysql://"+prop.getProperty("DBServerURL")+'/'+prop.getProperty("DBName"));
+        dataSource.setUsername(prop.getProperty("DBUser"));
+        dataSource.setPassword(prop.getProperty("DBPassword"));
 
         return dataSource;
     }

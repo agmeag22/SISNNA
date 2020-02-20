@@ -1,6 +1,6 @@
 package org.glasswing.configuration;
 
-import UtilityMethods.CrunchifyGetPropertyValues;
+import UtilityMethods.GetPropertyValues;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -16,20 +16,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class MailConfiguration {
 
     @Bean
-    public JavaMailSender getJavaMailSender() {
-        CrunchifyGetPropertyValues getproperties = new CrunchifyGetPropertyValues();
-        String[] properties = null;
-        try {
-            properties = getproperties.getPropValues();
-        } catch (IOException ex) {
-            Logger.getLogger(MailConfiguration.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public JavaMailSender getJavaMailSender() throws IOException {
+        GetPropertyValues getproperties = new GetPropertyValues();
+        Properties properties = null;
+        properties = getproperties.getPropValues();
+       
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost(properties[4]);
-        mailSender.setPort(Integer.parseInt(properties[7]));
+        mailSender.setHost(properties.getProperty("mailServerUrl"));
+        mailSender.setPort(Integer.parseInt(properties.getProperty("mailServerPort")));
 
-        mailSender.setUsername(properties[5]);
-        mailSender.setPassword(properties[6]); // KP9KWw\X+Km2am-J
+        mailSender.setUsername(properties.getProperty("mailServerUsername"));
+        mailSender.setPassword(properties.getProperty("mailServerPassword")); // KP9KWw\X+Km2am-J
 
         Properties props = mailSender.getJavaMailProperties();
 

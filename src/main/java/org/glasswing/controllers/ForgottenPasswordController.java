@@ -5,7 +5,10 @@
  */
 package org.glasswing.controllers;
 
+import UtilityMethods.GetPropertyValues;
+import java.io.IOException;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.glasswing.domain.User;
@@ -28,7 +31,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Controller //manda a llamar a los metodos
 public class ForgottenPasswordController {
 //    
+     GetPropertyValues getproperties = new GetPropertyValues();
+    Properties prop;
 
+    public ForgottenPasswordController() throws IOException {
+        this.prop = getproperties.getPropValues();
+    }
     static String emailToRecipient, emailSubject, emailMessage;
     static final String emailFromRecipient = "erkexami@gmail.com";
     static final String server = ":8084/SIS_NNA";
@@ -70,7 +78,7 @@ public class ForgottenPasswordController {
 
             // Save token to database
             userService.save(u);
-            String appUrl = request.getScheme() + "://" + request.getServerName() + server;
+            String appUrl = prop.getProperty("WebPageURL");
 
             // Email message
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();

@@ -53,6 +53,8 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/denuncias/denuncias_pendientes").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")
                 .antMatchers("/denuncias/denuncias_procesadas").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")
                 .antMatchers("/denuncias/ver_denuncia/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")    
+                .antMatchers("/setear_resolucion/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")    
+                .antMatchers("/cambiar_clasificacion/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")   
                 .antMatchers("/denuncias/store/**").permitAll()
                 .antMatchers("/denuncias/nueva_denuncia").permitAll()                        
                 .antMatchers("/dashboard/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")

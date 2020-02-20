@@ -36,8 +36,9 @@
         <script src="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/js/quill/quill.min.js"></script>
         <script>
+            var editor2,editor1;
             $(document).ready(function () {
-                var editor1 = new Quill('#clasificationComment', {
+                editor1 = new Quill('#clasificationComment', {
                     modules: {
                         toolbar: [
                             ['bold', 'italic'],
@@ -48,7 +49,7 @@
                     placeholder: 'Comentario',
                     theme: 'snow'
                 });
-                var editor2 = new Quill('#resolution', {
+                editor2 = new Quill('#resolution', {
                     modules: {
                         toolbar: [
                             ['bold', 'italic'],
@@ -61,17 +62,28 @@
                 });
             });
 
-            var form = document.querySelector('form');
+            var form = document.querySelector('#clasificacion_form');
             form.onsubmit = function () {
+                var hvalue = JSON.stringify(editor1.getContents());
+//                console.log(JSON.stringify(editor1.getContents()));
+                $(this).append("<textarea name='clasificationComment' style='display:none'>"+hvalue+"</textarea>");
+
+//                console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+//
+//                // No back end to actually submit to!
+//                alert('Open the console to see the submit data!')
+//                return false;
+            };
+             var form2 = document.querySelector('#resolution_form');
+            form2.onsubmit = function () {
                 // Populate hidden form on submit
-                var about = document.querySelector('input[name=about]');
-                about.value = JSON.stringify(editor1.getContents());
-
-                console.log("Submitted", $(form).serialize(), $(form).serializeArray());
-
-                // No back end to actually submit to!
-                alert('Open the console to see the submit data!')
-                return false;
+               var hvalue = JSON.stringify(editor2.getContents()); 
+              $(this).append("<textarea name='resolution' style='display:none'>"+hvalue+"</textarea>");
+//                console.log("Submitted", $(form).serialize(), $(form).serializeArray());
+//
+//                // No back end to actually submit to!
+//                alert('Open the console to see the submit data!')
+//                return false;
             };
             $('#radioBtn a').on('click', function () {
                 var sel = $(this).data('title');
@@ -103,7 +115,7 @@
                 </div>
 
                 <div class="tab-pane fade" id="clasif" role="tabpanel" aria-labelledby="clasif-tab">
-                    <form class="form" action="/denuncias/cambiar_clasificacion/${complaint.idComplaint}">
+                    <form class="form" id="clasificacion_form" action="${pageContext.request.contextPath}/cambiar_clasificacion/${complaint.idComplaint}" method="post">
 
                         <div class="form-group row">
                             <label for="happy" class="col-sm-4 col-md-4 control-label text-right">Clasificación de la Alerta:</label>
@@ -113,29 +125,67 @@
                                         <a class="btn btn-primary btn-sm active" data-toggle="happy" data-title="1">LEVE</a>
                                         <a class="btn btn-primary btn-sm notActive" data-toggle="happy" data-title="2">GRAVE</a>
                                     </div>
-                                    <input type="hidden" name="priority.id_priority" id="happy">
+                                    <input type="hidden" name="priority" id="happy" value="1">
                                 </div>
                             </div>
                         </div>
-                        <input name="clasificationComment" type="hidden">
+                        <!--<input name="clasificationComment" type="hidden">-->
                         <div id="clasificationComment"></div>
                         <br>
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Guardar Clasificación</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#confirm_clasif_modal">Guardar Clasificación</button>
                     </form>
                 </div>
 
                 <div class="tab-pane fade" id="result" role="tabpanel" aria-labelledby="result-tab">
-                    <form class="form" action="/denuncias/setear_resolucion/${complaint.idComplaint}">
-                        <input name="resolution" type="hidden">
+                    <form class="form" id="resolution_form" action="${pageContext.request.contextPath}/setear_resolucion/${complaint.idComplaint}" method="post">
+                        <!--<input name="resolution" type="hidden">-->
                         <div id="resolution"></div>
                         <br>
-                        <button type="button" class="btn btn-primary btn-lg btn-block">Guardar Resolución</button>
+                        <button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#confirm_resolution_modal">Guardar Resolución</button>
                     </form>
                 </div>
             </div>
 
         </div>
-
-
+        <!-- Modal -->
+        <div class="modal fade" id="confirm_clasif_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">¿Esta seguro que desea guardar los cambios?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="$('#clasificacion_form').submit()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+ <!-- Modal -->
+        <div class="modal fade" id="confirm_resolution_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+               <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">¿Esta seguro que desea guardar los cambios?</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="$('#resolution_form').submit()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </jsp:body>
 </t:admin-template>

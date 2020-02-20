@@ -5,17 +5,20 @@
  */
 package org.glasswing.controllers;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.logging.Logger;
 import org.glasswing.domain.Abuse;
 import org.glasswing.domain.AccusedType;
 import org.glasswing.domain.Complaint;
 import org.glasswing.domain.ComplaintAbuses;
+import org.glasswing.domain.ComplaintModifications;
 import org.glasswing.domain.ComplaintPrograms;
 import org.glasswing.domain.Country;
 import org.glasswing.domain.Gender;
 import org.glasswing.domain.Program;
 import org.glasswing.domain.State;
+import org.glasswing.domain.User;
 import org.glasswing.service.AbuseService;
 import org.glasswing.service.AccusedTypeService;
 import org.glasswing.service.ComplaintService;
@@ -29,6 +32,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller //manda a llamar a los metodos
@@ -91,7 +95,40 @@ public class ComplaintController {
         mav.setViewName("complaint/view_complaint");
         return mav;
     }
+    
+    @RequestMapping("/setear_resolucion/{id}")
+    public ModelAndView view_complaint(Principal principal,@PathVariable("id") int id, @RequestParam String resolution) {
+        ModelAndView mav = new ModelAndView();
+        Complaint complaint = complaintService.findOne(id);
+        complaint.setResolution(resolution);
+        complaint.setState(new State(4));
+        ComplaintModifications mod = new ComplaintModifications();
+        mod.setComplaint(complaint);
+        User ux= userService.findByEmail(principal.getName());
+        mod.setUser(ux);
+        try{
+        complaintService.save(complaint);
+         mav.addObject("success", "Se ha guardado correctamente ");
+         mav.setViewName("redirect:/denuncias/denuncias_pendientes");
+        }catch(Error e){
+         mav.addObject("error", "No se ha podido guardar");   
+        }
 
+        return mav;
+    }
+    
+    @RequestMapping("/cambiar_clasificacion/{id}")
+    public ModelAndView view_complaint(@PathVariable("id") int id,@RequestParam String clasificationComment,@RequestParam int priority) {
+        ModelAndView mav = new ModelAndView();
+        Complaint complaint = complaintService.findOne(id);
+        List<ComplaintAbuses> complaintAbuses = complaint.getComplaintAbusesList();
+        List<ComplaintPrograms> complaintPrograms = complaint.getComplaintProgramsList();
+        mav.addObject("complaintAbuses", complaintAbuses);
+        mav.addObject("complaintPrograms", complaintPrograms);
+        mav.addObject("complaint", complaint);
+        mav.setViewName("complaint/view_complaint");
+        return mav;
+    }
     @RequestMapping("/denuncias/nueva_denuncia")
     public ModelAndView new_complaint() {
         List<Abuse> abuseList = abuseService.getAll();

@@ -16,6 +16,7 @@ import org.glasswing.domain.ComplaintModifications;
 import org.glasswing.domain.ComplaintPrograms;
 import org.glasswing.domain.Country;
 import org.glasswing.domain.Gender;
+import org.glasswing.domain.Priority;
 import org.glasswing.domain.Program;
 import org.glasswing.domain.State;
 import org.glasswing.domain.User;
@@ -59,10 +60,11 @@ public class ComplaintController {
         ModelAndView mav = new ModelAndView();
         List complaint_list = null;
         try {
-            complaint_list = complaintService.findByStateNot(new State(4));
+            complaint_list = complaintService.findByStateNot(new State(3));
         } catch (Exception e) {
         }
         mav.addObject("title", "Denuncias Pendientes");
+        mav.addObject("marked", "denuncias-pendientes");
         mav.addObject("lista", complaint_list);
         mav.setViewName("complaint/list_complaints");
         return mav;
@@ -71,64 +73,82 @@ public class ComplaintController {
     @RequestMapping("/denuncias/denuncias_procesadas")
     public ModelAndView processed_complaint() {
         ModelAndView mav = new ModelAndView();
-        List complaint_list = null;
+        List complaint_list2 = null;
         try {
-            complaint_list = complaintService.findByState(new State(4));
+            complaint_list2 = complaintService.findByState(new State(3));
         } catch (Exception e) {
         }
         mav.addObject("title", "Denuncias Procesadas");
-        mav.addObject("list", complaint_list);
-
+         mav.addObject("lista", complaint_list2);
+        mav.addObject("marked", "denuncias-procesadas");
+       
         mav.setViewName("complaint/list_complaints");
         return mav;
     }
 
     @RequestMapping("/denuncias/ver_denuncia/{id}")
-    public ModelAndView view_complaint(@PathVariable("id") int id) {
+    public ModelAndView view_complaint(@PathVariable("id") int id, Principal principal) {
         ModelAndView mav = new ModelAndView();
         Complaint complaint = complaintService.findOne(id);
         List<ComplaintAbuses> complaintAbuses = complaint.getComplaintAbusesList();
         List<ComplaintPrograms> complaintPrograms = complaint.getComplaintProgramsList();
+        User ux = userService.findByEmail(principal.getName());
         mav.addObject("complaintAbuses", complaintAbuses);
         mav.addObject("complaintPrograms", complaintPrograms);
         mav.addObject("complaint", complaint);
+        mav.addObject("user", ux);
         mav.setViewName("complaint/view_complaint");
         return mav;
     }
-    
+
     @RequestMapping("/setear_resolucion/{id}")
-    public ModelAndView view_complaint(Principal principal,@PathVariable("id") int id, @RequestParam String resolution) {
+    public ModelAndView view_complaint(Principal principal, @PathVariable("id") int id, @RequestParam String resolution) {
         ModelAndView mav = new ModelAndView();
         Complaint complaint = complaintService.findOne(id);
         complaint.setResolution(resolution);
-        complaint.setState(new State(4));
+        complaint.setState(new State(3));
         ComplaintModifications mod = new ComplaintModifications();
         mod.setComplaint(complaint);
-        User ux= userService.findByEmail(principal.getName());
+        User ux = userService.findByEmail(principal.getName());
         mod.setUser(ux);
-        try{
-        complaintService.save(complaint);
-         mav.addObject("success", "Se ha guardado correctamente ");
-         mav.setViewName("redirect:/denuncias/denuncias_pendientes");
-        }catch(Error e){
-         mav.addObject("error", "No se ha podido guardar");   
+        List<ComplaintModifications> list = complaint.getComplaintModificationsList();
+        list.add(mod);
+        complaint.setComplaintModificationsList(list);
+        try {
+            complaintService.save(complaint);
+            mav.addObject("success", "Se ha guardado correctamente ");
+            mav.setViewName("redirect:/denuncias/denuncias_procesadas");
+        } catch (Error e) {
+            mav.addObject("error", "No se ha podido guardar");
+        }
+        return mav;
+    }
+
+    @RequestMapping("/cambiar_clasificacion/{id}")
+    public ModelAndView view_complaint(Principal principal, @PathVariable("id") int id, @RequestParam String clasificationComment, @RequestParam int priority) {
+        ModelAndView mav = new ModelAndView();
+        Complaint complaint = complaintService.findOne(id);
+        complaint.setClasificationComment(clasificationComment);
+        complaint.setState(new State(2));
+        complaint.setPriority(new Priority(priority));
+        ComplaintModifications mod = new ComplaintModifications();
+        mod.setComplaint(complaint);
+        User ux = userService.findByEmail(principal.getName());
+        mod.setUser(ux);
+        List<ComplaintModifications> list = complaint.getComplaintModificationsList();
+        list.add(mod);
+        complaint.setComplaintModificationsList(list);
+        try {
+            complaintService.save(complaint);
+            mav.addObject("success", "Se ha guardado correctamente ");
+            mav.setViewName("redirect:/denuncias/denuncias_pendientes");
+        } catch (Error e) {
+            mav.addObject("error", "No se ha podido guardar");
         }
 
         return mav;
     }
-    
-    @RequestMapping("/cambiar_clasificacion/{id}")
-    public ModelAndView view_complaint(@PathVariable("id") int id,@RequestParam String clasificationComment,@RequestParam int priority) {
-        ModelAndView mav = new ModelAndView();
-        Complaint complaint = complaintService.findOne(id);
-        List<ComplaintAbuses> complaintAbuses = complaint.getComplaintAbusesList();
-        List<ComplaintPrograms> complaintPrograms = complaint.getComplaintProgramsList();
-        mav.addObject("complaintAbuses", complaintAbuses);
-        mav.addObject("complaintPrograms", complaintPrograms);
-        mav.addObject("complaint", complaint);
-        mav.setViewName("complaint/view_complaint");
-        return mav;
-    }
+
     @RequestMapping("/denuncias/nueva_denuncia")
     public ModelAndView new_complaint() {
         List<Abuse> abuseList = abuseService.getAll();
@@ -147,7 +167,7 @@ public class ComplaintController {
     }
 
     @RequestMapping("/denuncias/store")
-    public ModelAndView store_complaint(@ModelAttribute Complaint c) {
+    public ModelAndView store_complaint(Principal principal, @ModelAttribute Complaint c) {
 
         List<ComplaintAbuses> x = c.getComplaintAbusesList();
         for (ComplaintAbuses m : x) {
@@ -164,8 +184,19 @@ public class ComplaintController {
 
         complaintService.save(c);
         ModelAndView mav = new ModelAndView();
+        User ux = userService.findByEmail(principal.getName());
+        if (ux.getRole().getIdRole() > 1) {
+            mav.setViewName("redirect:/denuncias/denuncias_pendientes");
+        } else {
+            mav.setViewName("complaint/send_success");
+        }
+        return mav;
+    }
 
-        mav.setViewName("redirect:/denuncias/denuncias_pendientes");
+    @RequestMapping("/denuncias/denuncia_enviada")
+    public ModelAndView store_complaint(Principal principal) {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("complaint/send_success");
         return mav;
     }
 

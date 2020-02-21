@@ -56,6 +56,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/setear_resolucion/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")    
                 .antMatchers("/cambiar_clasificacion/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")   
                 .antMatchers("/denuncias/store/**").permitAll()
+                .antMatchers("/denuncias/denuncia_enviada/**").permitAll()    
                 .antMatchers("/denuncias/nueva_denuncia").permitAll()                        
                 .antMatchers("/dashboard/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")
                 .antMatchers("/usuarios/**").hasAuthority("ADMINISTRADOR")
@@ -70,7 +71,9 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
         
     }
 }

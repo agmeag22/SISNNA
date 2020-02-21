@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -106,9 +107,9 @@ public class Complaint implements Serializable {
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintPrograms> complaintProgramsList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintAbuses> complaintAbusesList;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -134,7 +135,7 @@ public class Complaint implements Serializable {
     @JoinColumn(name = "id_priority", referencedColumnName = "id_priority")
     @ManyToOne(fetch = FetchType.EAGER)
     private Priority priority;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintModifications> complaintModificationsList;
 
     public Complaint() {

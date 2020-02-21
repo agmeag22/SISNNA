@@ -4,8 +4,8 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <t:admin-template>
-    <jsp:attribute name="marked">denuncias-pendientes</jsp:attribute>
-    <jsp:attribute name="title">Denuncias Pendientes</jsp:attribute>
+    <jsp:attribute name="marked">${marked}</jsp:attribute>
+    <jsp:attribute name="title">${title}</jsp:attribute>
     <jsp:attribute name="styles">
         <!-- Custom styles for this page -->
         <link href="${pageContext.request.contextPath}/resources/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -68,7 +68,7 @@
                                     <td>${item.state.name}</td>
                                     <td>${updatedDate}</td>
                                     
-                                    <td></td>
+                                    <td>${item.priority.name}</td>
                                     <td><div class="dropdown">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <em class="fa fa-cog"></em>

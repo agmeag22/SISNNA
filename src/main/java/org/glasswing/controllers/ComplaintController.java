@@ -10,12 +10,14 @@ import java.util.List;
 import java.util.logging.Logger;
 import org.glasswing.domain.Abuse;
 import org.glasswing.domain.AccusedType;
+import org.glasswing.domain.Committee;
 import org.glasswing.domain.Complaint;
 import org.glasswing.domain.ComplaintAbuses;
 import org.glasswing.domain.ComplaintModifications;
 import org.glasswing.domain.ComplaintPrograms;
 import org.glasswing.domain.Country;
 import org.glasswing.domain.Gender;
+import org.glasswing.domain.Members;
 import org.glasswing.domain.Priority;
 import org.glasswing.domain.Program;
 import org.glasswing.domain.State;
@@ -56,12 +58,18 @@ public class ComplaintController {
     UserService userService;
 
     @RequestMapping("/denuncias/denuncias_pendientes")
-    public ModelAndView pending_complaint() {
+    public ModelAndView pending_complaint(Principal principal) {
         ModelAndView mav = new ModelAndView();
         List complaint_list = null;
         try {
-            complaint_list = complaintService.findByStateNot(new State(3));
+            User ux = userService.findByEmail(principal.getName());
+            List<Members> members = ux.getMembersList();
+            Members member = members.get(0);
+            Committee comite = member.getCommittee();
+            Country country = comite.getCountry();
+            complaint_list = complaintService.findByStateNotAndCountry(new State(3), country);
         } catch (Exception e) {
+            log.info(e.getMessage());
         }
         mav.addObject("title", "Denuncias Pendientes");
         mav.addObject("marked", "denuncias-pendientes");
@@ -71,17 +79,23 @@ public class ComplaintController {
     }
 
     @RequestMapping("/denuncias/denuncias_procesadas")
-    public ModelAndView processed_complaint() {
+    public ModelAndView processed_complaint(Principal principal) {
         ModelAndView mav = new ModelAndView();
         List complaint_list2 = null;
         try {
-            complaint_list2 = complaintService.findByState(new State(3));
+                 User ux = userService.findByEmail(principal.getName());
+            List<Members> members = ux.getMembersList();
+            Members member = members.get(0);
+            Committee comite = member.getCommittee();
+            Country country = comite.getCountry();
+            complaint_list2 = complaintService.findByStateAndCountry(new State(3),country);
         } catch (Exception e) {
+            log.info(e.getMessage());
         }
         mav.addObject("title", "Denuncias Procesadas");
-         mav.addObject("lista", complaint_list2);
+        mav.addObject("lista", complaint_list2);
         mav.addObject("marked", "denuncias-procesadas");
-       
+
         mav.setViewName("complaint/list_complaints");
         return mav;
     }
@@ -168,23 +182,26 @@ public class ComplaintController {
 
     @RequestMapping("/denuncias/store")
     public ModelAndView store_complaint(Principal principal, @ModelAttribute Complaint c) {
-
-        List<ComplaintAbuses> x = c.getComplaintAbusesList();
-        for (ComplaintAbuses m : x) {
-            m.setComplaint(c);
+        if (c.getComplaintAbusesList() != null) {
+            List<ComplaintAbuses> x = c.getComplaintAbusesList();
+            for (ComplaintAbuses m : x) {
+                m.setComplaint(c);
+            }
+            c.setComplaintAbusesList(x);
         }
-        c.setComplaintAbusesList(x);
-
-        List<ComplaintPrograms> y = c.getComplaintProgramsList();
-        for (ComplaintPrograms m : y) {
-            m.setComplaint(c);
+        if (c.getComplaintProgramsList() != null) {
+            List<ComplaintPrograms> y = c.getComplaintProgramsList();
+            for (ComplaintPrograms m : y) {
+                m.setComplaint(c);
+            }
+            c.setComplaintProgramsList(y);
         }
-        c.setComplaintProgramsList(y);
         c.setState(new State(1));
-
+        User ux = userService.findByEmail(principal.getName());
+        c.setUser(ux);
         complaintService.save(c);
         ModelAndView mav = new ModelAndView();
-        User ux = userService.findByEmail(principal.getName());
+
         if (ux.getRole().getIdRole() > 1) {
             mav.setViewName("redirect:/denuncias/denuncias_pendientes");
         } else {

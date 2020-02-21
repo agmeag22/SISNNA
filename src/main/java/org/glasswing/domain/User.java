@@ -69,8 +69,8 @@ public class User implements Serializable {
     private Date updatedDate;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Complaint> complaintList;
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Members> membersList;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Members> membersList;  
     @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
     @ManyToOne(fetch = FetchType.EAGER)
     private PersonalInfo personalInfo;

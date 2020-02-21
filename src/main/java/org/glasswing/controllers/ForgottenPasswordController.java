@@ -76,8 +76,8 @@ public class ForgottenPasswordController {
             SimpleMailMessage passwordResetEmail = new SimpleMailMessage();
             passwordResetEmail.setFrom("emailFromRecipient");
             passwordResetEmail.setTo(u.getEmail());
-            passwordResetEmail.setSubject("Password Reset Request");
-            passwordResetEmail.setText("To reset your password, click the link below:\n" + appUrl
+            passwordResetEmail.setSubject("Sistema de Alerta Glasswing: Pedido de reinicio de contraseña");
+            passwordResetEmail.setText("Para reiniciar su contraseña del servicio de alerta Glasswing haga click en el siguiente enlace:\n" + appUrl
                     + "/reset?token=" + u.getResetToken());
 
             emailService.sendEmail(passwordResetEmail);
@@ -113,32 +113,39 @@ public class ForgottenPasswordController {
         //public ModelAndView setNewPassword(ModelAndView modelAndView, @RequestParam Map<String, String> requestParams, RedirectAttributes redir) {
 
         ModelAndView modelAndView = new ModelAndView();
-        // Find the user associated with the reset token
-        Optional<User> user = userService.findUserByResetToken(token);
+        
+        if(pass1.equals(pass2)){
+            // Find the user associated with the reset token
+            Optional<User> user = userService.findUserByResetToken(token);
 
-        // This should always be non-null but we check just in case
-        if (user.isPresent()) {
+            // This should always be non-null but we check just in case
+            if (user.isPresent()) {
 
-            User resetUser = user.get();
+                User resetUser = user.get();
 
-            // Set new password    
-            //resetUser.setPassword(pass1);
-            resetUser.setPassword(bCryptPasswordEncoder().encode(pass1));
+                // Set new password    
+                //resetUser.setPassword(pass1);
+                resetUser.setPassword(bCryptPasswordEncoder().encode(pass1));
 
-            // Set the reset token to null so it cannot be used again
-            resetUser.setResetToken(null);
+                // Set the reset token to null so it cannot be used again
+                resetUser.setResetToken(null);
 
-            // Save user
-            userService.save(resetUser);
+                // Save user
+                userService.save(resetUser);
 
-            // In order to set a model attribute on a redirect, we must use
-            // RedirectAttributes
-            //redir.addFlashAttribute("successMessage", "You have successfully reset your password.  You may now login.");
-            modelAndView.setViewName("login");
-            return modelAndView;
+                // In order to set a model attribute on a redirect, we must use
+                // RedirectAttributes
+                //redir.addFlashAttribute("successMessage", "You have successfully reset your password.  You may now login.");
+                modelAndView.setViewName("login");
+                return modelAndView;
 
-        } else {
-            modelAndView.addObject("respuesta", "Link de contraseña inválido.");
+            } else {
+                modelAndView.addObject("respuesta", "Link de contraseña inválido.");
+                modelAndView.setViewName("resetPassword");
+            }
+        }else{
+            modelAndView.addObject("respuesta", "Las contraseñas deben ser iguales.");
+            modelAndView.addObject("resetToken", token);
             modelAndView.setViewName("resetPassword");
         }
 

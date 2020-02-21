@@ -33,7 +33,7 @@
                 var id = document.getElementById("country_list_id").value;
 
                 $.ajax({
-                    url: `${pageContext.request.contextPath}/country/${"${id}"}`,
+                    url: `${pageContext.request.contextPath}/country_reg/${"${id}"}`,
                                 type: 'POST',
                                 dataType: 'json',
                                 success: function (json) {
@@ -50,7 +50,7 @@
                             var id = document.getElementById("country_list_department_id").value;
 //                console.log("ENTRO");
                             $.ajax({
-                                url: `${pageContext.request.contextPath}/department/${"${id}"}`,
+                                url: `${pageContext.request.contextPath}/department_reg/${"${id}"}`,
                                             type: 'POST',
                                             dataType: 'json',
                                             success: function (json) {
@@ -145,7 +145,7 @@
                                             <div class="form-group">
                                                 Género
                                                 <div class="form-group">
-                                                  <select class="form-control" name="gender.idGender">
+                                                  <select class="form-control" name="idGender">
                                                          <c:forEach items="${genders}" var="gender">
                                                           <option value="${gender.idGender}">${gender.name}</option>
                                                            </c:forEach>
@@ -155,7 +155,7 @@
                                             </div>
                                             <div class="form-group">
                                                 Fecha de Nacimiento
-                                            <input type="date" class="form-control" id="fechainc" >
+                                            <input type="date" class="form-control" id="fechainc" name="birthDate" >
                                         
                                             </div>
                                     
@@ -185,7 +185,7 @@
                                             <div class="form-group">
                                                 Departamento de Trabajo en Glasswings
                                                 <div class="form-group">
-                                                  <select class="form-control" name="department.idDepartment">
+                                                  <select class="form-control" name="department">
                                                          <c:forEach items="${departments}" var="department">
                                                           <option value="${department.idDepartment}">${department.name}</option>
                                                            </c:forEach>
@@ -194,8 +194,12 @@
                                              
                                             </div>
                                             <div class="form-group">
-                                                Cargo
-                                              <input type="text" class="form-control form-control-user" name="position" id="inputPosition">
+                                                    Cargo
+                                                  <select class="form-control" name="id_position">
+                                                         <c:forEach items="${positions}" var="position">
+                                                          <option value="${position.idPosition}">${position.name}</option>
+                                                           </c:forEach>
+                                                  </select>
                                             </div>
                                     
                                     <!--Hidden and preset attributes-->

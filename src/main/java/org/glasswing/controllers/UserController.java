@@ -287,6 +287,8 @@ public class UserController {
         return mav;
     }
 
+    
+    
     @RequestMapping("/country/{id}")
     public @ResponseBody
     HashMap<Integer, String> getDepartmentsOfCountryByID(@PathVariable("id") int id) {

@@ -51,6 +51,7 @@ public class MainController {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
     @RequestMapping(value="/login",method=RequestMethod.POST)
     public ModelAndView login(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpServletRequest request,Model model) {
      User ux = userServ.findByEmail(username);

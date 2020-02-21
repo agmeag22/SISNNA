@@ -52,17 +52,35 @@
                                             </div>
                                             -->
                                             <div class="form-group">
-                                                <input type="password" class="form-control form-control-user" name="passwordNew" id="exampleInputPassword" placeholder="Contraseña nueva">
+                                                <input type="password" class="form-control form-control-user" name="passwordNew" id="inputPassword" placeholder="Contraseña nueva" oninput="check(this)">
                                             </div>
                                             <div class="form-group">
-                                                <input type="password" class="form-control form-control-user" name="passwordConfirm" id="exampleInputPasswordConfirm" placeholder="Confirme Contraseña">
+                                                <input type="password" class="form-control form-control-user" name="passwordConfirm" id="inputPasswordConfirm" placeholder="Confirme contraseña nueva" oninput="check(this)">
                                             </div>
+                                            <script language='javascript' type='text/javascript'>
+                                                function check(input) {                                                                                                        
+                                                    if((document.getElementById('inputPasswordConfirm').value === '') || (document.getElementById('inputPassword').value === '')){
+                                                        //input.setCustomValidity('La contraseña no puede estar vacia');
+                                                        //document.getElementByName("validacion").value("La contraseña no puede ir vacia");
+                                                        document.getElementById("resetButton").setAttribute("disabled","disabled");
+                                                    }else{
+                                                        input.setCustomValidity('');
+                                                        //document.getElementByName("validacion").value("");
+                                                        document.getElementById("resetButton").removeAttribute("disabled");
+                                                    }
+                                                    
+                                                    
+                                                    
+                                                    
+                                                }
+                                            </script>
+                                            
                                             <input type="hidden" class="form-control form-control-user" name="tokenId" id="theToken" value="${resetToken}">
                                             
-                                           
+                                            <output name="validacion"></output>
                                            
                                             
-                                            <button type="submit" class="btn btn-primary btn-user btn-block">
+                                            <button type="submit" class="btn btn-primary btn-user btn-block" id="resetButton" disabled="true">
                                                 Reiniciar Contraseña
                                             </button>
                                            

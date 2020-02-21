@@ -63,7 +63,7 @@
                                                 <a class="small" href="${pageContext.request.contextPath}/contrasena_olvidada">¿Olvidaste tu contraseña?</a>
                                             </div>
                                             <div class="text-center">
-                                                <a class="small" href="${pageContext.request.contextPath}/registrar">Registrarse</a>
+                                                <a class="small" href="${pageContext.request.contextPath}/registrar">Registrarse al sistema</a>
                                             </div>
                                         </form>
                                     </div>

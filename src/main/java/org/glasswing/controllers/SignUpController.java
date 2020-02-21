@@ -5,6 +5,7 @@
  */
 package org.glasswing.controllers;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -56,8 +57,8 @@ public class SignUpController {
 		
 		ModelAndView mav = new ModelAndView();
                 
-                List<CountryDepartment> cdepts = cdServ.getAll();
-                List<Municipality> mun = mService.getAll();
+//                List<CountryDepartment> cdepts = cdServ.getAll();
+//                List<Municipality> mun = mService.getAll();
                 List<Gender> gen = genderService.getAll();
                 List<Department> dept = departmentService.getAll();
                 List<Country> co = countryService.getAll();
@@ -71,7 +72,7 @@ public class SignUpController {
 		return mav;
 	}
         
-        @RequestMapping(value="/signUser")
+        @RequestMapping(value="/sign-in")
 	public ModelAndView signUser(@ModelAttribute User u) {
 		//(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpServletRequest request)
 		ModelAndView mav = new ModelAndView();
@@ -81,7 +82,8 @@ public class SignUpController {
                 role.setName("USUARIO");
                 u.setRole(role);
                 u.setActiveState(0);
-                
+                u.setCreatedDate(new Date());
+                u.setUpdatedDate(new Date());
                 /*
                 Country c = new Country();
                 c.setCode("222");
@@ -97,26 +99,21 @@ public class SignUpController {
                 */
                 mav.addObject("respuesta","Usuario Registrado");                    
                 
-                try {
-
+             
                     userService.save(u);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
-                    mav.setViewName("redirect:/usuarios/inicio_usuarios");
-                    return mav;
-                }
-                List<CountryDepartment> cdepts = cdServ.getAll();
-                List<Municipality> mun = mService.getAll();
+                
+               
+//                List<CountryDepartment> cdepts = cdServ.getAll();
+//                List<Municipality> mun = mService.getAll();
                 List<Gender> gen = genderService.getAll();
                 List<Department> dept = departmentService.getAll();
                 List<Country> co = countryService.getAll();
-                mav.addObject("countryDepartments" , cdepts);
-                mav.addObject("municipalities" , mun);
+//                mav.addObject("countryDepartments" , cdepts);
+//                mav.addObject("municipalities" , mun);
                 mav.addObject("genders" , gen);
                 mav.addObject("departments" , dept);
-                mav.addObject("country" , co);
+                mav.addObject("country_list" , co);
                 
 		mav.setViewName("sign_up");
 		return mav;

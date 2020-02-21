@@ -13,11 +13,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        
+
         <style type="text/css">
-            
-            </style>
-            
+
+        </style>
+
 
         <title>Sign Up</title>
 
@@ -106,63 +106,32 @@
                                             <h2 class="h6 text-gray-900 mb-4">Inserte sus datos personales</h2>
                                             ${respuesta}
                                         </div>
-
-                                <form action="${pageContext.request.contextPath}/signUser" method = "post" class="user">
-                                    
-                                    <!--
+                                        <form action="${pageContext.request.contextPath}/sign-in">
                                             <div class="form-group">
-                                                ID
-                                              <input type="text" class="form-control form-control-user" name="id" id="inputId">
-                                            </div> -->
-                                            <div class="form-group">
-                                                Nombres
-                                              <input type="text" class="form-control form-control-user" name="name" id="inputName">
-                                            </div>
-                                            <div class="form-group">
-                                                Apellidos
-                                              <input type="text" class="form-control form-control-user" name="lastname" id="inputLastName">
-                                            </div>
-<!--                                            <div class="form-group">
-                                                Usuario
-                                              <input type="text" class="form-control form-control-user" name="username" id="inputUsername">
-                                            </div>-->
-
-                                             <div class="form-group">
-                                                Contraseña
-                                              <input type="password" class="form-control form-control-user" name="password" id="inputPassword">
+                                                Nombres y Apellidos
+                                                <input type="text" class="form-control form-control-user" name="personalInfo.name" id="inputName">
                                             </div>
                                             <div class="form-group">
                                                 E-mail
-                                              <input type="email" class="form-control form-control-user" name="email" id="inputEmail">
+                                                <input type="email" class="form-control form-control-user" name="email" id="inputEmail">
                                             </div>
-
-<!--
                                             <div class="form-group">
-                                                Dirección
-                                              <input type="text" class="form-control form-control-user" name="address" id="inputAddress">
-                                            </div> -->
-
+                                                Contraseña
+                                                <input type="password" class="form-control form-control-user" name="password" id="inputPassword">
+                                            </div>
                                             <div class="form-group">
                                                 Género
                                                 <div class="form-group">
-                                                  <select class="form-control" name="gender.idGender">
-                                                         <c:forEach items="${genders}" var="gender">
-                                                          <option value="${gender.idGender}">${gender.name}</option>
-                                                           </c:forEach>
-                                                  </select>
-                                              </div>
-                                              
+                                                    <select class="form-control" name="personalInfo.gender.idGender">
+                                                        <c:forEach items="${genders}" var="gender">
+                                                            <option value="${gender.idGender}">${gender.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                Fecha de Nacimiento
-                                            <input type="date" class="form-control" id="fechainc" >
-                                        
-                                            </div>
-                                    
-
                                             <div class="form-group">
                                                 <label for="country_list">País</label> 
-                                                <select class="custom-select" id="country_list_id" name="id_country" aria-describedby="country_listHelp" required> 
+                                                <select class="custom-select" id="country_list_id" name="country.idCountry" aria-describedby="country_listHelp" required> 
                                                     <c:forEach items="${country_list}" var="country">
                                                         <option value="${country.idCountry}">${country.name}</option>
                                                     </c:forEach>
@@ -170,14 +139,14 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="country_department_list">Departamento/Estado</label> 
-                                                <select class="custom-select" id="country_list_department_id" name="id_country_department" aria-describedby="country_listHelp" required> 
+                                                <select class="custom-select" id="country_list_department_id" name="countryDepartment.idCountryDepartment" aria-describedby="country_listHelp" required> 
                                                     <option selected>N/A</option>
                                                 </select> 
                                                 <small id="nameHelp" class="form-text text-muted">Seleccione el departamento.</small>
                                             </div>
                                             <div class="form-group">
                                                 <label for="country_department_list">Municipio</label> 
-                                                <select class="custom-select" id="country_list_department_municipality_id" name="id_municipality" aria-describedby="country_listHelp" required> 
+                                                <select class="custom-select" id="country_list_department_municipality_id" name="municipality.idMunicipality" aria-describedby="country_listHelp" required> 
                                                     <option selected>N/A</option>
                                                 </select> 
                                                 <small id="nameHelp" class="form-text text-muted">Seleccione el municipio.</small>
@@ -185,35 +154,23 @@
                                             <div class="form-group">
                                                 Departamento de Trabajo en Glasswings
                                                 <div class="form-group">
-                                                  <select class="form-control" name="department.idDepartment">
-                                                         <c:forEach items="${departments}" var="department">
-                                                          <option value="${department.idDepartment}">${department.name}</option>
-                                                           </c:forEach>
-                                                  </select>
-                                              </div>
-                                             
+                                                    <select class="form-control" name="department.idDepartment">
+                                                        <c:forEach items="${departments}" var="department">
+                                                            <option value="${department.idDepartment}">${department.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+
                                             </div>
-                                            <div class="form-group">
+<!--                                            <div class="form-group">
                                                 Cargo
-                                              <input type="text" class="form-control form-control-user" name="position" id="inputPosition">
-                                            </div>
-                                    
-                                    <!--Hidden and preset attributes-->
-                                    <!-- Pais a El Salvador -->
-                                    <!--          <input type="hidden" class="form-control form-control-user" name="role" id="inputRole" value="${country}"> -->
-                                                
-                                    
-                                                <!-- Role -->
-                                              <!-- <input type="hidden" class="form-control form-control-user" name="role" id="inputRole"> -->
-                                            <!-- State -->
-                                            <!-- <input type="text" class="form-control form-control-user" name="State" id="inputState" readonly="true" hidden="true"> -->
-                                            
-                                    
+                                                <input type="text" class="form-control form-control-user" name="position" id="inputPosition">
+                                            </div>-->
                                             <button type="submit" class="btn btn-primary btn-user">
-                                              Registrarse
+                                                Registrarse
                                             </button>
-                                          </form>
-                    
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>

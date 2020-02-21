@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -72,7 +73,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Members> membersList;  
     @JoinColumn(name = "id_personal_info", referencedColumnName = "id_personal_info")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private PersonalInfo personalInfo;
     @JoinColumn(name = "id_department", referencedColumnName = "id_department")
     @ManyToOne(fetch = FetchType.LAZY)

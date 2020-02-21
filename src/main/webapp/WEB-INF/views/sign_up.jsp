@@ -162,10 +162,17 @@
                                                 </div>
 
                                             </div>
-<!--                                            <div class="form-group">
-                                                Cargo
-                                                <input type="text" class="form-control form-control-user" name="position" id="inputPosition">
-                                            </div>-->
+                                            <div class="form-group">
+                                                Cargo de Trabajo en Glasswings
+                                                <div class="form-group">
+                                                    <select class="form-control" name="position.idPosition">
+                                                        <c:forEach items="${positions}" var="position">
+                                                            <option value="${position.idPosition}">${position.name}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+
+                                            </div>
                                             <button type="submit" class="btn btn-primary btn-user">
                                                 Registrarse
                                             </button>

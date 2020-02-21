@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -58,12 +59,10 @@ public class PersonalInfo implements Serializable {
     @Column(name = "guardian_contact")
     private String guardianContact;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
@@ -71,13 +70,13 @@ public class PersonalInfo implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
     @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CountryDepartment countryDepartment;
     @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Municipality municipality;
     @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Gender gender;
     @OneToMany(mappedBy = "personalInfo", fetch = FetchType.LAZY)
     private List<User> userList;

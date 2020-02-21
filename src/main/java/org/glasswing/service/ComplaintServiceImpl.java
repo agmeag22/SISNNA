@@ -7,6 +7,7 @@ package org.glasswing.service;
 
 import java.util.List;
 import org.glasswing.domain.Complaint;
+import org.glasswing.domain.Country;
 import org.glasswing.domain.State;
 import org.glasswing.repositories.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,5 +59,15 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public List<Complaint> findByState(State s) throws DataAccessException {
          return complaintRepository.findByState(s);
+    }
+
+    @Override
+    public List<Complaint> findByStateNotAndCountry(State s, Country c) throws DataAccessException {
+        return complaintRepository.findByStateNotAndCountry(s,c);
+    }
+
+    @Override
+    public List<Complaint> findByStateAndCountry(State s, Country c) throws DataAccessException {
+        return complaintRepository.findByStateAndCountry(s,c);
     }
 }

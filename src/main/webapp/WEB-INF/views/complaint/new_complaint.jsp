@@ -255,7 +255,7 @@
                             </div>  
                             <div class="form-group">
                                 Hora en la que se cometió la falta: <span style="color:red">*</span>
-                                <input type="date" class="form-control " id="fechainc"  name="misdemeanorTime" required>
+                                <input type="time" class="form-control " id="fechainc"  name="misdemeanorTime" required>
                                     
                                 <small id="nameHelp" class="form-text text-muted">Ingrese la hora aproximada.</small>
                             </div>  

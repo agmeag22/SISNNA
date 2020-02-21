@@ -48,12 +48,16 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/reset/**").permitAll()
+                .antMatchers("/registrar/**").permitAll()
                 .antMatchers("/contrasena_olvidada**").permitAll()
                 .antMatchers("/pedir_contrasena**").permitAll()
                 .antMatchers("/denuncias/denuncias_pendientes").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")
                 .antMatchers("/denuncias/denuncias_procesadas").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")
                 .antMatchers("/denuncias/ver_denuncia/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")    
+                .antMatchers("/setear_resolucion/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")    
+                .antMatchers("/cambiar_clasificacion/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")   
                 .antMatchers("/denuncias/store/**").permitAll()
+                .antMatchers("/denuncias/denuncia_enviada/**").permitAll()    
                 .antMatchers("/denuncias/nueva_denuncia").permitAll()                        
                 .antMatchers("/dashboard/**").hasAnyAuthority("ADMINISTRADOR", "PUNTO DE CONTROL","MIEMBRO DE COMITE")
                 .antMatchers("/usuarios/**").hasAuthority("ADMINISTRADOR")
@@ -68,7 +72,9 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
-                .permitAll();
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/403");
         
     }
 }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,6 +27,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
@@ -53,9 +55,11 @@ public class Complaint implements Serializable {
     private String scholarCenter;
     @Column(name = "misdemeanor_date")
     @Temporal(TemporalType.DATE)
+     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date misdemeanorDate;
     @Column(name = "misdemeanor_time")
-    @Temporal(TemporalType.DATE)
+     @DateTimeFormat(pattern = "hh:mm")
+    @Temporal(TemporalType.TIME)
     private Date misdemeanorTime;
     @Lob
     @Size(max = 65535)
@@ -94,44 +98,44 @@ public class Complaint implements Serializable {
     @Column(name = "resolution")
     private String resolution;
     @Basic(optional = false)
-    @NotNull
+    
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Basic(optional = false)
-    @NotNull
+   
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintPrograms> complaintProgramsList;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintAbuses> complaintAbusesList;
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private User user;
     @JoinColumn(name = "id_country", referencedColumnName = "id_country")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Country country;
     @JoinColumn(name = "id_country_department", referencedColumnName = "id_country_department")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private CountryDepartment countryDepartment;
     @JoinColumn(name = "id_municipality", referencedColumnName = "id_municipality")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Municipality municipality;
     @JoinColumn(name = "id_accused_type", referencedColumnName = "id_accused_type")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private AccusedType accusedType;
     @JoinColumn(name = "id_state", referencedColumnName = "id_state")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private State state;
     @JoinColumn(name = "id_gender", referencedColumnName = "id_gender")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Gender gender;
     @JoinColumn(name = "id_priority", referencedColumnName = "id_priority")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Priority priority;
-    @OneToMany(mappedBy = "complaint", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "complaint", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<ComplaintModifications> complaintModificationsList;
 
     public Complaint() {

@@ -11,6 +11,7 @@ package org.glasswing.repositories;
  */
 import java.util.List;
 import org.glasswing.domain.Complaint;
+import org.glasswing.domain.Country;
 import org.glasswing.domain.State;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,4 +20,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ComplaintRepository extends JpaRepository<Complaint, Integer>{
         List<Complaint> findByStateNot(State s);
         List<Complaint> findByState(State s);
+        List<Complaint> findByStateNotAndCountry(State s,Country c);
+        List<Complaint> findByStateAndCountry(State s,Country c);
 }

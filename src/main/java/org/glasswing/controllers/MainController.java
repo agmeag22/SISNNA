@@ -71,6 +71,7 @@ public class MainController {
             log.info("Entrando a funcion init-min" + log.getName());
              User u = userServ.findByEmail(username);
         session.setAttribute("userId", u.getIdUser());
+        session.setAttribute("userRoleId", u.getRole().getIdRole());
         session.setAttribute("userFullName", u.getPersonalInfo().getName());
         session.setAttribute("userEmail", u.getEmail());
         if(u.getRole().getName().equals("USUARIO")) mav= new ModelAndView("redirect:/denuncias/nueva_denuncia");
@@ -85,6 +86,12 @@ public class MainController {
         }
         log.info("No se pudo realizar" + log.getName() +"u:::::::"+ username+ "p::::::"+password);
         return mav;
+    }
+    
+     @RequestMapping(value="/403")
+    public ModelAndView login(){
+         ModelAndView mav = new ModelAndView("403");
+         return mav;
     }
     
     

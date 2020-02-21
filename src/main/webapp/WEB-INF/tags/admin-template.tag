@@ -1,8 +1,10 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@attribute name="styles" fragment="true" %>
 <%@attribute name="scripts" fragment="true" %>
 <%@attribute name="title"%>
 <%@attribute name="marked"%>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,7 +46,8 @@
 
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
-
+      
+      <c:if test="${userRoleId>1}">
       <!-- Nav Item - Dashboard -->
       <li class="nav-item ${marked eq 'dashboard' ? ' active' : ''}">
         <a class="nav-link" href="${pageContext.request.contextPath}/dashboard">
@@ -54,7 +57,7 @@
       
       <!-- Divider -->
       <hr class="sidebar-divider">
-      
+      </c:if>
       
        <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_complaints" aria-expanded="true" aria-controls="collapseTwo">
@@ -65,12 +68,14 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Denuncias</h6>
             <a class="collapse-item ${marked eq 'nueva-denuncia' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/nueva_denuncia">Nueva denuncia</a>
+            <c:if test="${userRoleId>1}">
             <a class="collapse-item ${marked eq 'denuncias-pendientes' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/denuncias_pendientes">Denuncias pendientes</a>
             <a class="collapse-item ${marked eq 'denuncias-procesadas' ? ' active' : ''}" href="${pageContext.request.contextPath}/denuncias/denuncias_procesadas">Denuncias procesadas</a>
+            </c:if>
           </div>
         </div>
       </li>
-      
+      <c:if test="${userRoleId==4}">
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_committees" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fa fa-envelope"></i>
@@ -84,6 +89,7 @@
           </div>
         </div>
       </li>
+      
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse_users" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fa fa-envelope"></i>
@@ -110,6 +116,7 @@
           </div>
         </div>
       </li>
+      </c:if>
 <!--       Heading 
       <div class="sidebar-heading">
         Interface

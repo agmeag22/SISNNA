@@ -68,10 +68,6 @@
                                                         //document.getElementByName("validacion").value("");
                                                         document.getElementById("resetButton").removeAttribute("disabled");
                                                     }
-                                                    
-                                                    
-                                                    
-                                                    
                                                 }
                                             </script>
                                             

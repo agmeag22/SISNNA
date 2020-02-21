@@ -96,94 +96,42 @@ public class SignUpController {
 	}
         
         @RequestMapping(value="/signUser")
-        public ModelAndView signUser(@RequestParam(value = "name") String name,
-            @RequestParam(value = "lastname") String lastname,
-            @RequestParam(value = "birthDate") String birthDate,
-            @RequestParam(value = "idGender") int idGender,
-            @RequestParam(value = "id_country") int id_country,
-            @RequestParam(value = "id_country_department") int id_country_department,
-            @RequestParam(value = "id_municipality") int id_municipality,
-            @RequestParam(value = "email") String email,
-            @RequestParam(value = "password") String password,
-            @RequestParam(value = "department") int idDepartment,
-            @RequestParam(value = "id_position") int idPosition) {
-	//public ModelAndView signUser(@ModelAttribute User u) {
+	public ModelAndView signUser(@ModelAttribute User u) {
 		//(@RequestParam(value="username") String username,@RequestParam(value="password") String password,HttpServletRequest request)
-        ModelAndView mav = new ModelAndView();
-        String date = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-        Date birthdate = null;
-        Date parsed_date = null;
-        try {
-            birthdate = sdf.parse(birthDate);
-            parsed_date = sdf2.parse(date);
-        } catch (ParseException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-        Country c = new Country();
-        c.setIdCountry(id_country);
-        CountryDepartment countryDepartment = new CountryDepartment();
-        countryDepartment.setIdCountryDepartment(id_country_department);
-        Municipality municipality = new Municipality();
-        municipality.setIdMunicipality(id_municipality);
-        Role r = new Role();
-        r.setIdRole(1);
-        Gender g = new Gender();
-        g.setIdGender(idGender);
-        Department department = new Department();
-        department.setIdDepartment(idDepartment);
-
-        Position p = new Position();
-        p.setIdPosition(idPosition);
-        
-        PersonalInfo personalInfo = new PersonalInfo();
-        personalInfo.setName(name + " " + lastname);
-
-        personalInfo.setGender(g);
-        personalInfo.setBirthDate(birthdate);
-        personalInfo.setCreatedDate(parsed_date);
-        personalInfo.setUpdatedDate(parsed_date);
-        personalInfo.setCountry(c);
-        personalInfo.setCountryDepartment(countryDepartment);
-        personalInfo.setMunicipality(municipality);
-
-        User user = new User();
-        user.setEmail(email);
-        user.setPassword(passwordEncoder().encode(password));
-        user.setDepartment(department);
-        user.setRole(r);
-        user.setPersonalInfo(personalInfo);
-        user.setCreatedDate(parsed_date);
-        user.setUpdatedDate(parsed_date);
-        user.setActiveState(0);
-        user.setPosition(p);
-        
+		ModelAndView mav = new ModelAndView();
                 
-        try {
-            personalInfoServ.save(personalInfo);
-            userService.save(user);
+                Role role = new Role();
+                role.setIdRole(1);
+                role.setName("USUARIO");
+                u.setRole(role);
+                u.setActiveState(0);
+                
+                /*
+                Country c = new Country();
+                c.setCode("222");
+                c.setIdCountry(68);
+                c.setIso3166a1("SV");
+                c.setIso3166a2("SLV");
+                c.setName("El Salvador");
+                
+                PersonalInfo pf = new PersonalInfo();
+                pf.setCountry(c);
+                
+                u.setPersonalInfo(pf);
+                */
+                
+                
+                try {
 
-        } catch (Exception e) {
-            mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
-            List<CountryDepartment> cdepts = cdServ.getAll();
-            List<Municipality> mun = mService.getAll();
-            List<Gender> gen = genderService.getAll();
-            List<Department> dept = departmentService.getAll();
-            List<Country> co = countryService.getAll();
-            List<Position> po = positionService.getAll();
-            mav.addObject("positions" , po);
-            mav.addObject("countryDepartments" , cdepts);
-            mav.addObject("municipalities" , mun);
-            mav.addObject("genders" , gen);
-            mav.addObject("departments" , dept);
-            mav.addObject("country_list" , co);
-            mav.setViewName("sign_up");
-            return mav;
-        }       
-        mav.addObject("respuesta","Usuario Registrado");  
+                    userService.save(u);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    mav.addObject("respuesta", "Error de conexión. No se pudo añadir usuario");
+                    mav.setViewName("redirect:/usuarios/inicio_usuarios");
+                    return mav;
+                }
+                mav.addObject("respuesta","Usuario Registrado");  
                 
         List<CountryDepartment> cdepts = cdServ.getAll();
         List<Municipality> mun = mService.getAll();
@@ -200,10 +148,9 @@ public class SignUpController {
 
         mav.setViewName("sign_up");
         return mav;
-                               
 	}
-
-    @RequestMapping("/country_reg/{id}")
+        
+        @RequestMapping("/country_reg/{id}")
     public @ResponseBody
     HashMap<Integer, String> getDepartmentsOfCountryByIDReg(@PathVariable("id") int id) {
         Country c = countryService.findOne(id);
@@ -230,5 +177,34 @@ public class SignUpController {
         
         
         
+        //Selectionbox control in UserController
+        
+        /*
+        @RequestMapping(value="/contrasena_olvidada")
+	public ModelAndView forgottenPassword() {
+		
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("forgotten_password");
+		return mav;
+	}
+        
+        @RequestMapping(value="/pedir_contrasena")
+	public ModelAndView recuperatePassword(@RequestParam(value="email") String email) {
+		
+		ModelAndView mav = new ModelAndView();
+                
+                User u= userService.findByEmail(email);
+                
+                if(!(u==null)){
+                    
+                    //enviar codigo de recuperacion
+                    mav.addObject("respuesta","Se ha enviado un codigo de recuperacion al correo " + email);                    
+                }else {
+                    mav.addObject("respuesta","Ese correo no existe");                    
+                }
+                
+		mav.setViewName("forgotten_password");
+		return mav;
+	}*/
 }   
 
